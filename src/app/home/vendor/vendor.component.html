@@ -1,0 +1,15 @@
+<div class="container-fluid py-5">
+    <div class="row px-xl-5">
+        <div class="col">
+            <swiper [config]="config">
+                <div class="swiper-wrapper">
+                    <div class="row swiper-slide">
+                        <div class="bg-light p-4 cardSize" *ngFor="let item of vendordata.vendorImg">
+                            <img class="swiper-slide imgSize" src={{item}} alt="">
+                        </div>
+                    </div>
+                </div>
+            </swiper>
+        </div>
+    </div>
+</div>

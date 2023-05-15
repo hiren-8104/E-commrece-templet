@@ -3,18 +3,44 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LayoutModule } from './layout/layout.module';
+
+
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TopbarComponent } from './layout/topbar/topbar.component';
+import { HeaderComponent } from './layout/header/header.component';
+import { FooterComponent } from './layout/footer/footer.component';
+import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
+import { HttpClientModule } from '@angular/common/http';
+import { ContactComponent } from './contact/contact.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
+import { AllproductComponent } from './allproduct/allproduct.component';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TopbarComponent,
+    HeaderComponent,
+    FooterComponent,
+    ContactComponent,
+    ProductDetailsComponent,
+    AllproductComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    LayoutModule,
-    HomeModule
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SharedModule,
+    HomeModule,
+    HttpClientModule,
+
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]
