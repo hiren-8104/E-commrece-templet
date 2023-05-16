@@ -30,11 +30,11 @@
                     <div class="navbar-nav mr-auto py-0">
                         <ng-container *ngFor="let item of headerSection.navItem ;first as first">
                             <a class="nav-item nav-link " (click)=" manuClick(item)"
-                                [ngClass]="{'active':first, 'dropdown':item.dropDwon , 'show':dropDwonIsActive }">{{item.navName}}
+                                [ngClass]="{'active':(item.route == route.url.split('?')[0]), 'dropdown':item.dropDwon , 'show':dropDwonIsActive }">{{item.navName}}
                                 <i *ngIf="item.isDropDwon" class="fa fa-angle-down mt-1"></i>
                                 <div *ngIf="item.isDropDwon" [ngClass]="{'show':dropDwonIsActive}"
                                     class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-                                    <a *ngFor="let drops of item.dropDwon" class="dropdown-item">{{drops.name}}</a>
+                                    <a *ngFor="let drops of item.dropDwon" class="dropdown-item" [routerLink]="drops.route">{{drops.name}} </a>
 
                                 </div>
                             </a>

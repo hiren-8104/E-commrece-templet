@@ -14,20 +14,21 @@ export class HeaderComponent implements OnInit {
     navItem: [
       {
         navName: "Home",
-        route: ""
+        route: "/"
       },
       {
         navName: "Shop",
-        route: "product"
+        route: "/Shop"
       },
 
       {
         navName: "Page",
+        route: "/cart",
         isDropDwon: true,
         dropDwon: [
           {
             name: "Shoping Cart",
-            route: ""
+            route: "/cart"
           },
           {
             name: "Check Out",
@@ -43,8 +44,8 @@ export class HeaderComponent implements OnInit {
     ]
 
   }
-  constructor(private commonsercice: CommonService, private route: Router) { }
-cateToggle:boolean=false
+  constructor(private commonsercice: CommonService, public route: Router) { }
+  cateToggle: boolean = false
   ngOnInit(): void {
 
     this.commonsercice.getCategory().subscribe({
@@ -60,13 +61,14 @@ cateToggle:boolean=false
     }
 
     else {
-      this.route.navigate([`/${navItem.route}`], {queryParams:{'allProduct':'product'}})
+      this.route.navigate([`/${navItem.route}`], { queryParams: { 'allProduct': 'product' } })
+      this.dropDwonIsActive = false
     }
 
   }
-  selectedCate(item:any){
-    console.log(item , ":_____________________")
-    this.route.navigate(['/product'],{queryParams:{'selCate':item}}
-    )
+  selectedCate(item: any) {
+    console.log(item, ":_____________________")
+    this.route.navigate(['/Shop'], { queryParams: { 'selCate': item } })
+    this.dropDwonIsActive = false
   }
 }

@@ -26,5 +26,9 @@ getSelectedProduct(id: number):Observable<any>{
     
 }
 
+getCartItem(params:any):Observable<any>{
+  return this.http.getReq('https://fakestoreapi.com/carts/'+params)
+}
+
 
 }

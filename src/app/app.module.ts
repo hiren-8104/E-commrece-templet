@@ -18,6 +18,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { AllproductComponent } from './allproduct/allproduct.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
+import { ShopingCartComponent } from './shoping-cart/shoping-cart.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
     ContactComponent,
     ProductDetailsComponent,
     AllproductComponent,
+    ShopingCartComponent,
 
   ],
   imports: [
