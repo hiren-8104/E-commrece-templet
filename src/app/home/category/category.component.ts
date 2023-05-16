@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-category',
@@ -6,72 +8,32 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit {
-categorySectionData:any=[
-  {
-    cateImg:'assets/img/cat-1.jpg',
-    cateName:'Category Name',
-    cateQuntity:"100 Products"
-  },
-  {
-    cateImg:'assets/img/cat-2.jpg',
-    cateName:'Category Name',
-    cateQuntity:"100 Products"
-  },
-  {
-    cateImg:'assets/img/cat-3.jpg',
-    cateName:'Category Name',
-    cateQuntity:"100 Products"
-  },
-  {
-    cateImg:'assets/img/cat-1.jpg',
-    cateName:'Category Name',
-    cateQuntity:"100 Products"
-  },
-
-  {
-    cateImg:'assets/img/cat-2.jpg',
-    cateName:'Category Name',
-    cateQuntity:"100 Products"
-  },
-  {
-    cateImg:'assets/img/cat-2.jpg',
-    cateName:'Category Name',
-    cateQuntity:"100 Products"
-  },
-  {
-    cateImg:'assets/img/cat-3.jpg',
-    cateName:'Category Name',
-    cateQuntity:"100 Products"
-  },
-  {
-    cateImg:'assets/img/cat-3.jpg',
-    cateName:'Category Name',
-    cateQuntity:"100 Products"
-  },
-  {
-    cateImg:'assets/img/cat-4.jpg',
-    cateName:'Category Name',
-    cateQuntity:"100 Products"
-  },
-  {
-    cateImg:'assets/img/cat-3.jpg',
-    cateName:'Category Name',
-    cateQuntity:"100 Products"
-  },
-  {
-    cateImg:'assets/img/cat-2.jpg',
-    cateName:'Category Name',
-    cateQuntity:"100 Products"
-  },
-  {
-    cateImg:'assets/img/cat-1.jpg',
-    cateName:'Category Name',
-    cateQuntity:"100 Products"
-  }
-]
-  constructor() { }
+  categorySectionData: any = [
+   
+  ]
+  constructor(private commonService: CommonService ,private route: Router) { }
 
   ngOnInit(): void {
+
+    this.commonService.getCategory().subscribe({
+      next: (res) => {
+        
+        res.forEach((ele: any) => {
+          this.categorySectionData.push({
+            cateImg: 'assets/img/cat-2.jpg',
+            cateName: ele,
+            cateQuntity: "100 Products"
+          })
+        })
+      },
+      error:(res)=>{console.log(res)}
+    })
+  }
+
+  selectedCate(item:any){
+    console.log(item , ":_____________________")
+    this.route.navigate(['/product'],{queryParams:{'selCate':item}}
+    )
   }
 
 }

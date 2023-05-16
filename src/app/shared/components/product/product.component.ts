@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonService } from '../../services/common.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product',
@@ -7,10 +8,12 @@ import { CommonService } from '../../services/common.service';
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
+  @Input() parentData:any=null
   productData: any[] = []
-  constructor( private commonService: CommonService) { }
+  constructor( private commonService: CommonService ,private route: Router) { }
 
   ngOnInit(): void {
+    console.log(this.parentData)
      let limit=8
     this.commonService.getProduct(limit).subscribe({
       next: (res) => {
@@ -25,4 +28,8 @@ export class ProductComponent implements OnInit {
 
 
   }
+  seletedPro(item:any){
+    //  console.log(item.id)
+     this.route.navigate(['/details'],{queryParams:{'ProductId':item.id}})
+    }
 }

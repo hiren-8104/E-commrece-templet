@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit {
 
   }
   constructor(private commonsercice: CommonService, private route: Router) { }
-
+cateToggle:boolean=false
   ngOnInit(): void {
 
     this.commonsercice.getCategory().subscribe({
@@ -60,8 +60,13 @@ export class HeaderComponent implements OnInit {
     }
 
     else {
-      this.route.navigate([`/${navItem.route}`])
+      this.route.navigate([`/${navItem.route}`], {queryParams:{'allProduct':'product'}})
     }
 
+  }
+  selectedCate(item:any){
+    console.log(item , ":_____________________")
+    this.route.navigate(['/product'],{queryParams:{'selCate':item}}
+    )
   }
 }

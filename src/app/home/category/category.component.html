@@ -3,13 +3,13 @@
     <div class="row px-xl-5 pb-3">
         <ng-container  *ngFor="let item of categorySectionData">
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
+                <a (click)="selectedCate(item.cateName)" class="text-decoration-none">
                     <div class="cat-item d-flex align-items-center mb-4">
                         <div class="overflow-hidden" style="width: 100px; height: 100px;">
                             <img class="img-fluid" src="{{item.cateImg}}" alt="">
                         </div>
                         <div class="flex-fill pl-3">
-                            <h6>{{item.cateName}}</h6>
+                            <h6>{{item.cateName |titlecase}}</h6>
                             <small class="text-body">{{item.cateQuntity}}</small>
                         </div>
                     </div>

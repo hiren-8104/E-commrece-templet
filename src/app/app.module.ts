@@ -16,6 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ContactComponent } from './contact/contact.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { AllproductComponent } from './allproduct/allproduct.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
 
 
 @NgModule({
@@ -38,6 +40,8 @@ import { AllproductComponent } from './allproduct/allproduct.component';
     SharedModule,
     HomeModule,
     HttpClientModule,
+    NgxUsefulSwiperModule,
+    NgxPaginationModule
 
 
 

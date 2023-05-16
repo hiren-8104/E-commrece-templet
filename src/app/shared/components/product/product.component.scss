@@ -1,5 +1,14 @@
 
 .imgWidth{
-    height: 450px !important;
-    width: 450px !important;
+    height: 350px !important;
+    width: 300px !important;
+}
+
+.titlewrap{
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+.custom-row {
+    flex-wrap: nowrap !important;
 }
