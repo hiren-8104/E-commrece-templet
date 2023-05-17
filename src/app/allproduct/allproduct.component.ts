@@ -8,6 +8,8 @@ import { CommonService } from '../shared/services/common.service';
   styleUrls: ['./allproduct.component.scss']
 })
 export class AllproductComponent implements OnInit {
+  p:number=1
+ 
   productList: any = []
 
   allProductSectionData: any = {

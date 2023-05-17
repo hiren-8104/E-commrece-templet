@@ -13,11 +13,11 @@ export class ProductComponent implements OnInit {
   constructor( private commonService: CommonService ,private route: Router) { }
 
   ngOnInit(): void {
-    console.log(this.parentData)
+    
      let limit=8
     this.commonService.getProduct(limit).subscribe({
       next: (res) => {
-        console.log(res)
+         
         this.productData= res
       }
     })
@@ -29,7 +29,7 @@ export class ProductComponent implements OnInit {
 
   }
   seletedPro(item:any){
-    //  console.log(item.id)
+     
      this.route.navigate(['/details'],{queryParams:{'ProductId':item.id}})
     }
 }

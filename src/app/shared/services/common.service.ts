@@ -13,7 +13,7 @@ export class CommonService {
     return this.http.getReq('https://fakestoreapi.com/products/categories')
   }
 
-getProduct(params?:any):Observable<any>{
+ getProduct(params?:any):Observable<any>{
   return this.http.getReq('https://fakestoreapi.com/products?limit=' + params )
 }
 

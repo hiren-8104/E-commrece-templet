@@ -19,6 +19,8 @@ import { AllproductComponent } from './allproduct/allproduct.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
 import { ShopingCartComponent } from './shoping-cart/shoping-cart.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -31,6 +33,8 @@ import { ShopingCartComponent } from './shoping-cart/shoping-cart.component';
     ProductDetailsComponent,
     AllproductComponent,
     ShopingCartComponent,
+    CheckoutComponent,
+    PageNotFoundComponent,
 
   ],
   imports: [

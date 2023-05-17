@@ -100,7 +100,7 @@
                 <div class="col-12 pb-1">
                     <!-- here a show a all product -->
                     <div class="row px-xl-5">
-                        <ng-container *ngFor="let item of productList">
+                        <ng-container *ngFor="let item of productList | paginate : { itemsPerPage: 6, currentPage: p }">
 
                             <div class="col-lg-4 col-md-4 col-sm-6 pb-1 ">
                                 <div (click)="seletedPro(item)" class="product-item bg-light mb-4">
@@ -137,6 +137,7 @@
                             </div>
                         </ng-container>
                     </div>
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
                 </div>
             </div>
 

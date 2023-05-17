@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../shared/services/common.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-shoping-cart',
@@ -7,8 +8,15 @@ import { CommonService } from '../shared/services/common.service';
   styleUrls: ['./shoping-cart.component.scss']
 })
 export class ShopingCartComponent implements OnInit {
-  cartProduct: any = []
-  hiren: number = 1
+  cartProduct: any = {
+    cartItem: [],
+    cartCheck: {
+      subTotal: 0,
+      shipping: 10,
+
+    }
+  }
+
 
   constructor(private common: CommonService) { }
 
@@ -16,29 +24,52 @@ export class ShopingCartComponent implements OnInit {
 
 
     this.common.getCartItem(3).subscribe({
-      next: (res) => {
-        console.log(res, "this is a cart item")
-        // res.products.forEach((product: any) => {
-        //   console.log(product)
-        //   this.common.getProduct(product.productId).subscribe({
-        //     next: (res) => {
-        //       console.log(res, "dfhjkhgkjdh")
-        //       this.cartProduct.push(res)
-        //     },
-        //     error: (err) => { console.log(err) }
-        //   })
-        // })
+      next: (resp) => {
+        
+        resp.products.forEach((product: any) => {
+          this.common.getSelectedProduct(product.productId).subscribe({
+            next: (res) => {
+              res['quantity'] = product.quantity
 
+              this.cartProduct.cartItem.push(res)
+              this.finalSum()
+            },
+            error: (err) => { console.log(err) }
+          })
+        })
       },
-
       error: (err) => { console.log(err) }
     })
   }
 
-  fn(val: any) {
-    this.hiren++
-    console.log(this.cartProduct)
-
+  increaseQuntity(i: any) {
+    this.cartProduct.cartItem[i].quantity = 1 + parseInt(this.cartProduct.cartItem[i].quantity)
+    this.finalSum()
   }
+  decreaseQuntity(i: any) {
+    if (this.cartProduct.cartItem[i].quantity > 1) {
+      this.cartProduct.cartItem[i].quantity = parseInt(this.cartProduct.cartItem[i].quantity) - 1
+      this.finalSum()
+    }
+  }
+  removeItem(i: any) {
+    this.cartProduct.cartItem.splice(i, 1)
+    this.finalSum()
+  }
+
+
+  finalSum() {
+
+    if (this.cartProduct.cartItem.length == 0) {
+      this.cartProduct.cartCheck.shipping = 0
+    }
+    this.cartProduct.cartCheck.subTotal = 0
+    this.cartProduct.cartItem.forEach((ele: any) => {
+      let sum = 0
+      sum += ele.quantity * ele.price
+      this.cartProduct.cartCheck.subTotal += sum
+    });
+  }
+
 
 }

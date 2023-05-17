@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
         navName: "Shop",
         route: "/Shop"
       },
-
+      
       {
         navName: "Page",
         route: "/cart",
@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
           },
           {
             name: "Check Out",
-            route: ""
+            route: "/checkout"
           },
         ]
       },
@@ -40,34 +40,39 @@ export class HeaderComponent implements OnInit {
         navName: "Contact",
         route: "/contact"
       },
-
+      
     ]
-
+    
   }
   constructor(private commonsercice: CommonService, public route: Router) { }
   cateToggle: boolean = false
   ngOnInit(): void {
-
+  
+    
     this.commonsercice.getCategory().subscribe({
       next: (res) => { this.headerSection.category = res }
     })
-
+    
   }
   manuClick(navItem: any) {
-
+    // console.log("this.headerSection.navItem.navName",this.headerSection.navItem[2].navName)
+    if(this.headerSection.navItem[2].navName == 'Page') {
+      this.headerSection.navItem[2].route = (this.route.url.split('?')[0] == '/checkout') ? '/checkout' : '/cart'
+    }
     if (navItem.isDropDwon) {
-
+      
       this.dropDwonIsActive = !this.dropDwonIsActive
     }
 
     else {
-      this.route.navigate([`/${navItem.route}`], { queryParams: { 'allProduct': 'product' } })
+      this.route.navigate([`/${navItem.route}`])
       this.dropDwonIsActive = false
     }
 
+
   }
   selectedCate(item: any) {
-    console.log(item, ":_____________________")
+    // console.log(item, ":_____________________")
     this.route.navigate(['/Shop'], { queryParams: { 'selCate': item } })
     this.dropDwonIsActive = false
   }
