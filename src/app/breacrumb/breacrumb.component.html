@@ -1,0 +1,10 @@
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-30">
+                <a *ngFor="let item of bread.breadcrumbs|async ;last as last" class="text-decoration-none breadcrumb-item text-dark" [ngClass]="{'active':last}" routerLink="/{{item.route}}">{{item.label}}</a>
+                
+            </nav>
+        </div>
+    </div>
+</div>

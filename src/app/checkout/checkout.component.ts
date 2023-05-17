@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from '../shared/services/common.service';
 
 @Component({
   selector: 'app-checkout',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CheckoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(private common: CommonService) { }
 
   ngOnInit(): void {
+this.common.breadcrumbs.next([{label:"Home", route:"/"},{label:"Shop", route:"/Shop"},{label:"CheckOut", route:"checkout"}])
   }
 
 }

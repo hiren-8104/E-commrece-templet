@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CommonService {
-  selectedCategory:any=new BehaviorSubject<any>('')
+  breadcrumbs = new BehaviorSubject<any>([{label:"Home", route:"/"}]);
   constructor(private http:HttpService) { }
 
   getCategory():Observable<any>{

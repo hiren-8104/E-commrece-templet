@@ -21,6 +21,7 @@ export class ShopingCartComponent implements OnInit {
   constructor(private common: CommonService) { }
 
   ngOnInit(): void {
+    this.common.breadcrumbs.next([{label:"Home", route:"/"},{label:"Shop", route:"/Shop"},{label:"Shoping Cart", route:"cart"}])
 
 
     this.common.getCartItem(3).subscribe({

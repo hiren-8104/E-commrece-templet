@@ -21,6 +21,7 @@ import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
 import { ShopingCartComponent } from './shoping-cart/shoping-cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { BreacrumbComponent } from './breacrumb/breacrumb.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     ShopingCartComponent,
     CheckoutComponent,
     PageNotFoundComponent,
+    BreacrumbComponent,
 
   ],
   imports: [

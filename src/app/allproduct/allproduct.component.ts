@@ -34,17 +34,18 @@ export class AllproductComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.commonService.breadcrumbs.next([{label:"Home", route:"/"},{label:"Shop", route:"/Shop"}])
    
 
     this.activatedRoute.params.subscribe((params: any) => {
-      console.log(params)
-      if (params.length) {
-        console.log(params, "rahul")
-     
-        this.getSelectedCategoryProduct(params.category)
+      // console.log(params.category)
+      if (params['category']) {
+        
+        
+        this.getSelectedCategoryProduct(params['category'])
       }
-      else {
-        console.log("hiren Dabhi")
+      else  {
         this.getAllProduct()
       }
     })
