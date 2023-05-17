@@ -63,6 +63,8 @@ export class ShopingCartComponent implements OnInit {
     if (this.cartProduct.cartItem.length == 0) {
       this.cartProduct.cartCheck.shipping = 0
     }
+
+    
     this.cartProduct.cartCheck.subTotal = 0
     this.cartProduct.cartItem.forEach((ele: any) => {
       let sum = 0

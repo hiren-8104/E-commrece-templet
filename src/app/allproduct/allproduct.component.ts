@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from '../shared/services/common.service';
 
 @Component({
   selector: 'app-allproduct',
   templateUrl: './allproduct.component.html',
-  styleUrls: ['./allproduct.component.scss']
+  styleUrls: ['./allproduct.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllproductComponent implements OnInit {
-  p:number=1
- 
+  p: number = 1
+
   productList: any = []
 
   allProductSectionData: any = {
@@ -26,32 +27,48 @@ export class AllproductComponent implements OnInit {
       filter: ["All size", "S", "m", "l", "XL", "XXL"]
     }
   }
-  constructor(private activatedRoute: ActivatedRoute, private commonService: CommonService, private route: Router) { }
+  constructor(private activatedRoute: ActivatedRoute,
+    private commonService: CommonService,
+    private route: Router,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe((params: any) => {
-      if (params.selCate) {
-        this.getSelectedCategoryProduct(params.selCate)
+   
+
+    this.activatedRoute.params.subscribe((params: any) => {
+      console.log(params)
+      if (params.length) {
+        console.log(params, "rahul")
+     
+        this.getSelectedCategoryProduct(params.category)
       }
       else {
+        console.log("hiren Dabhi")
         this.getAllProduct()
       }
     })
+    this.cdr.detectChanges()
+
   }
+
 
   getAllProduct() {
     this.commonService.getProduct().subscribe({
       next: (res) => {
         this.productList = res
+        this.cdr.detectChanges();
       },
       error: (error) => { console.log(error) }
     })
-  } 
+  }
 
   getSelectedCategoryProduct(category: string) {
     this.commonService.getSpeicalCategory(category).subscribe({
       next: (res) => {
+       
         this.productList = res
+        this.cdr.detectChanges();
       },
       error: (err) => { console.log(err) }
     })

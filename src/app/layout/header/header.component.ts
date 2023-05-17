@@ -73,7 +73,8 @@ export class HeaderComponent implements OnInit {
   }
   selectedCate(item: any) {
     // console.log(item, ":_____________________")
-    this.route.navigate(['/Shop'], { queryParams: { 'selCate': item } })
+    // this.route.navigate(['/Shop'], { queryParams: { 'selCate': item } })
+    this.route.navigate(['Shop',item])
     this.dropDwonIsActive = false
   }
 }

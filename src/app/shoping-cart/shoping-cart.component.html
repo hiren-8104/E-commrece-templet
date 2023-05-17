@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="align-middle">{{(item.price)*item.quantity}}</td>
+                        <td class="align-middle">{{(item.price)*item.quantity |currency}}</td>
                         <td class="align-middle"><button (click)="removeItem(index)"  class="btn btn-sm btn-danger"><i
                                     class="fa fa-times"></i></button></td>
                     </tr>

@@ -5,7 +5,6 @@ import { ContactComponent } from './contact/contact.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { AllproductComponent } from './allproduct/allproduct.component';
 import { ShopingCartComponent } from './shoping-cart/shoping-cart.component';
-import { CheckboxControlValueAccessor } from '@angular/forms';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 
@@ -23,6 +22,10 @@ const routes: Routes = [
     component: ProductDetailsComponent
   },
   {
+    path: 'Shop/:category',
+    component: AllproductComponent
+  },
+  {
     path: 'Shop',
     component: AllproductComponent
   },
@@ -34,11 +37,11 @@ const routes: Routes = [
     path: 'checkout',
     component:CheckoutComponent
   },
-  {
-  path:'**',
-  redirectTo:"notfound",
-  pathMatch: 'full'
-},
+//   {
+//   path:'**',
+//   redirectTo:"notfound",
+//   pathMatch: 'full'
+// },
 {
   path:"notfound",
   component:PageNotFoundComponent
