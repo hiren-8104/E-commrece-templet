@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent implements OnInit {
+  tabActive: any = "Information"
   config: any = {
     autoplay: true,
     loop: true,
@@ -74,6 +75,13 @@ export class ProductDetailsComponent implements OnInit {
     else {
       alert("form is not valid")
     }
+
+  }
+
+
+  tabChange(name:any){
+    console.log(name)
+    this.tabActive = name
 
   }
 
