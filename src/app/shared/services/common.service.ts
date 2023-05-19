@@ -30,5 +30,9 @@ getCartItem(params:any):Observable<any>{
   return this.http.getReq('https://fakestoreapi.com/carts/'+params)
 }
 
-
+getSort(params:any):Observable<any>{
+  console.log(params, "api request");
+  
+  return this.http.getReq('https://fakestoreapi.com/products',{params})
+}
 }

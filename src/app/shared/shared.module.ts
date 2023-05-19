@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { OffersComponent } from './components/offers/offers.component';
 import { ProductComponent } from './components/product/product.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { ProductComponent } from './components/product/product.component';
   ],
   imports: [
     CommonModule,
+    RouterModule
 
   ],
   exports: [

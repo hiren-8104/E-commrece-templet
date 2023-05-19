@@ -8,6 +8,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  cartItemCount:any=0
   dropDwonIsActive: boolean = false;
   headerSection: any = {
     category: [],
@@ -47,7 +48,7 @@ export class HeaderComponent implements OnInit {
   constructor(private commonsercice: CommonService, public route: Router) { }
   cateToggle: boolean = false
   ngOnInit(): void {
-  
+      this.cartItemCount=localStorage.getItem("cartItem")
     
     this.commonsercice.getCategory().subscribe({
       next: (res) => { this.headerSection.category = res }

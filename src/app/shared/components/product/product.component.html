@@ -3,7 +3,7 @@
     <div class="row px-xl-5 " [ngClass]="{'custom-row' : parentData}">
         <ng-container *ngFor="let item of productData" >
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1 " >
-                <div  (click)="seletedPro(item)" class="product-item bg-light mb-4 "  >
+                <div   class="product-item bg-light mb-4 "  >
                     <div class="product-img position-relative overflow-hidden">
                         <ng-container class="ps-3 d-flex justify-content-center">
 
@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="text-center py-4">
-                        <a class="h6 text-decoration-none titlewrap d-flex justify-content-center" href="">{{item.title}}</a>
+                        <a (click)="seletedPro(item)" class="h6 text-decoration-none titlewrap d-flex justify-content-center" href="">{{item.title}}</a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
                             <h5>${{item.price}}</h5>
                             <h6 class="text-muted ml-2"><del>${{item.price}}</del></h6>
