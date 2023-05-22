@@ -6,7 +6,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CommonService {
+  favouritesProducts=new BehaviorSubject<any[]>([])
   breadcrumbs = new BehaviorSubject<any>([{label:"Home", route:"/"}]);
+
+
+  recentProducts = new BehaviorSubject<any>([])
   constructor(private http:HttpService) { }
 
   getCategory():Observable<any>{

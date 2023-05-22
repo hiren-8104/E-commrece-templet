@@ -8,7 +8,8 @@ import { CommonService } from 'src/app/shared/services/common.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  cartItemCount:any=0
+  cartItemCount: any = 0
+  favItemCount: any = 0
   dropDwonIsActive: boolean = false;
   headerSection: any = {
     category: [],
@@ -21,7 +22,7 @@ export class HeaderComponent implements OnInit {
         navName: "Shop",
         route: "/Shop"
       },
-      
+
       {
         navName: "Page",
         route: "/cart",
@@ -41,27 +42,29 @@ export class HeaderComponent implements OnInit {
         navName: "Contact",
         route: "/contact"
       },
-      
+
     ]
-    
+
   }
   constructor(private commonsercice: CommonService, public route: Router) { }
   cateToggle: boolean = false
   ngOnInit(): void {
-      this.cartItemCount=localStorage.getItem("cartItem")
-    
+    let favItem: any = localStorage.getItem('favorite')
+    this.favItemCount = (JSON.parse(favItem)).length
+    this.cartItemCount = localStorage.getItem("cartItem")
+
     this.commonsercice.getCategory().subscribe({
       next: (res) => { this.headerSection.category = res }
     })
-    
+
   }
   manuClick(navItem: any) {
     // console.log("this.headerSection.navItem.navName",this.headerSection.navItem[2].navName)
-    if(this.headerSection.navItem[2].navName == 'Page') {
+    if (this.headerSection.navItem[2].navName == 'Page') {
       this.headerSection.navItem[2].route = (this.route.url.split('?')[0] == '/checkout') ? '/checkout' : '/cart'
     }
     if (navItem.isDropDwon) {
-      
+
       this.dropDwonIsActive = !this.dropDwonIsActive
     }
 
@@ -75,7 +78,7 @@ export class HeaderComponent implements OnInit {
   selectedCate(item: any) {
     // console.log(item, ":_____________________")
     // this.route.navigate(['/Shop'], { queryParams: { 'selCate': item } })
-    this.route.navigate(['Shop',item])
+    this.route.navigate(['Shop', item])
     this.dropDwonIsActive = false
   }
 }

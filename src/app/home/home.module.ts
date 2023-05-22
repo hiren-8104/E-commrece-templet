@@ -9,6 +9,8 @@ import { SharedModule } from '../shared/shared.module';
 import { CategoryComponent } from './category/category.component';
 import { VendorComponent } from './vendor/vendor.component';
 import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
+import { RecentProductsComponent } from '../recent-products/recent-products.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -17,13 +19,15 @@ import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
     FeaturedComponent,
     HeroComponent,
     CategoryComponent,
-    VendorComponent
+    VendorComponent,
+    RecentProductsComponent
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
     SharedModule,
-    NgxUsefulSwiperModule
+    NgxUsefulSwiperModule,
+    NgxPaginationModule
     
   ]
 })

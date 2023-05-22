@@ -7,6 +7,7 @@ import { AllproductComponent } from './allproduct/allproduct.component';
 import { ShopingCartComponent } from './shoping-cart/shoping-cart.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { FavoriteComponent } from './favorite/favorite.component';
 
 const routes: Routes = [
   {
@@ -37,11 +38,10 @@ const routes: Routes = [
     path: 'checkout',
     component:CheckoutComponent
   },
-//   {
-//   path:'**',
-//   redirectTo:"notfound",
-//   pathMatch: 'full'
-// },
+{
+path:"favorites",
+component: FavoriteComponent
+},
 {
   path:"notfound",
   component:PageNotFoundComponent

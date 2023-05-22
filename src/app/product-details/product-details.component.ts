@@ -53,11 +53,14 @@ export class ProductDetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    this.commonService.breadcrumbs.next([{ label: "Home", route: "/" }, { label: "Shop", route: "/Shop" }, { label: "details", route: "" }])
+
     this.activatedRoute.queryParams.subscribe((params: any) => {
-      console.log(params.ProductId)
+      
       this.commonService.getSelectedProduct(params.ProductId).subscribe({
         next: (res) => {
-          console.log(res)
+          
           this.selectedProduct = res
         },
         error: (err) => { console.log(err) }
@@ -80,7 +83,7 @@ export class ProductDetailsComponent implements OnInit {
 
 
   tabChange(name:any){
-    console.log(name)
+    
     this.tabActive = name
 
   }

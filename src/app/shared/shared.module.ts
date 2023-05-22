@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { OffersComponent } from './components/offers/offers.component';
 import { ProductComponent } from './components/product/product.component';
 import { RouterModule } from '@angular/router';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    NgxPaginationModule
 
   ],
   exports: [

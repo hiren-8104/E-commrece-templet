@@ -6,10 +6,11 @@ import { CommonService } from '../shared/services/common.service';
   selector: 'app-allproduct',
   templateUrl: './allproduct.component.html',
   styleUrls: ['./allproduct.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class AllproductComponent implements OnInit {
-  p: number = 1
+  recents: any[] = []
+  p = 1
   sortToggle: boolean = false
   productList: any = []
 
@@ -32,6 +33,7 @@ export class AllproductComponent implements OnInit {
       sortBy: ["Ascending", "Descending"]
     }
   }
+
   constructor(private activatedRoute: ActivatedRoute,
     private commonService: CommonService,
     private route: Router,
@@ -40,14 +42,18 @@ export class AllproductComponent implements OnInit {
 
   ngOnInit(): void {
 
+
+
+    let a = localStorage.getItem('recents')
+    if (a) {
+      this.recents = JSON.parse(a)
+
+    }
+
     this.commonService.breadcrumbs.next([{ label: "Home", route: "/" }, { label: "Shop", route: "/Shop" }])
-
-
     this.activatedRoute.params.subscribe((params: any) => {
-      // console.log(params.category)
       if (params['category']) {
-
-
+        
         this.getSelectedCategoryProduct(params['category'])
       }
       else {
@@ -55,7 +61,6 @@ export class AllproductComponent implements OnInit {
       }
     })
     this.cdr.detectChanges()
-
   }
 
 
@@ -63,7 +68,7 @@ export class AllproductComponent implements OnInit {
     this.commonService.getProduct().subscribe({
       next: (res) => {
         this.productList = res
-        this.cdr.detectChanges();
+
       },
       error: (error) => { console.log(error) }
     })
@@ -74,38 +79,64 @@ export class AllproductComponent implements OnInit {
       next: (res) => {
 
         this.productList = res
-        this.cdr.detectChanges();
+
       },
       error: (err) => { console.log(err) }
     })
   }
 
   seletedPro(item: any) {
+
+    // console.log(this.recents , "this.recents")
+    this.recents.unshift(item)
+    localStorage.setItem('recents', JSON.stringify(this.recents))
     this.route.navigate(['/details'], { queryParams: { 'ProductId': item.id } })
   }
 
 
   sort() {
     this.sortToggle = !this.sortToggle
-    setTimeout(() => {
-      // console.log("kkk")
-      this.sortToggle = false
-    }, 2000)
+
   }
 
   sortProduct(item: any) {
     if (item == "Ascending") {
       let sort = { sort: "asc" }
       this.commonService.getSort(sort).subscribe({
-        next: (res) => { this.productList=res,this.cdr.detectChanges(); }
+        next: (res) => { this.productList = res, this.cdr.detectChanges(); }
       })
     }
     else {
       let sort = { sort: "desc" }
       this.commonService.getSort(sort).subscribe({
-        next: (res) => {this.productList=res ,this.cdr.detectChanges();}
+        next: (res) => { this.productList = res, this.cdr.detectChanges(); }
       })
     }
     this.sortToggle = false
   }
+
+
+  fav(i: any) {
+    // var localStore: any = localStorage.getItem("favorite")
+    // if (localStore) {
+    //   this.favPro = JSON.parse(localStore)
+    // }
+    // this.favPro.push(item);
+    // if (JSON.parse(localStore)) {
+    //   JSON.parse(localStore).map((res: any, index: any) => {
+    //     if (res.id === item.id) {
+    //       console.log("favorite", index)
+    //       this.favPro.splice(this.favPro[index], 1);
+    //     }
+    //   })
+    // }
+    // localStorage.setItem('favorite', JSON.stringify(this.favPro))
+
+    this.productList[i]['isFavourite'] = true
+    this.commonService.favouritesProducts.next(this.productList)
+
+
+
+  }
+
 }

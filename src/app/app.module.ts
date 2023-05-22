@@ -22,6 +22,8 @@ import { ShopingCartComponent } from './shoping-cart/shoping-cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BreacrumbComponent } from './breacrumb/breacrumb.component';
+import { FavoriteComponent } from './favorite/favorite.component';
+import { RecentProductsComponent } from './recent-products/recent-products.component';
 
 
 @NgModule({
@@ -37,6 +39,8 @@ import { BreacrumbComponent } from './breacrumb/breacrumb.component';
     CheckoutComponent,
     PageNotFoundComponent,
     BreacrumbComponent,
+    FavoriteComponent,
+    
 
   ],
   imports: [

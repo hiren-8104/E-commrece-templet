@@ -1,8 +1,9 @@
 
 
-    <div class="row px-xl-5 " [ngClass]="{'custom-row' : parentData}">
-        <ng-container *ngFor="let item of productData" >
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1 " >
+    <div class="row px-xl-5 " [ngClass]="{'custom-row' : homeData}">
+        <ng-container *ngFor="let item of productData   ;index as index " >
+            <!-- <ng-container  *ngFor="let item of productData | paginate : { itemsPerPage: 6, currentPage: p } ;index as index">   -->
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1 " [ngClass]="{'col-lg-4':allProductData}" >
                 <div   class="product-item bg-light mb-4 "  >
                     <div class="product-img position-relative overflow-hidden">
                         <ng-container class="ps-3 d-flex justify-content-center">
@@ -10,14 +11,16 @@
                             <img class=" imgWidth img-fluid  " src="{{item.image}}" alt="">
                         </ng-container>
                         <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                                <a class="btn btn-outline-dark btn-square" ><i class="fa fa-shopping-cart"></i></a>
+                                <a (click)="fav(index)" class="btn btn-outline-dark btn-square">
+                                    <i class="far fa-heart " [ngClass]="{'fa text-danger':item.isFavourite}"></i>
+                                </a>
+                                <a class="btn btn-outline-dark btn-square" ><i class="fa fa-sync-alt"></i></a>
+                                <a class="btn btn-outline-dark btn-square" ><i class="fa fa-search"></i></a>
                         </div>
                     </div>
                     <div class="text-center py-4">
-                        <a (click)="seletedPro(item)" class="h6 text-decoration-none titlewrap d-flex justify-content-center" href="">{{item.title}}</a>
+                        <a (click)="seletedPro(item)" class="h6 text-decoration-none titlewrap d-flex justify-content-center" >{{item.title}}</a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
                             <h5>${{item.price}}</h5>
                             <h6 class="text-muted ml-2"><del>${{item.price}}</del></h6>
@@ -35,4 +38,5 @@
             </div>
         </ng-container>
     </div>
+    <pagination-controls *ngIf="allProductData" (pageChange)="p = $event"></pagination-controls>
 
