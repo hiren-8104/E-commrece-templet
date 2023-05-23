@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductComponent implements OnInit {
-  currncySymbol="INR"
+  
   rpp:number =8
   p = 1
   recents: any[] = []
@@ -36,7 +36,7 @@ export class ProductComponent implements OnInit {
     else if (this.favData) {
       this.productData = this.favData
     }
-    else if (this.callingHome || this.productDetailsData) {
+    else if (this.callingHome || this.productDetailsData ) {
       this.rpp =8
       this.commonService.getProduct(this.rpp).subscribe({
         next: (res) => {

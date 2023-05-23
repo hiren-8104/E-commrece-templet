@@ -39,22 +39,21 @@ export class TopbarComponent implements OnInit {
       number: "+012 345 6789"
     }
   }
-  constructor(public common: CommonService ,private route: Router) { }
+  selectedCurrncy: any = "USD";
+  constructor(public common: CommonService, private route: Router) { }
 
   ngOnInit(): void {
   }
   currencySelet(item: any) {
-
+    this.selectedCurrncy = item
     this.common.currncypipe.next(item)
   }
   search() {
-    if(this.searchForm.value.searchValue){
-    this.route.navigate(['/Shop'])
+    if (this.searchForm.value.searchValue) {
+      this.route.navigate(['/Shop'])
     }
-    else{
-      this.route.navigate([''])
-    }
+
     this.common.searchfilters.next(this.searchForm.value.searchValue)
-    
+
   }
 }

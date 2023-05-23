@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../shared/services/common.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+
 
 @Component({
   selector: 'app-checkout',
@@ -10,7 +14,6 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class CheckoutComponent implements OnInit {
   isChecked: boolean = false
   checkOutData!: any
-
 
   billingAdress: FormGroup = this.fb.group({
     firstName: ["hiren", Validators.required],
@@ -27,7 +30,7 @@ export class CheckoutComponent implements OnInit {
 
   })
   formArray!: FormArray;
-  
+
   constructor(private common: CommonService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -49,7 +52,7 @@ export class CheckoutComponent implements OnInit {
   addMoreDetails() {
     this.isChecked = !this.isChecked
 
-    let shippingAddres :FormGroup =this.fb.group({
+    let shippingAddres: FormGroup = this.fb.group({
       firstName: ["Hiren", Validators.required],
       lastName: ["dabhi", Validators.required],
       email: ["hirendabhi8104@gamil.com", [Validators.required, Validators.email]],
@@ -61,7 +64,7 @@ export class CheckoutComponent implements OnInit {
       state: ['Gujrat', Validators.required],
       zipCode: ['361320', Validators.required],
     })
-    if(this.formArray.length <1){
+    if (this.formArray.length < 1) {
       this.formArray.push(shippingAddres)
     }
 
@@ -72,10 +75,5 @@ export class CheckoutComponent implements OnInit {
     let a = confirm("you can place your order");
     (a) ? alert("your order has been successfully placed") : alert("your order not placed")
   }
-
-  // getControls() {
-  //   console.log("this.billingAdress.get('moreDetails')",)
-  //   return (this.billingAdress.get('moreDetails') as FormArray).controls;
-  // }
   
 }

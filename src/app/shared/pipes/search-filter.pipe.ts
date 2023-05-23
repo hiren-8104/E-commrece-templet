@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class SearchFilterPipe implements PipeTransform {
 
   transform(value: any[], args: any): any {
-    const regexp = new RegExp(args, 'g');
+    const regexp = new RegExp(args, 'i');
 
     if (args) {
       return value.filter(filter => regexp.test(filter.title));
