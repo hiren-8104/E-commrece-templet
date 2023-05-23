@@ -6,37 +6,41 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CommonService {
-  favouritesProducts=new BehaviorSubject<any[]>([])
-  breadcrumbs = new BehaviorSubject<any>([{label:"Home", route:"/"}]);
+  checkoutData = new BehaviorSubject<any>(null)
+  searchfilters = new BehaviorSubject<any>('')
+  currncypipe = new BehaviorSubject<any>("$")
+  favouritesProducts = new BehaviorSubject<any[]>([])
+  breadcrumbs = new BehaviorSubject<any>([{ label: "Home", route: "/" }]);
 
 
   recentProducts = new BehaviorSubject<any>([])
-  constructor(private http:HttpService) { }
+  constructor(private http: HttpService) { }
 
-  getCategory():Observable<any>{
+  getCategory(): Observable<any> {
     return this.http.getReq('https://fakestoreapi.com/products/categories')
   }
 
- getProduct(params?:any):Observable<any>{
-  return this.http.getReq('https://fakestoreapi.com/products?limit=' + params )
-}
+  getProduct(params?: any): Observable<any> {
+    return this.http.getReq('https://fakestoreapi.com/products?limit=' + params)
+  }
 
-getSpeicalCategory(params?:any):Observable<any>{
-  return this.http.getReq('https://fakestoreapi.com/products/category/'+params)
-}
+  getSpeicalCategory(params?: any): Observable<any> {
+    return this.http.getReq('https://fakestoreapi.com/products/category/' + params)
+  }
 
-getSelectedProduct(id: number):Observable<any>{
-  return this.http.getReq('https://fakestoreapi.com/products/'+id)
-    
-}
+  getSelectedProduct(id: number): Observable<any> {
+    return this.http.getReq('https://fakestoreapi.com/products/' + id)
 
-getCartItem(params:any):Observable<any>{
-  return this.http.getReq('https://fakestoreapi.com/carts/'+params)
-}
+  }
 
-getSort(params:any):Observable<any>{
-  console.log(params, "api request");
-  
-  return this.http.getReq('https://fakestoreapi.com/products',{params})
-}
+  getCartItem(params: any): Observable<any> {
+    return this.http.getReq('https://fakestoreapi.com/carts/' + params)
+  }
+
+  getSort(params: any): Observable<any> {
+    console.log(params, "api request");
+
+    return this.http.getReq('https://fakestoreapi.com/products', { params })
+  }
+
 }

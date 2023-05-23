@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 
 
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 import { TopbarComponent } from './layout/topbar/topbar.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
@@ -23,7 +23,6 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BreacrumbComponent } from './breacrumb/breacrumb.component';
 import { FavoriteComponent } from './favorite/favorite.component';
-import { RecentProductsComponent } from './recent-products/recent-products.component';
 
 
 @NgModule({
@@ -40,6 +39,7 @@ import { RecentProductsComponent } from './recent-products/recent-products.compo
     PageNotFoundComponent,
     BreacrumbComponent,
     FavoriteComponent,
+   
     
 
   ],
@@ -52,8 +52,10 @@ import { RecentProductsComponent } from './recent-products/recent-products.compo
     SharedModule,
     HomeModule,
     HttpClientModule,
+    
     NgxUsefulSwiperModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+   
 
 
 

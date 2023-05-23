@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonService } from '../shared/services/common.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shoping-cart',
@@ -18,13 +19,13 @@ export class ShopingCartComponent implements OnInit {
   }
 
 
-  constructor(private common: CommonService , private cdr: ChangeDetectorRef) { }
+  constructor(public common: CommonService , private cdr: ChangeDetectorRef , private router: Router) { }
 
   ngOnInit(): void {
     this.common.breadcrumbs.next([{label:"Home", route:"/"},{label:"Shop", route:"/Shop"},{label:"Shoping Cart", route:"cart"}])
 
 
-    this.common.getCartItem(3).subscribe({
+    this.common.getCartItem(5).subscribe({
       next: (resp) => {
         
         resp.products.forEach((product: any) => {
@@ -73,6 +74,9 @@ export class ShopingCartComponent implements OnInit {
       this.cartProduct.cartCheck.subTotal += sum
     });
   }
-
+  goToCheckOut(){
+    this.common.checkoutData.next(this.cartProduct)
+    this.router.navigate(['/checkout'])
+  }
 
 }

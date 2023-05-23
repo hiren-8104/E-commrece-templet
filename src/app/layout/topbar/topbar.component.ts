@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-topbar',
@@ -6,36 +9,52 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./topbar.component.scss']
 })
 export class TopbarComponent implements OnInit {
-topBarSection:any={
-  navItem:[
-    {
-      name:"About",
-      route:""
-    },
-    {
-      name:"Contact",
-      route:""
-    },
- 
-    {
-      name:"Help",
-      route:""
-    },
-    {
-      name:"FAQs",
-      route:""
-    },
-  ],
-  currency:["EUR","GBP","USD","CAD" , "INR"],
-  country:["US","RU","IND"],
-  coustomerCare:{
-    title:"Customer Service",
-    number:"+012 345 6789"
+  searchForm: FormGroup = new FormGroup({
+    searchValue: new FormControl(null)
+  })
+  topBarSection: any = {
+    navItem: [
+      {
+        name: "About",
+        route: ""
+      },
+      {
+        name: "Contact",
+        route: ""
+      },
+
+      {
+        name: "Help",
+        route: ""
+      },
+      {
+        name: "FAQs",
+        route: ""
+      },
+    ],
+    currency: ["EUR", "GBP", "USD", "CAD", "INR"],
+    country: ["US", "RU", "IND"],
+    coustomerCare: {
+      title: "Customer Service",
+      number: "+012 345 6789"
+    }
   }
-}
-  constructor() { }
+  constructor(public common: CommonService ,private route: Router) { }
 
   ngOnInit(): void {
   }
+  currencySelet(item: any) {
 
+    this.common.currncypipe.next(item)
+  }
+  search() {
+    if(this.searchForm.value.searchValue){
+    this.route.navigate(['/Shop'])
+    }
+    else{
+      this.route.navigate([''])
+    }
+    this.common.searchfilters.next(this.searchForm.value.searchValue)
+    
+  }
 }

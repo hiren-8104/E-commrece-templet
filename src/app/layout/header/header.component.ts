@@ -22,22 +22,6 @@ export class HeaderComponent implements OnInit {
         navName: "Shop",
         route: "/Shop"
       },
-
-      {
-        navName: "Page",
-        route: "/cart",
-        isDropDwon: true,
-        dropDwon: [
-          {
-            name: "Shoping Cart",
-            route: "/cart"
-          },
-          {
-            name: "Check Out",
-            route: "/checkout"
-          },
-        ]
-      },
       {
         navName: "Contact",
         route: "/contact"
@@ -49,9 +33,15 @@ export class HeaderComponent implements OnInit {
   constructor(private commonsercice: CommonService, public route: Router) { }
   cateToggle: boolean = false
   ngOnInit(): void {
-    let favItem: any = localStorage.getItem('favorite')
-    this.favItemCount = (JSON.parse(favItem)).length
+  
+  
     this.cartItemCount = localStorage.getItem("cartItem")
+    this.commonsercice.favouritesProducts.subscribe({
+      next:(res)=>{
+        let a = res.filter(item => item.isFavourite==true)
+        this.favItemCount = a.length
+      }
+    })
 
     this.commonsercice.getCategory().subscribe({
       next: (res) => { this.headerSection.category = res }

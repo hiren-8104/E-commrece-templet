@@ -6,12 +6,16 @@ import { OffersComponent } from './components/offers/offers.component';
 import { ProductComponent } from './components/product/product.component';
 import { RouterModule } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SearchFilterPipe } from './pipes/search-filter.pipe';
+
 
 
 @NgModule({
   declarations: [
     OffersComponent,
-    ProductComponent
+    ProductComponent,
+    SearchFilterPipe
+  
   ],
   imports: [
     CommonModule,

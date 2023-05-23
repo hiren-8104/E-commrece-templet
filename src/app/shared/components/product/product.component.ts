@@ -9,14 +9,16 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductComponent implements OnInit {
+  currncySymbol="INR"
+  rpp:number =8
   p = 1
   recents: any[] = []
   @Input() callingHome: boolean = false;
-  @Input() homeData: any = null
+  @Input() productDetailsData: any = null
   @Input() favData!: any
   @Input() allProductData: any = false
   productData: any[] = []
-  constructor(private commonService: CommonService, private route: Router, private cdr: ChangeDetectorRef) { }
+  constructor(public commonService: CommonService, private route: Router, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     let a = localStorage.getItem('recents')
@@ -28,17 +30,15 @@ export class ProductComponent implements OnInit {
 
   ngOnChanges(): void {
     if (this.allProductData) {
-
-
+      this.rpp =6
       this.productData = this.allProductData
     }
     else if (this.favData) {
-
       this.productData = this.favData
     }
-    else if (this.callingHome) {
-      let limit = 8
-      this.commonService.getProduct(limit).subscribe({
+    else if (this.callingHome || this.productDetailsData) {
+      this.rpp =8
+      this.commonService.getProduct(this.rpp).subscribe({
         next: (res) => {
           this.productData = res;
 

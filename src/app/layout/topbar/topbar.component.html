@@ -19,7 +19,7 @@
                     <div class="btn-group mx-2">
                         <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">USD</button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" *ngFor="let item of topBarSection.currency" type="button">{{item}}</button>
+                            <button class="dropdown-item" (click)="currencySelet(item)" *ngFor="let item of topBarSection.currency" type="button">{{item}}</button>
                             
                         </div>
                     </div>
@@ -51,9 +51,10 @@
                 </a>
             </div>
             <div class="col-lg-4 col-6 text-left">
-                <form action="">
+                <form [formGroup]="searchForm">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
+                        <input type="text" class="form-control" formControlName="searchValue" placeholder="Search for products" (keyup)="search()">
+                        
                         <div class="input-group-append">
                             <span class="input-group-text bg-transparent text-primary">
                                 <i class="fa fa-search"></i>

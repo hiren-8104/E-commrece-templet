@@ -7,23 +7,27 @@ import { CommonService } from '../shared/services/common.service';
   styleUrls: ['./favorite.component.scss']
 })
 export class FavoriteComponent implements OnInit {
-  
-  data:any=[]
-  constructor(private commonService: CommonService) { }
-  
-  ngOnInit(): void {
-    let fav:any = localStorage.getItem('favorite');
-if(fav){
-  this.data =JSON.parse(fav)
-}
 
-this.commonService.favouritesProducts.subscribe({
-  next:(res:any[])=>{
-    this.data = res.filter(item=>item.isFavourite==true);
-    localStorage.setItem('favorite', JSON.stringify(this.data));
+  data: any = []
+  constructor(private commonService: CommonService) { }
+
+  ngOnInit(): void {
+    let fav: any = localStorage.getItem('favorite');
+    if (fav) {
+      this.data = JSON.parse(fav)
+    }
+
+    
+    
   }
-})
-     
+
+  getFavouritesItem(){
+    this.commonService.favouritesProducts.subscribe({
+      next: (res: any[]) => {
+        this.data = res.filter(item => item.isFavourite == true);
+        localStorage.setItem('favorite', JSON.stringify(this.data));
+      }
+    })
   }
   
   

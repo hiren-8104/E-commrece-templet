@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../shared/services/common.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-checkout',
@@ -9,6 +9,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class CheckoutComponent implements OnInit {
   isChecked: boolean = false
+  checkOutData!: any
+
 
   billingAdress: FormGroup = this.fb.group({
     firstName: ["hiren", Validators.required],
@@ -21,19 +23,34 @@ export class CheckoutComponent implements OnInit {
     city: ['Dwarka', Validators.required],
     state: ['Gujrat', Validators.required],
     zipCode: ['361320', Validators.required],
-    moreDetails: this.fb.group({})
+    moreDetails: this.fb.array([], Validators.required)
 
   })
+  formArray!: FormArray;
+  
   constructor(private common: CommonService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.common.breadcrumbs.next([{ label: "Home", route: "/" }, { label: "Shop", route: "/Shop" }, { label: "CheckOut", route: "checkout" }])
+
+
+    this.formArray = this.billingAdress.get('moreDetails') as FormArray;
+
+
+
+    this.common.checkoutData.subscribe({
+      next: (res) => {
+        this.checkOutData = res
+      },
+      error: (err) => { console.log(err) }
+    })
   }
 
   addMoreDetails() {
     this.isChecked = !this.isChecked
-    let shippingAddres = this.fb.group({
-      firstName: ["hiren", Validators.required],
+
+    let shippingAddres :FormGroup =this.fb.group({
+      firstName: ["Hiren", Validators.required],
       lastName: ["dabhi", Validators.required],
       email: ["hirendabhi8104@gamil.com", [Validators.required, Validators.email]],
       mobileNo: ["7600924242", Validators.required],
@@ -44,9 +61,21 @@ export class CheckoutComponent implements OnInit {
       state: ['Gujrat', Validators.required],
       zipCode: ['361320', Validators.required],
     })
+    if(this.formArray.length <1){
+      this.formArray.push(shippingAddres)
+    }
 
-  
+
 
   }
+  placeOrder() {
+    let a = confirm("you can place your order");
+    (a) ? alert("your order has been successfully placed") : alert("your order not placed")
+  }
 
+  // getControls() {
+  //   console.log("this.billingAdress.get('moreDetails')",)
+  //   return (this.billingAdress.get('moreDetails') as FormArray).controls;
+  // }
+  
 }
