@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hero.component.scss']
 })
 export class HeroComponent implements OnInit {
+  caroselItem=0
   heroSectionData: any = {
     carousel: [
       {

@@ -11,7 +11,7 @@
                     </ng-container>
                     <div class="product-action">
                         <a class="btn btn-outline-dark btn-square"><i class="fa fa-shopping-cart"></i></a>
-                        <a (click)="fav(index)" class="btn btn-outline-dark btn-square">
+                        <a (click)="makeFavourite(item)" class="btn btn-outline-dark btn-square">
                             <i class="far fa-heart " [ngClass]="{'fa text-danger':item.isFavourite}"></i>
                         </a>
                         <a class="btn btn-outline-dark btn-square"><i class="fa fa-sync-alt"></i></a>

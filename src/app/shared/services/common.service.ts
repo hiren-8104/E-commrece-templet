@@ -9,7 +9,7 @@ export class CommonService {
   checkoutData = new BehaviorSubject<any>(null)
   searchfilters = new BehaviorSubject<any>('')
   currncypipe = new BehaviorSubject<any>("$")
-  favouritesProducts = new BehaviorSubject<any[]>([])
+  favouritesProductsService = new BehaviorSubject<any>('')
   breadcrumbs = new BehaviorSubject<any>([{ label: "Home", route: "/" }]);
 
 

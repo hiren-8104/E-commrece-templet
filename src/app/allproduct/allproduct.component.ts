@@ -9,7 +9,7 @@ import { CommonService } from '../shared/services/common.service';
 
 })
 export class AllproductComponent implements OnInit {
-  recents: any[] = []
+  
   p = 1
   sortToggle: boolean = false
   productList: any = []
@@ -41,15 +41,6 @@ export class AllproductComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-
-
-    let a = localStorage.getItem('recents')
-    if (a) {
-      this.recents = JSON.parse(a)
-
-    }
-
     this.commonService.breadcrumbs.next([{ label: "Home", route: "/" }, { label: "Shop", route: "/Shop" }])
     this.activatedRoute.params.subscribe((params: any) => {
       if (params['category']) {
@@ -85,13 +76,7 @@ export class AllproductComponent implements OnInit {
     })
   }
 
-  seletedPro(item: any) {
-
-    // console.log(this.recents , "this.recents")
-    this.recents.unshift(item)
-    localStorage.setItem('recents', JSON.stringify(this.recents))
-    this.route.navigate(['/details'], { queryParams: { 'ProductId': item.id } })
-  }
+  
 
 
   sort() {
@@ -116,27 +101,6 @@ export class AllproductComponent implements OnInit {
   }
 
 
-  fav(i: any) {
-    // var localStore: any = localStorage.getItem("favorite")
-    // if (localStore) {
-    //   this.favPro = JSON.parse(localStore)
-    // }
-    // this.favPro.push(item);
-    // if (JSON.parse(localStore)) {
-    //   JSON.parse(localStore).map((res: any, index: any) => {
-    //     if (res.id === item.id) {
-    //       console.log("favorite", index)
-    //       this.favPro.splice(this.favPro[index], 1);
-    //     }
-    //   })
-    // }
-    // localStorage.setItem('favorite', JSON.stringify(this.favPro))
 
-    this.productList[i]['isFavourite'] = true
-    this.commonService.favouritesProducts.next(this.productList)
-
-
-
-  }
 
 }

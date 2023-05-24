@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../shared/services/common.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import * as pdfMake from "pdfmake/build/pdfmake";
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+// import * as pdfMake from "pdfmake/build/pdfmake";
+// import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+// (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 
 @Component({

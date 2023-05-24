@@ -30,18 +30,21 @@ export class HeaderComponent implements OnInit {
     ]
 
   }
-  constructor(private commonsercice: CommonService, public route: Router) { }
+  constructor(public commonsercice: CommonService, public route: Router) { }
   cateToggle: boolean = false
   ngOnInit(): void {
-  
-  
-    this.cartItemCount = localStorage.getItem("cartItem")
-    this.commonsercice.favouritesProducts.subscribe({
-      next:(res)=>{
-        let a = res.filter(item => item.isFavourite==true)
-        this.favItemCount = a.length
+    let favItem= localStorage.getItem("favorite")
+        if(favItem){
+          this.favItemCount = JSON.parse(favItem).length
+        }
+    this.commonsercice.favouritesProductsService.subscribe({
+      next: (res) => {
+        this.favItemCount =res
       }
     })
+
+    this.cartItemCount = localStorage.getItem("cartItem")
+
 
     this.commonsercice.getCategory().subscribe({
       next: (res) => { this.headerSection.category = res }
@@ -49,7 +52,7 @@ export class HeaderComponent implements OnInit {
 
   }
   manuClick(navItem: any) {
-    // console.log("this.headerSection.navItem.navName",this.headerSection.navItem[2].navName)
+
     if (this.headerSection.navItem[2].navName == 'Page') {
       this.headerSection.navItem[2].route = (this.route.url.split('?')[0] == '/checkout') ? '/checkout' : '/cart'
     }
@@ -66,8 +69,6 @@ export class HeaderComponent implements OnInit {
 
   }
   selectedCate(item: any) {
-    // console.log(item, ":_____________________")
-    // this.route.navigate(['/Shop'], { queryParams: { 'selCate': item } })
     this.route.navigate(['Shop', item])
     this.dropDwonIsActive = false
   }
