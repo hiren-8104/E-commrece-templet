@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CommonService {
+  allHidden=new BehaviorSubject<boolean>(true);
   checkoutData = new BehaviorSubject<any>(null)
   searchfilters = new BehaviorSubject<any>('')
   currncypipe = new BehaviorSubject<any>("$")

@@ -14,6 +14,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class CheckoutComponent implements OnInit {
   isChecked: boolean = false
   checkOutData!: any
+  formArray!: FormArray;
 
   billingAdress: FormGroup = this.fb.group({
     firstName: ["hiren", Validators.required],
@@ -29,18 +30,19 @@ export class CheckoutComponent implements OnInit {
     moreDetails: this.fb.array([], Validators.required)
 
   })
-  formArray!: FormArray;
 
   constructor(private common: CommonService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.common.breadcrumbs.next([{ label: "Home", route: "/" }, { label: "Shop", route: "/Shop" }, { label: "CheckOut", route: "checkout" }])
-
-
+    // breadcrumbs
+    this.common.breadcrumbs.next([
+      { label: "Home", route: "/" },
+      { label: "Shop", route: "/Shop" },
+      { label: "CheckOut", route: "checkout" }
+    ])
     this.formArray = this.billingAdress.get('moreDetails') as FormArray;
-
-
-
+ 
+    // cart product data
     this.common.checkoutData.subscribe({
       next: (res) => {
         this.checkOutData = res
@@ -49,6 +51,7 @@ export class CheckoutComponent implements OnInit {
     })
   }
 
+  // add other shipping address
   addMoreDetails() {
     this.isChecked = !this.isChecked
 
@@ -67,13 +70,12 @@ export class CheckoutComponent implements OnInit {
     if (this.formArray.length < 1) {
       this.formArray.push(shippingAddres)
     }
-
-
-
   }
+
+  // place order
   placeOrder() {
     let a = confirm("you can place your order");
     (a) ? alert("your order has been successfully placed") : alert("your order not placed")
   }
-  
+
 }

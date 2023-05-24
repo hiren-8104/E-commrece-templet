@@ -8,11 +8,17 @@ import { ShopingCartComponent } from './shoping-cart/shoping-cart.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { FavoriteComponent } from './favorite/favorite.component';
+import { LogInComponent } from './auth/log-in/log-in.component';
 
 const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
+  },
+  {
+    path: 'login',
+    pathMatch:'full',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: 'contact',
@@ -36,16 +42,17 @@ const routes: Routes = [
   },
   {
     path: 'checkout',
-    component:CheckoutComponent
+    component: CheckoutComponent
   },
-{
-path:"favorites",
-component: FavoriteComponent
-},
-{
-  path:"notfound",
-  component:PageNotFoundComponent
-  }
+  {
+    path: "favorites",
+    component: FavoriteComponent
+  },
+  {
+    path: "notfound",
+    component: PageNotFoundComponent
+  },
+  
 
 ];
 

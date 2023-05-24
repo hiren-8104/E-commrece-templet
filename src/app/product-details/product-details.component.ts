@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent implements OnInit {
+  quntityUpDwon: number = 1
   tabActive: any = "Information"
   config: any = {
     autoplay: true,
@@ -54,13 +55,18 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.commonService.breadcrumbs.next([{ label: "Home", route: "/" }, { label: "Shop", route: "/Shop" }, { label: "details", route: "" }])
+    // for breadcrumbs
+    this.commonService.breadcrumbs.next([
+      { label: "Home", route: "/" },
+      { label: "Shop", route: "/Shop" },
+      { label: "details", route: "" }
+    ])
 
+
+    // for perticular product get
     this.activatedRoute.queryParams.subscribe((params: any) => {
-      
       this.commonService.getSelectedProduct(params.ProductId).subscribe({
         next: (res) => {
-          
           this.selectedProduct = res
         },
         error: (err) => { console.log(err) }
@@ -69,8 +75,7 @@ export class ProductDetailsComponent implements OnInit {
     })
   }
 
-
-
+// review Form 
   formSubmit() {
     if (this.reviewForm.valid) {
       this.product.userReview.push(this.reviewForm.value)
@@ -78,14 +83,11 @@ export class ProductDetailsComponent implements OnInit {
     else {
       alert("form is not valid")
     }
-
   }
 
-
-  tabChange(name:any){
-    
+// for a tab change 
+  tabChange(name: any) {
     this.tabActive = name
-
   }
 
 

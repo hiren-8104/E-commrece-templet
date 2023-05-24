@@ -59,7 +59,10 @@ footerData:any={
   ngOnInit(): void {
   }
 
-  signUp(){
+
+
+  // for site subscriptions
+  siteSubscribe(){
     if(this.userSubscribeForm.valid){
       confirm("Subscribe ")
     }

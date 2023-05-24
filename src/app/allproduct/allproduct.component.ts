@@ -41,10 +41,11 @@ export class AllproductComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // breadcrumbs
     this.commonService.breadcrumbs.next([{ label: "Home", route: "/" }, { label: "Shop", route: "/Shop" }])
+    // get category form params
     this.activatedRoute.params.subscribe((params: any) => {
       if (params['category']) {
-        
         this.getSelectedCategoryProduct(params['category'])
       }
       else {
@@ -54,36 +55,32 @@ export class AllproductComponent implements OnInit {
     this.cdr.detectChanges()
   }
 
-
+// get all product 
   getAllProduct() {
     this.commonService.getProduct().subscribe({
       next: (res) => {
         this.productList = res
-
       },
       error: (error) => { console.log(error) }
     })
   }
 
+// get category wise product
   getSelectedCategoryProduct(category: string) {
     this.commonService.getSpeicalCategory(category).subscribe({
       next: (res) => {
-
         this.productList = res
-
       },
       error: (err) => { console.log(err) }
     })
   }
 
-  
-
-
+  // sort btn toggle
   sort() {
     this.sortToggle = !this.sortToggle
-
   }
 
+  // sorting product
   sortProduct(item: any) {
     if (item == "Ascending") {
       let sort = { sort: "asc" }

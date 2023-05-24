@@ -14,18 +14,22 @@ export class ContactComponent implements OnInit {
     subject: ["", [Validators.required]],
     massage: ["", [Validators.required]]
   });
-  constructor(private fb: FormBuilder ,private common:CommonService) { }
+  constructor(private fb: FormBuilder, private common: CommonService) { }
 
   ngOnInit(): void {
-this.common.breadcrumbs.next([{label:"Home", route:"/"},{label:"Contact", route:"/Contact"}])
-
-
+    // breadcrumbs
+    this.common.breadcrumbs.next([
+      { label: "Home", route: "/" },
+      { label: "Contact", route: "/Contact" }
+    ])
   }
-  contactFormSubmit(){
-    if(this.contactForm.valid){
+
+  // contact form data
+  contactFormSubmit() {
+    if (this.contactForm.valid) {
       alert("your form has been submitted")
     }
-    else{
+    else {
       alert("Error! Please try again")
 
     }

@@ -1,20 +1,9 @@
-    <!-- Topbar Start -->
-    <app-topbar></app-topbar>
-    <!-- Topbar End -->
-    <app-header></app-header>
-  
-    <router-outlet></router-outlet>
-    
-    <a (click)="backToTop()" #btt class="btn btn-primary back-to-top d-none" ><i class="fa fa-angle-double-up"></i></a>
-    <app-footer></app-footer>
+<app-topbar *ngIf="commonService.allHidden |async"></app-topbar>
 
-  
+<app-header *ngIf="commonService.allHidden |async"></app-header>
 
+<router-outlet></router-outlet>
 
-   
-
-
-    <!-- Back to Top -->
-    
-
-
+<a *ngIf="commonService.allHidden |async" (click)="backToTop()" #btt class="btn btn-primary back-to-top d-none"><i
+        class="fa fa-angle-double-up"></i></a>
+<app-footer *ngIf="commonService.allHidden |async"></app-footer>

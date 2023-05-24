@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
 
 @Component({
   selector: 'app-topbar',
@@ -40,20 +41,37 @@ export class TopbarComponent implements OnInit {
     }
   }
   selectedCurrncy: any = "USD";
-  constructor(public common: CommonService, private route: Router) { }
+  constructor(public common: CommonService, private route: Router, private storage: StorageService) { }
 
   ngOnInit(): void {
+    this.currencySelet()
+    var storeCurrncy: any = this.storage.getStorageItem("defultCurrncy")
+    if (storeCurrncy) {
+      this.selectedCurrncy = JSON.parse(storeCurrncy)
+    }
   }
-  currencySelet(item: any) {
-    this.selectedCurrncy = item
-    this.common.currncypipe.next(item)
+
+  // selected the currency
+  currencySelet(item?: any) {
+    if (item) {
+      this.selectedCurrncy = item
+      this.storage.setStorageItem("defultCurrncy", item)
+    }
+    this.common.currncypipe.next(this.selectedCurrncy)
   }
+
+  // for the search all product
   search() {
     if (this.searchForm.value.searchValue) {
       this.route.navigate(['/Shop'])
     }
-
     this.common.searchfilters.next(this.searchForm.value.searchValue)
+  }
 
+// logout
+  logout(){
+    this.common.allHidden.next(false)
+    localStorage.clear()
+    this.route.navigate(['/login'])
   }
 }
