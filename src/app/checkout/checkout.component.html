@@ -1,0 +1,273 @@
+<!-- Breadcrumb Start -->
+<app-breacrumb></app-breacrumb>
+<!-- Breadcrumb End -->
+
+
+<!-- Checkout Start -->
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-lg-8">
+            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Billing
+                    Address </span></h5>
+            <div class="bg-light p-30 mb-5">
+                <form [formGroup]="billingAdress">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>First Name</label>
+                            <input class="form-control" type="text" placeholder="John" formControlName="firstName">
+                            <span class="help-block text-danger"
+                                *ngIf="billingAdress.controls['firstName'].hasError('required') && billingAdress.controls['firstName'].touched ">
+                                Please enter your name
+                            </span>
+
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Last Name</label>
+                            <input class="form-control" type="text" placeholder="Doe" formControlName="lastName">
+                            <span class="help-block text-danger"
+                                *ngIf="billingAdress.controls['lastName'].hasError('required') && billingAdress.controls['lastName'].touched ">
+                                Please enter your lastName
+                            </span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>E-mail</label>
+                            <input class="form-control" type="text" placeholder="example@email.com"
+                                formControlName="email">
+                            <span class="help-block text-danger"
+                                *ngIf="billingAdress.controls['email'].hasError('required') && billingAdress.controls['email'].touched ">
+                                Please enter your email
+                            </span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Mobile No</label>
+                            <input class="form-control" type="text" placeholder="+123 456 789"
+                                formControlName="mobileNo">
+                            <span class="help-block text-danger"
+                                *ngIf="billingAdress.controls['mobileNo'].hasError('required') && billingAdress.controls['mobileNo'].touched ">
+                                Please enter your mobileNo
+                            </span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Address Line 1</label>
+                            <input class="form-control" type="text" placeholder="123 Street" formControlName="address">
+                            <span class="help-block text-danger"
+                                *ngIf="billingAdress.controls['address'].hasError('required') && billingAdress.controls['address'].touched ">
+                                Please enter your address
+                            </span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Address Line 2</label>
+                            <input class="form-control" type="text" placeholder="123 Street"
+                                formControlName="secondAddress">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Country</label>
+                            <input class="form-control" type="text" placeholder="123 Street" formControlName="country">
+                            <span class="help-block text-danger"
+                                *ngIf="billingAdress.controls['country'].hasError('required') && billingAdress.controls['country'].touched ">
+                                Please enter your country
+                            </span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>City</label>
+                            <input class="form-control" type="text" placeholder="New York" formControlName="city">
+                            <span class="help-block text-danger"
+                                *ngIf="billingAdress.controls['city'].hasError('required') && billingAdress.controls['city'].touched ">
+                                Please enter your city
+                            </span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>State</label>
+                            <input class="form-control" type="text" placeholder="New York" formControlName="state">
+                            <span class="help-block text-danger"
+                                *ngIf="billingAdress.controls['state'].hasError('required') && billingAdress.controls['state'].touched ">
+                                Please enter your state
+                            </span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>ZIP Code</label>
+                            <input class="form-control" type="text" placeholder="123" formControlName="zipCode">
+                            <span class="help-block text-danger"
+                                *ngIf="billingAdress.controls['zipCode'].hasError('required') && billingAdress.controls['zipCode'].touched ">
+                                Please enter your zipCode
+                            </span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="newaccount">
+                                <label class="custom-control-label" for="newaccount">Create an account</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" [checked]="isChecked"
+                                    (change)="addMoreDetails()" id="shipto">
+                                <label class="custom-control-label" for="shipto">Ship to different address</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        
+
+            <div *ngIf="isChecked" class="mb-5" id="shipping-address ">
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Shipping
+                        Address</span></h5>
+                <div class="bg-light p-30">
+                    <form [formGroup]="billingAdress">
+                        <div class="row" formArrayName="moreDetails"
+                            *ngFor="let item of this.billingAdress.get('moreDetails')?.value; let i = index;">
+
+                            <ng-container [formGroupName]="i">
+                                <div class="col-md-6 form-group">
+                                    <label>First Name </label>
+                                    <input class="form-control" type="text" placeholder="John"
+                                        formControlName="firstName" required>
+                                        <span class="help-block text-danger"
+                                        *ngIf="billingAdress.controls['firstName'].hasError('required') && billingAdress.controls['firstName'].touched ">
+                                        Please enter your name
+                                    </span>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Last Name</label>
+                                    <input class="form-control" type="text" placeholder="Doe"
+                                        formControlName="lastName">
+                                    <span class="help-block text-danger"
+                                        *ngIf="billingAdress.controls['lastName'].hasError('required') && billingAdress.controls['lastName'].touched ">
+                                        Please enter your lastName
+                                    </span>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>E-mail</label>
+                                    <input class="form-control" type="text" placeholder="example@email.com"
+                                        formControlName="email">
+                                    <span class="help-block text-danger"
+                                        *ngIf="billingAdress.controls['email'].hasError('required') && billingAdress.controls['email'].touched ">
+                                        Please enter your email
+                                    </span>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Mobile No</label>
+                                    <input class="form-control" type="text" placeholder="+123 456 789"
+                                        formControlName="mobileNo">
+                                    <span class="help-block text-danger"
+                                        *ngIf="billingAdress.controls['mobileNo'].hasError('required') && billingAdress.controls['mobileNo'].touched ">
+                                        Please enter your mobileNo
+                                    </span>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Address Line 1</label>
+                                    <input class="form-control" type="text" placeholder="123 Street"
+                                        formControlName="address">
+                                    <span class="help-block text-danger"
+                                        *ngIf="billingAdress.controls['address'].hasError('required') && billingAdress.controls['address'].touched ">
+                                        Please enter your address
+                                    </span>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Address Line 2</label>
+                                    <input class="form-control" type="text" placeholder="123 Street"
+                                        formControlName="secondAddress">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Country</label>
+                                    <input class="form-control" type="text" placeholder="123 Street"
+                                        formControlName="country">
+                                    <span class="help-block text-danger"
+                                        *ngIf="billingAdress.controls['country'].hasError('required') && billingAdress.controls['country'].touched ">
+                                        Please enter your country
+                                    </span>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>City</label>
+                                    <input class="form-control" type="text" placeholder="New York"
+                                        formControlName="city">
+                                    <span class="help-block text-danger"
+                                        *ngIf="billingAdress.controls['city'].hasError('required') && billingAdress.controls['city'].touched ">
+                                        Please enter your city
+                                    </span>
+
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>State</label>
+                                    <input class="form-control" type="text" placeholder="New York"
+                                        formControlName="state">
+                                    <span class="help-block text-danger"
+                                        *ngIf="billingAdress.controls['state'].hasError('required') && billingAdress.controls['state'].touched ">
+                                        Please enter your state
+                                    </span>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>ZIP Code</label>
+                                    <input class="form-control" type="text" placeholder="123" formControlName="zipCode">
+                                    <span class="help-block text-danger"
+                                        *ngIf="billingAdress.controls['zipCode'].hasError('required') && billingAdress.controls['zipCode'].touched ">
+                                        Please enter your zipCode
+                                    </span>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Order
+                    Total</span></h5>
+            <div class="bg-light p-30 mb-5">
+                <div class="border-bottom">
+                    <h6 class="mb-3">Products</h6>
+                    <div class="d-flex justify-content-between" *ngFor="let item of checkOutData?.cartItem">
+                        <p>{{item.title}}</p>
+                        <p>{{item.price* item.quantity}}</p>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <h6>subtotal</h6>
+                        <h6>{{checkOutData?.cartCheck?.subTotal}}</h6>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="font-weight-medium">Shipping</h6>
+                        <h6 class="font-weight-medium">{{checkOutData?.cartCheck?.shipping}}</h6>
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <div class="d-flex justify-content-between mt-2">
+                        <h5>Total</h5>
+                        <h5>{{checkOutData?.cartCheck?.subTotal + checkOutData?.cartCheck?.shipping}}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-5">
+                <h5 class="section-title position-relative text-uppercase mb-3"><span
+                        class="bg-secondary pr-3">Payment</span></h5>
+                <div class="bg-light p-30">
+                    <div class="form-group">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" name="payment" id="paypal">
+                            <label class="custom-control-label" for="paypal">Paypal</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" name="payment" id="directcheck">
+                            <label class="custom-control-label" for="directcheck">Direct Check</label>
+                        </div>
+                    </div>
+                    <div class="form-group mb-4">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" name="payment" id="banktransfer">
+                            <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
+                        </div>
+                    </div>
+                    <button class="btn btn-block btn-primary font-weight-bold py-3" (click)="placeOrder()">Place
+                        Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Checkout End -->

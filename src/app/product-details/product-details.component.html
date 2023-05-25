@@ -1,0 +1,189 @@
+<!-- Breadcrumb Start -->
+<app-breacrumb></app-breacrumb>
+<!-- Breadcrumb End -->
+
+
+<!-- Shop Detail Start -->
+<div class="container-fluid pb-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-5 mb-30">
+            <div id="product-carousel" class="carousel slide">
+                <div class="carousel-item active">
+                    <img class="w-100 h-100 " src="{{selectedProduct.image}}" alt="Image">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-7 h-auto mb-30">
+            <div class="h-100 bg-light p-30">
+                <h3>{{selectedProduct.title}}</h3>
+                <div class="d-flex mb-3">
+                    <div class="text-primary mr-2">
+                        <small class="fas fa-star"></small>
+                        <small class="fas fa-star"></small>
+                        <small class="fas fa-star"></small>
+                        <small class="fas fa-star-half-alt"></small>
+                        <small class="far fa-star"></small>
+                    </div>
+                    <small class="pt-1">({{selectedProduct.rating?.count}} Reviews)</small>
+                </div>
+                <h3 class="font-weight-semi-bold mb-4">{{selectedProduct.price | currency}}</h3>
+                <p class="mb-4">{{selectedProduct.description}}</p>
+                <div class="d-flex mb-3">
+                    <strong class="text-dark mr-3">Sizes:</strong>
+                    <form>
+                        <div *ngFor="let item of product.productSize"
+                            class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="size-1" name="size{{item}}">
+                            <label class="custom-control-label" for="size-1">{{item |uppercase}}</label>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="d-flex mb-4">
+                    <strong class="text-dark mr-3">Colors:</strong>
+                    <form>
+                        <div *ngFor="let item of product.productColor"
+                            class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="color-1" name="color">
+                            <label class="custom-control-label" for="color-1">{{item}}</label>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="d-flex align-items-center mb-4 pt-2">
+                    <div class="input-group quantity mr-3" style="width: 130px;">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary btn-minus">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <input type="text" class="form-control bg-secondary border-0 text-center" value="1">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary btn-plus">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary px-3" routerLink="/cart"><i class="fa fa-shopping-cart mr-1"></i> Add To
+                        Cart</button>
+                </div>
+                <div class="d-flex pt-2">
+                    <strong class="text-dark mr-2">Share on:</strong>
+                    <div class="d-inline-flex">
+                        <a class="text-dark px-2" href="">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="text-dark px-2" href="">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a class="text-dark px-2" href="">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a class="text-dark px-2" href="">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="bg-light p-30">
+                <div class="nav nav-tabs mb-4">
+                    <a *ngFor="let item of  product.tabs" (click)="tabChange(item.name)"
+                        class="nav-item nav-link text-dark"
+                        [ngClass]="{'active' :tabActive == item.name}">{{item.name}}</a>
+
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade  " [ngClass]="{'active show' :tabActive === 'Description'}"
+                        id="tab-pane-1">
+                        <h4 class="mb-3">Product Description</h4>
+                        <p>{{selectedProduct.description}}</p>
+                    </div>
+                    <div class="tab-pane fade  " [ngClass]="{'active show' :tabActive === 'Information'}"
+                        id="tab-pane-2">
+                        <h4 class="mb-3">Additional Information</h4>
+                        <p>{{selectedProduct.description}}</p>
+
+                    </div>
+                    <div class="tab-pane fade" [ngClass]="{'active show' :tabActive === 'Reviews'}" id="tab-pane-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="mb-4">{{selectedProduct.rating?.count}} review for
+                                    "{{selectedProduct.title}}"</h4>
+                                <div class="media mb-4" *ngFor="let item of product.userReview">
+                                    <img src="assets/img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
+                                        style="width: 45px;">
+                                    <div class="media-body">
+                                        <h6>{{item.userName}}<small> - <i>{{item.date|date:'dd/MMM/yyyy'}}</i></small>
+                                        </h6>
+                                        <div class="text-primary mb-2">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                        <p>{{item.massage}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="mb-4">Leave a review</h4>
+                                <small>Your email address will not be published. Required fields are marked *</small>
+                                <div class="d-flex my-3">
+                                    <p class="mb-0 mr-2">Your Rating * :</p>
+                                    <div class="text-primary">
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                                <form [formGroup]="reviewForm" (ngSubmit)="formSubmit()">
+                                    <div class="form-group">
+                                        <label for="message">Your Review *</label>
+                                        <textarea id="message" cols="30" rows="5" class="form-control"
+                                            formControlName="massage"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Your Name *</label>
+                                        <input type="text" class="form-control" id="name" formControlName="userName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Your Email *</label>
+                                        <input type="email" class="form-control" id="email" formControlName="userEmail">
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Shop Detail End -->
+    <div class="container-fluid pt-5 pb-3">
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
+            <span class="bg-secondary pr-3">YOU MAY ALSO LIKE</span>
+        </h2>
+        <div class="col">
+            <swiper [config]="config">
+                <div class="swiper-wrapper">
+                    <div class="row swiper-slide  ">
+                        <app-product [productDetailsData]="'flex-nowrap'"></app-product>
+                    </div>
+                </div>
+            </swiper>
+        </div>
+
+
+    </div>
+</div>
