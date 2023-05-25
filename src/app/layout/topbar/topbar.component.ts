@@ -34,25 +34,29 @@ export class TopbarComponent implements OnInit {
       },
     ],
     currency: ["EUR", "GBP", "USD", "CAD", "INR"],
-    country: ["US", "RU", "IND"],
+    languages: ["en", "hi", "gu", "fr", "ru"],
     coustomerCare: {
       title: "Customer Service",
       number: "+012 345 6789"
     }
   }
+  selectedLanguage : any= "en"
   selectedCurrncy: any = "USD";
   constructor(public common: CommonService, private route: Router, private storage: StorageService) { }
 
   ngOnInit(): void {
-    this.currencySelet()
+ 
+    this.selectedLanguage= this.readCookie('googtrans').split('/')[this.readCookie('googtrans').split('/').length-1]
     var storeCurrncy: any = this.storage.getStorageItem("defultCurrncy")
     if (storeCurrncy) {
       this.selectedCurrncy = JSON.parse(storeCurrncy)
+      this.common.currncypipe.next(this.selectedCurrncy)
     }
   }
 
   // selected the currency
   currencySelet(item?: any) {
+
     if (item) {
       this.selectedCurrncy = item
       this.storage.setStorageItem("defultCurrncy", item)
@@ -68,10 +72,30 @@ export class TopbarComponent implements OnInit {
     this.common.searchfilters.next(this.searchForm.value.searchValue)
   }
 
-// logout
-  logout(){
+  // change the language
+  changeLanguage(item: any) {
+    this.selectedLanguage = item
+    document.cookie = 'googtrans=' + `/en/${item}`;
+    location.reload()
+  }
+
+  // logout
+  logout() {
     this.common.allHidden.next(false)
-    localStorage.clear()
+    localStorage.removeItem("token")
     this.route.navigate(['/login'])
+  }
+
+// get cookies from the browser
+  readCookie(name: any) {
+    var c = document.cookie.split('; ');
+    var cookies: any = {}, i, C;
+
+    for (i = c.length - 1; i >= 0; i--) {
+      C = c[i].split('=');
+      cookies[C[0]] = C[1];
+    }
+
+    return cookies[name];
   }
 }

@@ -7,6 +7,7 @@ import { ProductComponent } from './components/product/product.component';
 import { RouterModule } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchFilterPipe } from './pipes/search-filter.pipe';
+import { RatingComponent } from './components/rating/rating.component';
 
 
 
@@ -14,7 +15,8 @@ import { SearchFilterPipe } from './pipes/search-filter.pipe';
   declarations: [
     OffersComponent,
     ProductComponent,
-    SearchFilterPipe
+    SearchFilterPipe,
+    RatingComponent
   
   ],
   imports: [

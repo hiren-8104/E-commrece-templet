@@ -25,12 +25,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     // user is logged in or not
     if (!this.storage.getStorageItem("token")) {
+      this.commonService.allHidden.next(false )
       this.route.navigate(['/login'])
     }
-    
-    
   }
-
+  
   backToTop() {
     window.scrollTo(0, 0);
   }

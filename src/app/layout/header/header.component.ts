@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit {
     let favItem: any = this.storage.getStorageItem("favorite")
     if (favItem) {
       this.favItemCount = JSON.parse(favItem).length
-      console.log(this.favItemCount)
+      
 
     }
     // subscribe a list of manu

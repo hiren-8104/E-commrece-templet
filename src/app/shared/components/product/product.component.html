@@ -12,7 +12,7 @@
                     <div class="product-action">
                         <a routerLink="/cart" class="btn btn-outline-dark btn-square"><i class="fa fa-shopping-cart"></i></a>
                         <a (click)="makeFavourite(item)" class="btn btn-outline-dark btn-square">
-                            <i class="far fa-heart " [ngClass]="{'fa text-danger':item.isFavourite}"></i>
+                            <i class="far fa-heart " [ngClass]="{'fa text-danger':favData}"></i>
                         </a>
                         <a class="btn btn-outline-dark btn-square"><i class="fa fa-sync-alt"></i></a>
                         <a class="btn btn-outline-dark btn-square"><i class="fa fa-search"></i></a>
@@ -30,7 +30,7 @@
                         <small class="fa fa-star text-primary mr-1"></small>
                         <small class="fa fa-star text-primary mr-1"></small>
                         <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
+                        <small class="fa fa-star-half-alt text-primary mr-1"></small>
                         <small>({{item.rating.rate}})</small>
                     </div>
                 </div>

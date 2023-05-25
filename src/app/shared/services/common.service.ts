@@ -12,10 +12,10 @@ export class CommonService {
   currncypipe = new BehaviorSubject<any>("$")
   favouritesProductsService = new BehaviorSubject<any>('')
   breadcrumbs = new BehaviorSubject<any>([{ label: "Home", route: "/" }]);
-
-
   recentProducts = new BehaviorSubject<any>([])
+  
   constructor(private http: HttpService) { }
+
 
   getCategory(): Observable<any> {
     return this.http.getReq('https://fakestoreapi.com/products/categories')
@@ -39,8 +39,6 @@ export class CommonService {
   }
 
   getSort(params: any): Observable<any> {
-    console.log(params, "api request");
-
     return this.http.getReq('https://fakestoreapi.com/products', { params })
   }
 

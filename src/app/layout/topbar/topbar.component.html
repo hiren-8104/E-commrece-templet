@@ -10,23 +10,23 @@
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
+                        <button translate="no" type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">Log-in</button>
-                            <button (click)="logout()" class="dropdown-item" type="button">Log-out</button>
+                            <button translate="no"  class="dropdown-item" type="button">Log-in</button>
+                            <button translate="no" (click)="logout()" class="dropdown-item" type="button">Log-out</button>
                         </div>
                     </div>
                     <div class="btn-group mx-2">
-                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">{{selectedCurrncy}}</button>
+                        <button translate="no" type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">{{selectedCurrncy}}</button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" (click)="currencySelet(item)" *ngFor="let item of topBarSection.currency" type="button">{{item}}</button>
+                            <button class="dropdown-item" translate="no" (click)="currencySelet(item)" *ngFor="let item of topBarSection.currency" type="button">{{item}}</button>
                             
                         </div>
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">EN</button>
+                        <button translate="no" type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">{{selectedLanguage|uppercase}}</button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button" *ngFor="let item of topBarSection.country">{{item}}</button>
+                            <button class="dropdown-item " translate="no" (click)="changeLanguage(item)" type="button" *ngFor="let item of topBarSection.languages">{{item|uppercase}}</button>
                         
                         </div>
                     </div>
@@ -46,8 +46,8 @@
         <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
             <div class="col-lg-4">
                 <a routerLink="" class="text-decoration-none">
-                    <span class="h1 text-uppercase text-primary bg-dark px-2">Multi</span>
-                    <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Shop</span>
+                    <span translate="no" class="h1 text-uppercase text-primary bg-dark px-2">Multi</span>
+                    <span translate="no" class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Shop</span>
                 </a>
             </div>
             <div class="col-lg-4 col-6 text-left">
