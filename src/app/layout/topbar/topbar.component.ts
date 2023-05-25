@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { currencyRate } from 'src/app/shared/interface/currncy';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 
@@ -40,13 +41,14 @@ export class TopbarComponent implements OnInit {
       number: "+012 345 6789"
     }
   }
-  selectedLanguage : any= "en"
+  selectedLanguage: any = "en"
   selectedCurrncy: any = "USD";
   constructor(public common: CommonService, private route: Router, private storage: StorageService) { }
 
   ngOnInit(): void {
- 
-    this.selectedLanguage= this.readCookie('googtrans').split('/')[this.readCookie('googtrans').split('/').length-1]
+    if (this.readCookie('googtrans')) {
+      this.selectedLanguage = this.readCookie('googtrans').split('/')[this.readCookie('googtrans').split('/').length - 1]
+    }
     var storeCurrncy: any = this.storage.getStorageItem("defultCurrncy")
     if (storeCurrncy) {
       this.selectedCurrncy = JSON.parse(storeCurrncy)
@@ -56,12 +58,22 @@ export class TopbarComponent implements OnInit {
 
   // selected the currency
   currencySelet(item?: any) {
-
     if (item) {
-      this.selectedCurrncy = item
-      this.storage.setStorageItem("defultCurrncy", item)
-    }
-    this.common.currncypipe.next(this.selectedCurrncy)
+      // this.common.getCurrncyrate(item).subscribe({
+      //   next: (res) => {
+           
+          // console.log(res.data[`${item}`], "this is currency rate")
+          this.selectedCurrncy = item
+          this.storage.setStorageItem("defultCurrncy", item)
+          let currncyObj:currencyRate={
+            name:item,
+            rate:1
+
+          }
+          this.common.currncypipe.next(currncyObj)
+        }
+    //   })
+    // }
   }
 
   // for the search all product
@@ -86,7 +98,7 @@ export class TopbarComponent implements OnInit {
     this.route.navigate(['/login'])
   }
 
-// get cookies from the browser
+  // get cookies from the browser
   readCookie(name: any) {
     var c = document.cookie.split('; ');
     var cookies: any = {}, i, C;
