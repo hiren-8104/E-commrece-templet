@@ -16,7 +16,7 @@ export class CommonService {
   
   constructor(private http: HttpService) { }
 
-
+// get categories
   getCategory(): Observable<any> {
     return this.http.getReq('https://fakestoreapi.com/products/categories')
   }
