@@ -19,7 +19,7 @@ export class CommonService {
 
 
   getCategory(): Observable<any> {
-    return this.http.getReq('http://192.168.1.178:1108/products/categories')
+    return this.http.getReq('https://fakestoreapi.com/products/categories')
   }
 
   getProduct(params?: any): Observable<any> {
