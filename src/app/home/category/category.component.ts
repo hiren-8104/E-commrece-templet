@@ -9,26 +9,21 @@ import { CommonService } from 'src/app/shared/services/common.service';
 })
 export class CategoryComponent implements OnInit {
   categorySectionData: any = []
-  constructor(private commonService: CommonService ,private route: Router) { }
+  constructor(private commonService: CommonService, private route: Router) { }
 
   ngOnInit(): void {
-    this.commonService.getCategory().subscribe({
+    let listOfCategory = { isCategoryList: true }
+    this.commonService.getProduct(listOfCategory).subscribe({
       next: (res) => {
-        res.forEach((ele: any) => {
-          this.categorySectionData.push({
-            cateImg: 'assets/img/cat-2.jpg',
-            cateName: ele,
-            cateQuntity: "100 Products"
-          })
-        })
+
+        this.categorySectionData = res.data.categories
       },
-      error:(res)=>{console.log(res)}
+      error: (res) => { console.log(res) }
     })
   }
-// select category
-  selectedCate(item:any){
-    console.log(item , ":_____________________")
-    this.route.navigate(['/product'],{queryParams:{'selCate':item}}
+  // select category
+  selectedCate(item: any) {
+    this.route.navigate(['/product'], { queryParams: { 'selCate': item } }
     )
   }
 

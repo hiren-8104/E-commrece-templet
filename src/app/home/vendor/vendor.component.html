@@ -5,11 +5,13 @@
                 <div class="swiper-wrapper">
                     <div class="row swiper-slide flex-nowrap overflow-hidden">
                         <div class="p-4 cardSize " *ngFor="let item of vendordata.vendorImg">
-                            <img class="swiper-slide imgSize" src={{item}} alt="">
+                            <img class="swiper-slide imgSize" src="{{item.image | imgconcate}}" alt="">
+                           
                         </div>
                     </div>
                 </div>
             </swiper>
+          
         </div>
     </div>
 </div>

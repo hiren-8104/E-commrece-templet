@@ -53,11 +53,11 @@
             <div class="col-lg-4 col-6 text-left">
                 <form [formGroup]="searchForm">
                     <div class="input-group">
-                        <input type="text" class="form-control" formControlName="searchValue" placeholder="Search for products" (keyup)="search()">
+                        <input type="text" class="form-control" formControlName="searchValue" placeholder="Search for products">
                         
                         <div class="input-group-append">
                             <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
+                                <i   (click)="search()" class="fa fa-search"></i>
                             </span>
                         </div>
                     </div>

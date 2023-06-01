@@ -11,12 +11,12 @@
 
                         <div class="carousel-item position-relative " [ngClass]="{'active':index ===caroselItem}"
                             style="height: 430px;">
-                            <img class="position-absolute w-100 h-100" src="{{item.img}}" style="object-fit: cover;">
+                            <img class="position-absolute w-100 h-100" src="{{item.image | imgconcate}}" style="object-fit: cover;">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
                                     <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">
                                         {{item.title}}</h1>
-                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">{{item.subTitle}}</p>
+                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">{{item.description}}</p>
                                     <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
                                         routerLink="/Shop">Shop Now</a>
                                 </div>
@@ -27,7 +27,9 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <app-offers></app-offers>
+            <ng-container *ngFor="let item of this.heroSectionData.offers" >
+                <app-offers [parentData]="item" ></app-offers>
+            </ng-container>
         </div>
     </div>
 </div>

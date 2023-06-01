@@ -45,8 +45,9 @@ export class TopbarComponent implements OnInit {
   constructor(public common: CommonService, private route: Router, private storage: StorageService) { }
 
   ngOnInit(): void {
- 
-    this.selectedLanguage= this.readCookie('googtrans').split('/')[this.readCookie('googtrans').split('/').length-1]
+ if(this.readCookie('googtrans')){
+   this.selectedLanguage= this.readCookie('googtrans').split('/')[this.readCookie('googtrans').split('/').length-1]
+ }
     var storeCurrncy: any = this.storage.getStorageItem("defultCurrncy")
     if (storeCurrncy) {
       this.selectedCurrncy = JSON.parse(storeCurrncy)

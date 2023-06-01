@@ -1,0 +1,1 @@
+export const ipAddress: string = 'http://192.168.1.178:1108'

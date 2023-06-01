@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchFilterPipe } from './pipes/search-filter.pipe';
 import { RatingComponent } from './components/rating/rating.component';
+import { ImgconcatePipe } from './pipes/imgconcate.pipe';
 
 
 
@@ -16,8 +17,10 @@ import { RatingComponent } from './components/rating/rating.component';
     OffersComponent,
     ProductComponent,
     SearchFilterPipe,
-    RatingComponent
-  
+    RatingComponent,
+    ImgconcatePipe,
+    
+
   ],
   imports: [
     CommonModule,
@@ -27,7 +30,12 @@ import { RatingComponent } from './components/rating/rating.component';
   ],
   exports: [
     OffersComponent,
-    ProductComponent
+    ProductComponent,
+    ImgconcatePipe
+
+  ],
+  providers: [
+    
   ]
 })
 export class SharedModule { }

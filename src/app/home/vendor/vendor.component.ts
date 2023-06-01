@@ -1,25 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { CommonService } from 'src/app/shared/services/common.service';
 import { SwiperOptions } from 'swiper';
 
 @Component({
   selector: 'app-vendor',
   templateUrl: './vendor.component.html',
-  styleUrls: ['./vendor.component.scss']
+  styleUrls: ['./vendor.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VendorComponent implements OnInit {
   vendordata: any = {
-    vendorImg: ["assets/img/vendor-1.jpg", "assets/img/vendor-2.jpg", "assets/img/vendor-3.jpg", "assets/img/vendor-4.jpg", "assets/img/vendor-5.jpg", "assets/img/vendor-6.jpg", "assets/img/vendor-7.jpg", "assets/img/vendor-8.jpg"]
+   
   }
   config: SwiperOptions = {
    
     autoplay: true,
     loop: true,
     spaceBetween: 30,
+    allowSlideNext: true,
+    // updateOnWindowResize
   };
-  constructor() { }
+  constructor(private common :CommonService , private cdr:ChangeDetectorRef) { }
 
   ngOnInit(): void {
-
+    
+    this.getVenders()
   }
 
+  getVenders(){
+    this.common.getVenders().subscribe({
+      next:(res)=>{
+        // console.log(res)
+        this.vendordata.vendorImg = res.data
+        this.cdr.markForCheck()
+      }
+    })
+  }
 }

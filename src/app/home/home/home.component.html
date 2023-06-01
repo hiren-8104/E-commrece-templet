@@ -10,12 +10,13 @@
         <span class="bg-secondary pr-3">Featured Products</span>
     </h2>
 
-    <app-product [callingHome]="true"></app-product>
+    <app-product [FeatureProduct]="featureProductList"></app-product>
     
 
 </div>
-
-<app-offers  [parentData]="true"></app-offers>
+<ng-container class="box" *ngFor="let item of offerData" >
+    <app-offers [customClass]="true" [parentData]="item" ></app-offers>
+</ng-container>
 
 <div class="container-fluid pt-5 pb-3">
     <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">

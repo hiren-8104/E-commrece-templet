@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-home',
@@ -6,10 +7,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
-  constructor() { }
+  featureProductList!: any[]
+  offerData!:any
+  constructor(private common: CommonService) { }
 
   ngOnInit(): void {
+    this.getFeatureProduct()
+    if(!this.offerData){
+
+      this.common.offerDataService.subscribe({
+          next:(res)=>{
+              this.offerData=res
+            }
+          })
+        }
   }
 
+
+  getFeatureProduct() {
+    let body = { filter: { isFeatured: true } }
+    this.common.getProduct(body).subscribe({
+      next: (res) => {
+        // console.log(res.data)
+        this.featureProductList = res.data.products
+
+      }
+    })
+  }
 }

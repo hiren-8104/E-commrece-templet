@@ -10,17 +10,22 @@ import { StorageService } from '../../services/storage.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductComponent implements OnInit {
+
   favouriteProducts: any[] = []
-  rpp: number = 8
-  p = 1
+  rpp: number = 6
+  p: number = 1
   recentsViewProduct: any[] = []
+  totalProduct !: any
   @Input() recentsProductData: any = null
-  @Input() callingHome: boolean = false;
+  @Input() FeatureProduct!: any[];
   @Input() productDetailsData: any = null
   @Input() favData!: any
   @Input() allProductData: any = false
-
+  @Output() getPage: any = new EventEmitter<number>();
   productData: any[] = []
+  paginationConfig: any = {
+    itemsPerPage: this.rpp, currentPage: this.p
+  }
   constructor(public commonService: CommonService,
     private route: Router,
     private cdr: ChangeDetectorRef,
@@ -28,6 +33,8 @@ export class ProductComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+
     let a = localStorage.getItem('recentsViewProduct')
     if (a) {
       this.recentsViewProduct = JSON.parse(a)
@@ -37,7 +44,6 @@ export class ProductComponent implements OnInit {
 
   ngOnChanges(): void {
     if (this.allProductData) {
-      this.rpp = 6
       this.productData = this.allProductData
     }
     else if (this.favData) {
@@ -46,11 +52,13 @@ export class ProductComponent implements OnInit {
     else if (this.recentsProductData) {
       this.productData = this.recentsProductData
     }
-    else if (this.callingHome || this.productDetailsData) {
-      this.rpp = 8
-      this.commonService.getProduct(this.rpp).subscribe({
+    else if (this.FeatureProduct) {
+      this.productData = this.FeatureProduct
+    }
+    else if (this.productDetailsData) {
+      this.commonService.getProduct().subscribe({
         next: (res) => {
-          this.productData = res;
+          this.productData = res.data.products;
           this.cdr.markForCheck()
         }
       })
@@ -76,7 +84,8 @@ export class ProductComponent implements OnInit {
       this.recentsViewProduct.unshift(item)
     }
     localStorage.setItem('recentsViewProduct', JSON.stringify(this.recentsViewProduct))
-    this.route.navigate(['/details'], { queryParams: { 'ProductId': item.id } })
+    console.log(item._id, "item _Id")
+    this.route.navigate(['/details'], { queryParams: { 'ProductId': item._id } })
   }
 
   // for a favourite product
@@ -122,5 +131,13 @@ export class ProductComponent implements OnInit {
     })
     this.commonService.favouritesProductsService.next(this.favouriteProducts)
     localStorage.setItem('favorite', JSON.stringify(this.favouriteProducts))
+  }
+
+  pageChange(val: any) {
+    console.log(val)
+    // this..paginationConfigcurrentPage = val;
+    this.getPage.emit(val)
+    this.cdr.markForCheck()
+
   }
 }

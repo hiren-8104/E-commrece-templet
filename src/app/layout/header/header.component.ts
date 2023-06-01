@@ -40,13 +40,20 @@ export class HeaderComponent implements OnInit {
     let favItem: any = this.storage.getStorageItem("favorite")
     if (favItem) {
       this.favItemCount = JSON.parse(favItem).length
-      
+
 
     }
     // subscribe a list of manu
     this.cartItemCount = this.storage.getStorageItem("cartItem")
-    this.commonsercice.getCategory().subscribe({
-      next: (res) => { this.headerSection.category = res }
+    let list = { isCategoryList: true }
+    this.commonsercice.getProduct(list).subscribe({
+      next: (res: any) => {
+        console.log(res)
+        res.data.categories.forEach((ele: any) => {
+          this.headerSection.category.push(ele.title)
+        })
+
+      }
     })
 
   }
@@ -66,7 +73,7 @@ export class HeaderComponent implements OnInit {
       this.dropDwonIsActive = false
     }
   }
-  
+
   // subscribe to get favorite items  length
   getFavoriteItemslength() {
     this.commonsercice.favouritesProductsService.subscribe({

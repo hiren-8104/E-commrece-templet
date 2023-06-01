@@ -65,9 +65,13 @@ export class ProductDetailsComponent implements OnInit {
 
     // for perticular product get
     this.activatedRoute.queryParams.subscribe((params: any) => {
+      
+     
       this.commonService.getSelectedProduct(params.ProductId).subscribe({
         next: (res) => {
-          this.selectedProduct = res
+         
+         this.selectedProduct=res.data.products[0]
+          
         },
         error: (err) => { console.log(err) }
       })
@@ -89,6 +93,8 @@ export class ProductDetailsComponent implements OnInit {
   tabChange(name: any) {
     this.tabActive = name
   }
+
+
 
 
 }

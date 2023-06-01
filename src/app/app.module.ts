@@ -15,7 +15,7 @@ import { HomeModule } from './home/home.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ContactComponent } from './contact/contact.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
-import { AllproductComponent } from './allproduct/allproduct.component';
+import { ShopCartComponent } from './shopcart/shopcart.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
 import { ShopingCartComponent } from './shoping-cart/shoping-cart.component';
@@ -33,7 +33,7 @@ import { FavoriteComponent } from './favorite/favorite.component';
     FooterComponent,
     ContactComponent,
     ProductDetailsComponent,
-    AllproductComponent,
+    ShopCartComponent,
     ShopingCartComponent,
     CheckoutComponent,
     PageNotFoundComponent,
@@ -52,7 +52,6 @@ import { FavoriteComponent } from './favorite/favorite.component';
     SharedModule,
     HomeModule,
     HttpClientModule,
-    
     NgxUsefulSwiperModule,
     NgxPaginationModule,
    

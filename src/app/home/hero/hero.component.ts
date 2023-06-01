@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-hero',
@@ -7,29 +8,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeroComponent implements OnInit {
   caroselItem=0
+  
   heroSectionData: any = {
-    carousel: [
-      {
-        img: 'assets/img/carousel-1.jpg',
-        title: 'Men Fashion',
-        sunTitle: 'Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam'
-      },
-      {
-        img: 'assets/img/carousel-2.jpg',
-        title: 'Women Fashion',
-        sunTitle: 'Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam'
-      },
-      {
-        img: 'assets/img/carousel-3.jpg',
-        title: 'Kids Fashion',
-        sunTitle: 'Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam'
-      },
-    ]
+    carousel: []
   }
 
-  constructor() { }
+  constructor(private common :CommonService) { }
 
   ngOnInit(): void {
+    this.getHeroData()
   }
 
+  getHeroData(){
+    this.common.getHeroSection().subscribe({
+      next:(res)=>{
+        // console.log(res.data.offers);
+        this.heroSectionData.carousel =res.data.carousels
+        this.heroSectionData.offers = res.data.offers
+        this.common.offerDataService.next(res.data.offers)
+      }
+    })
+  }
 }

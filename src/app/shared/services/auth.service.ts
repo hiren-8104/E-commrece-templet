@@ -9,6 +9,6 @@ export class AuthService {
 
   constructor(private http : HttpService) { }
   logIn(params:any):Observable<any>{
-    return this.http.getPost('https://fakestoreapi.com/auth/login', params)
+    return this.http.postReq('https://fakestoreapi.com/auth/login', params)
   }
 }
