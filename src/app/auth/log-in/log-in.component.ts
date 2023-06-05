@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { EmailValidator, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { merge } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
@@ -12,34 +14,59 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 })
 export class LogInComponent implements OnInit {
   logInForm: FormGroup = this.fb.group({
-    username: ["mor_2314", Validators.required],
-    password: ["83r5^_", Validators.required]
+    email: ["", [Validators.required, Validators.email]],
+    password: ["", Validators.required]
   })
+  offers: any;
+  carousel: any;
+  isRegister: boolean = false;
   constructor(
-    private commonService:CommonService,
+    private commonService: CommonService,
     private fb: FormBuilder,
     private auth: AuthService,
     private storage: StorageService,
-    private router: Router) { }
+    private router: Router,
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.getOffer()
+  }
+
+  ngAfterViewInit() {
 
   }
 
 
   // login aapi calling the auth service
   userLogin() {
+    console.log(this.logInForm.value)
     if (this.logInForm.valid) {
-      console.log(this.logInForm.value)
       this.auth.logIn(this.logInForm.value).subscribe({
         next: (res) => {
-          console.log(res)
+          this.toastr.success(res.message)
           this.storage.setStorageItem("token", res.token)
-          this.commonService.allHidden.next(true);
+
           this.router.navigate(['/'])
         },
-        error: (err) => {console.log(err)}
+        error: (err) => { console.log(err) }
       })
     }
+
   }
+
+  getOffer() {
+    this.commonService.getHeroSection().subscribe({
+      next: (res) => {
+        this.offers = res.data.offers
+
+      }
+    })
+  }
+
+
 }
+
+
+

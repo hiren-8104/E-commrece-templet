@@ -9,7 +9,7 @@
                         <img class=" imgWidth img-fluid  " src="{{item.image |imgconcate}}" alt="">
                     </ng-container>
                     <div class="product-action">
-                        <a routerLink="/cart" class="btn btn-outline-dark btn-square"><i
+                        <a (click)="addToCart(item._id)" class="btn btn-outline-dark btn-square"><i
                                 class="fa fa-shopping-cart"></i></a>
                         <a (click)="makeFavourite(item)" class="btn btn-outline-dark btn-square">
                             <i class="far fa-heart " [ngClass]="{'fa text-danger':favData}"></i>
@@ -32,13 +32,13 @@
         </div>
     </ng-container>
 </div>
-<pagination-controls *ngIf="productData.length" (pageChange)="p = $event ;pageChange($event)"></pagination-controls>
+<pagination-controls *ngIf=" allProductData && productData && productData.length" (pageChange)="p = $event ;pageChange($event)"></pagination-controls>
 
 
 
 
-<div class="text-center py-4" *ngIf="!productData.length">
-    <!-- <img src="https://cdn-icons-png.flaticon.com/128/9019/9019239.png" alt="" height="200px" width="200px"> -->
+<div class="text-center py-4" *ngIf="productData && !productData.length">
+    <img src="https://cdn-icons-png.flaticon.com/128/9019/9019239.png" alt="" height="200px" width="200px">
     <h1 class=" text-decoration-none titlewrap d-flex justify-content-center">Those type Product is Not
         available
     </h1>

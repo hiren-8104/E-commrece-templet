@@ -12,7 +12,7 @@ getStorageItem(key: string){
 }
 
 setStorageItem(key: string, value:any){
-  localStorage.setItem(key, JSON.stringify(value))
+  localStorage.setItem(key, value)
 }
 
 }

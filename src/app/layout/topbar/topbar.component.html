@@ -12,8 +12,8 @@
                     <div class="btn-group">
                         <button translate="no" type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <button translate="no"  class="dropdown-item" type="button">Log-in</button>
-                            <button translate="no" (click)="logout()" class="dropdown-item" type="button">Log-out</button>
+                            <button translate="no"  class="dropdown-item" type="button" routerLink="/auth/login">Log-in</button>
+                            <button *ngIf="storage.getStorageItem('token')" translate="no" (click)="logout()" class="dropdown-item" type="button">Log-out</button>
                         </div>
                     </div>
                     <div class="btn-group mx-2">
@@ -56,8 +56,8 @@
                         <input type="text" class="form-control" formControlName="searchValue" placeholder="Search for products">
                         
                         <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i   (click)="search()" class="fa fa-search"></i>
+                            <span (click)="search()" class="input-group-text bg-transparent text-primary">
+                                <i    class="fa fa-search"></i>
                             </span>
                         </div>
                     </div>

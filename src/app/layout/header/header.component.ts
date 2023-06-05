@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 
@@ -31,7 +32,12 @@ export class HeaderComponent implements OnInit {
     ]
 
   }
-  constructor(public commonsercice: CommonService, public route: Router, private storage: StorageService) { }
+  constructor(
+    public commonsercice: CommonService,
+    public route: Router,
+    private storage: StorageService,
+    private toastrService: ToastrService
+  ) { }
   cateToggle: boolean = false
 
 
@@ -62,16 +68,10 @@ export class HeaderComponent implements OnInit {
   // manu click to navigate and its active
 
   manuClick(navItem: any) {
-    if (this.headerSection.navItem[2].navName == 'Page') {
-      this.headerSection.navItem[2].route = (this.route.url.split('?')[0] == '/checkout') ? '/checkout' : '/cart'
-    }
-    if (navItem.isDropDwon) {
-      this.dropDwonIsActive = !this.dropDwonIsActive
-    }
-    else {
-      this.route.navigate([`/${navItem.route}`])
-      this.dropDwonIsActive = false
-    }
+
+    this.route.navigate([`/${navItem.route}`])
+    this.dropDwonIsActive = false
+
   }
 
   // subscribe to get favorite items  length
@@ -88,5 +88,14 @@ export class HeaderComponent implements OnInit {
   selectedCate(item: any) {
     this.route.navigate(['Shop', item])
     this.dropDwonIsActive = false
+  }
+  goTo(path: any) {
+    let token = this.storage.getStorageItem("token")
+    if (token) {
+      this.route.navigate([`${path}`])
+    }
+    else {
+this.toastrService.warning( `Login and see your  ${path}`,"Please Login")
+    }
   }
 }

@@ -13,7 +13,7 @@ export class HttpService {
     return this.http.get(url, params)
   }
 
-  postReq(url:string , params?: any): Observable<any> {
-    return this.http.post(url, params)
+  postReq(url:string , body: any): Observable<any> {
+    return this.http.post(url,body)
   }
 }

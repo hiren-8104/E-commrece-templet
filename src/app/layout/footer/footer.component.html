@@ -36,6 +36,9 @@
                                 <button type="submit" class="btn btn-primary">Sign Up</button>
                             </div>
                         </div>
+                        <div *ngIf="userSubscribeForm.controls['userEmail'].hasError('email')">
+                            <span class="text-danger">Please Enter valid Email</span>
+                        </div>
                     </form>
                     <h6 class="text-secondary text-uppercase mt-4 mb-3">Follow Us</h6>
                     <div class="d-flex">

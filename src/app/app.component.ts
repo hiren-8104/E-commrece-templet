@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Host
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from './shared/services/storage.service';
 import { CommonService } from './shared/services/common.service';
+import { AuthService } from './shared/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -17,17 +19,17 @@ export class AppComponent implements OnInit {
     private storage: StorageService,
     private route:Router,
     public commonService:CommonService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private auth: AuthService,
+    private toasterService : ToastrService
   ) { }
 
 
 
   ngOnInit(): void {
-    // user is logged in or not
-    if (!this.storage.getStorageItem("token")) {
-      this.commonService.allHidden.next(false )
-      this.route.navigate(['/login'])
-    }
+   if(!(this.validUser())){
+      this.toasterService.warning("", "Please Login Again")
+   }
   }
   
   backToTop() {
@@ -41,5 +43,10 @@ export class AppComponent implements OnInit {
     else {
       this.rendererr.removeClass(this.btt.nativeElement, "d-block")
     }
+  }
+
+  validUser(){
+    console.log("*************" ,this.auth.isValidToken())
+    return this.auth.isValidToken()
   }
 }

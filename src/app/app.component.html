@@ -1,9 +1,9 @@
-<app-topbar *ngIf="commonService.allHidden |async"></app-topbar>
+<app-topbar ></app-topbar>
 
-<app-header *ngIf="commonService.allHidden |async"></app-header>
+<app-header ></app-header>
 
 <router-outlet></router-outlet>
 
-<a *ngIf="commonService.allHidden |async" (click)="backToTop()" #btt class="btn btn-primary back-to-top d-none"><i
+<a  (click)="backToTop()" #btt class="btn btn-primary back-to-top d-none"><i
         class="fa fa-angle-double-up"></i></a>
-<app-footer *ngIf="commonService.allHidden |async"></app-footer>
+<app-footer ></app-footer>

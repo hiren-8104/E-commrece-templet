@@ -35,7 +35,7 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
 
 
-    let a = localStorage.getItem('recentsViewProduct')
+    let a = this.storage.getStorageItem('recentsViewProduct')
     if (a) {
       this.recentsViewProduct = JSON.parse(a)
     }
@@ -84,7 +84,7 @@ export class ProductComponent implements OnInit {
       this.recentsViewProduct.unshift(item)
     }
     localStorage.setItem('recentsViewProduct', JSON.stringify(this.recentsViewProduct))
-    console.log(item._id, "item _Id")
+    console.log(item, "item _Id")
     this.route.navigate(['/details'], { queryParams: { 'ProductId': item._id } })
   }
 
@@ -139,5 +139,20 @@ export class ProductComponent implements OnInit {
     this.getPage.emit(val)
     this.cdr.markForCheck()
 
+  }
+
+  addToCart(id: string) {
+    let item = {
+      _product: id,
+      quantity: <Number>1
+    }
+    console.log(item)
+
+    this.commonService.addIntoCart(item).subscribe({
+      next: (res) => {
+        console.log(res, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+      },
+      error:(err)=>{console.log(err)}
+    })
   }
 }

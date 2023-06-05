@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
@@ -55,7 +56,11 @@ export class FooterComponent implements OnInit {
     ],
     socialMedia: ['twitter', 'facebook', 'linkedin-in', 'instagram']
   }
-  constructor(private fb: FormBuilder, private common: CommonService) { }
+  constructor(private fb: FormBuilder,
+     private common: CommonService,
+     private toastrService: ToastrService
+     ) { }
+
 
   ngOnInit(): void {
   }
@@ -67,12 +72,10 @@ export class FooterComponent implements OnInit {
     if (this.userSubscribeForm.valid) {
       this.common.newsLatterSubscription(this.userSubscribeForm.value).subscribe({
         next: (res) => {
-          confirm(res.message)
+          this.toastrService.success (res.message)
         }
       })
     }
-    else {
-      alert("Enter valid email")
-    }
+   
   }
 }

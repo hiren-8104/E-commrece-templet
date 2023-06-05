@@ -58,6 +58,7 @@ export class ShopCartComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
     // get filter list
     this.allfilterList()
     // breadcrumbs
@@ -65,7 +66,9 @@ export class ShopCartComponent implements OnInit {
     // get category form params
     this.activatedRoute.params.subscribe((params: any) => {
       if (params['category']) {
-        this.filterDataForBody.filter.category = params['category'];
+        this.filterDataForBody.filter={}
+        // console.log(params['category'], "+++++++++++++++++++++", this.filterDataForBody)
+        this.filterDataForBody['filter']['category'] = params['category'];
         this.getAllProduct()
       }
       else {
@@ -79,8 +82,8 @@ export class ShopCartComponent implements OnInit {
 
   // get all product 
   getAllProduct() {
-    this.filterDataForBody['pagination'].page = this.paginationObject.currentPage
-    this.filterDataForBody.pagination['productsPerPage'] = this.paginationObject.itemsPerPage;
+    this.filterDataForBody['pagination'].page = <Number>this.paginationObject.currentPage
+    this.filterDataForBody.pagination['productsPerPage'] = <Number>this.paginationObject.itemsPerPage;
     this.commonService.getProduct(this.filterDataForBody).subscribe({
       next: (res) => {
         this.productList = res.data.products
@@ -142,6 +145,7 @@ export class ShopCartComponent implements OnInit {
   allfilterList() {
     this.commonService.getFilterList().subscribe({
       next: (res) => {
+
         this.allProductSectionData.sortByColor = res.data.colors
         this.allProductSectionData.sortByPrice = res.data.priceRanges
         this.allProductSectionData.sortBySize = res.data.sizes
@@ -183,20 +187,21 @@ export class ShopCartComponent implements OnInit {
   getSearchProduct() {
     this.commonService.searchfilters.subscribe({
       next: (res) => {
-        console.log(res, "******************************")
-        if (!("filter" in this.filterDataForBody)) {
-          this.filterDataForBody['filter'] = {}
-          if (!("search" in this.filterDataForBody.filter)) {
-            this.filterDataForBody.filter['search'] = {}
+        if (res.length > 0) {
+          console.log(res, "******************************")
+          if (!("filter" in this.filterDataForBody)) {
+            this.filterDataForBody['filter'] = {}
+            if (!("search" in this.filterDataForBody.filter)) {
+              this.filterDataForBody.filter['search'] = {}
 
+            }
           }
+
+          this.filterDataForBody.filter.search = res
+          this.getAllProduct()
+          this.cdr.markForCheck()
+          // console.log(this.filterDataForBody)
         }
-
-        this.filterDataForBody.filter.search = res
-        this.getAllProduct()
-        this.cdr.markForCheck()
-        // console.log(this.filterDataForBody)
-
       },
       error: (err) => { console.log(err) }
     })

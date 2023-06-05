@@ -12,7 +12,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ContactComponent } from './contact/contact.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ShopCartComponent } from './shopcart/shopcart.component';
@@ -23,6 +23,9 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BreacrumbComponent } from './breacrumb/breacrumb.component';
 import { FavoriteComponent } from './favorite/favorite.component';
+import { SetTokenInterceptor } from './set-token.interceptor';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 
 @NgModule({
@@ -38,14 +41,13 @@ import { FavoriteComponent } from './favorite/favorite.component';
     CheckoutComponent,
     PageNotFoundComponent,
     BreacrumbComponent,
-    FavoriteComponent,
-   
-    
+    FavoriteComponent    
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -54,12 +56,11 @@ import { FavoriteComponent } from './favorite/favorite.component';
     HttpClientModule,
     NgxUsefulSwiperModule,
     NgxPaginationModule,
+    ToastrModule.forRoot()
    
-
-
-
+  
   ],
-  providers: [],
+  providers: [ {provide: HTTP_INTERCEPTORS, useClass: SetTokenInterceptor, multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

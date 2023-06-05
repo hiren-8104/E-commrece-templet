@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { LogInComponent } from 'src/app/auth/log-in/log-in.component';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 
@@ -40,18 +43,25 @@ export class TopbarComponent implements OnInit {
       number: "+012 345 6789"
     }
   }
-  selectedLanguage : any= "en"
+  selectedLanguage: any = "en"
   selectedCurrncy: any = "USD";
-  constructor(public common: CommonService, private route: Router, private storage: StorageService) { }
+  constructor(
+    public common: CommonService,
+    private route: Router,
+    public storage: StorageService,
+    private auth: AuthService,
+    private toast: ToastrService
+  ) { }
 
   ngOnInit(): void {
- if(this.readCookie('googtrans')){
-   this.selectedLanguage= this.readCookie('googtrans').split('/')[this.readCookie('googtrans').split('/').length-1]
- }
+    if (this.readCookie('googtrans')) {
+      this.selectedLanguage = this.readCookie('googtrans').split('/')[this.readCookie('googtrans').split('/').length - 1]
+    }
     var storeCurrncy: any = this.storage.getStorageItem("defultCurrncy")
     if (storeCurrncy) {
-      this.selectedCurrncy = JSON.parse(storeCurrncy)
-      this.common.currncypipe.next(this.selectedCurrncy)
+      this.selectedCurrncy = storeCurrncy
+      this.common.currncypipe.next(storeCurrncy)
+      console.log("_+_+_+_+_+_+_+__+_+_+_+_")
     }
   }
 
@@ -61,16 +71,18 @@ export class TopbarComponent implements OnInit {
     if (item) {
       this.selectedCurrncy = item
       this.storage.setStorageItem("defultCurrncy", item)
+      this.common.currncypipe.next(this.selectedCurrncy)
+      console.log("======================")
     }
-    this.common.currncypipe.next(this.selectedCurrncy)
   }
 
   // for the search all product
   search() {
-    if (this.searchForm.value.searchValue) {
+  
+    if (this.searchForm.value.searchValue && this.searchForm.valid) {
+      this.common.searchfilters.next(this.searchForm.value.searchValue)
       this.route.navigate(['/Shop'])
     }
-    this.common.searchfilters.next(this.searchForm.value.searchValue)
   }
 
   // change the language
@@ -82,12 +94,17 @@ export class TopbarComponent implements OnInit {
 
   // logout
   logout() {
-    this.common.allHidden.next(false)
-    localStorage.removeItem("token")
-    this.route.navigate(['/login'])
+    this.auth.logout().subscribe({
+      next: (res) => {
+        this.toast.success(res.message,"",{timeOut: 3000,progressBar: true,enableHtml: true});
+        localStorage.removeItem("token")
+      },
+      error: (err) => { console.log(err) }
+    })
+    // this.route.navigate(['/auth/registration'])
   }
 
-// get cookies from the browser
+  // get cookies from the browser
   readCookie(name: any) {
     var c = document.cookie.split('; ');
     var cookies: any = {}, i, C;

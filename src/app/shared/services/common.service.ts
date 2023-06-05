@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
-import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subject, map } from 'rxjs';
 import { ProductEndPoint, categoryEndPoint, filterListEndPoint, heroSectionEndPoint, newsLatterEndPoint, specialCategoryEndPoint, vendorsEndPoint } from '../constant/apiEndPoint';
 
 @Injectable({
@@ -8,8 +8,8 @@ import { ProductEndPoint, categoryEndPoint, filterListEndPoint, heroSectionEndPo
 })
 export class CommonService {
   paginationsService = new BehaviorSubject<any>({ itemsPerPage: 6, currentPage: 1, totalItems: 20 })
-  offerDataService = new BehaviorSubject<any>('')
-  allHidden = new BehaviorSubject<boolean>(true);
+  offerDataService = new ReplaySubject<any>()
+
   checkoutData = new BehaviorSubject<any>(null)
   searchfilters = new BehaviorSubject<any>('')
   currncypipe = new BehaviorSubject<any>("$")
@@ -17,12 +17,9 @@ export class CommonService {
   breadcrumbs = new BehaviorSubject<any>([{ label: "Home", route: "/" }]);
   recentProducts = new BehaviorSubject<any>([])
 
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpService ) { }
 
-  // get categories
-  // getCategory(): Observable<any> {
-  //   return this.http.postReq(categoryEndPoint)
-  // }
+  
 
   getProduct(body?: any): Observable<any> {
     return this.http.postReq(ProductEndPoint, body)
@@ -33,17 +30,15 @@ export class CommonService {
   }
 
   getSelectedProduct(id: number): Observable<any> {
-    return this.http.postReq(ProductEndPoint+"/" + id)
+    // console.log("getSelectedProduct", id)
+    return this.http.postReq(ProductEndPoint +"/" + id,null)
 
   }
 
-  getCartItem(params: any): Observable<any> {
-    return this.http.getReq('https://fakestoreapi.com/carts/' + params)
+  getCartItem(): Observable<any> {
+    return this.http.getReq('http://192.168.1.178:3000/cart')
   }
 
-  getSort(params: any): Observable<any> {
-    return this.http.getReq('https://fakestoreapi.com/products', { params })
-  }
 
   getHeroSection(): Observable<any> {
     return this.http.getReq(heroSectionEndPoint)
@@ -58,5 +53,12 @@ export class CommonService {
   getFilterList(): Observable<any> {
     return this.http.getReq(filterListEndPoint)
   }
+
+  addIntoCart(body: any): Observable<any> {
+    return this.http.postReq('http://192.168.1.178:3000/cart/add-product',body)
+  }
+  
+  
+
 
 }

@@ -9,6 +9,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchFilterPipe } from './pipes/search-filter.pipe';
 import { RatingComponent } from './components/rating/rating.component';
 import { ImgconcatePipe } from './pipes/imgconcate.pipe';
+import { BrowserModule } from '@angular/platform-browser';
+// import { BrowserModule } from '@angular/platform-browser';
 
 
 
@@ -23,6 +25,7 @@ import { ImgconcatePipe } from './pipes/imgconcate.pipe';
 
   ],
   imports: [
+    // BrowserModule,
     CommonModule,
     RouterModule,
     NgxPaginationModule

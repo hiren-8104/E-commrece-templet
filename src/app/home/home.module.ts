@@ -29,6 +29,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgxUsefulSwiperModule,
     NgxPaginationModule
     
-  ]
+  ],
+  exports:[FeaturedComponent]
 })
 export class HomeModule { }

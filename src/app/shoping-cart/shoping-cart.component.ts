@@ -26,6 +26,8 @@ export class ShopingCartComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+   
     // breadcrumbs
     this.common.breadcrumbs.next(
       [
@@ -35,20 +37,11 @@ export class ShopingCartComponent implements OnInit {
       ])
 
     // cart item for a user id '5'
-    this.common.getCartItem(5).subscribe({
+    this.common.getCartItem().subscribe({
       next: (resp) => {
-        resp.products.forEach((product: any) => {
-          this.common.getSelectedProduct(product.productId).subscribe({
-            next: (res) => {
-              res['quantity'] = product.quantity
-              this.cartProduct.cartItem.push(res)
-              this.finalSum()
-              localStorage.setItem("cartItem", this.cartProduct.cartItem.length)
-              this.cdr.markForCheck()
-            },
-            error: (err) => { console.log(err) }
-          })
-        })
+        this.cartProduct.cartItem = resp.data.products
+       console.log(this.cartProduct.cartItem , "MMMMMMMMMMMMMMMMMMMMMMMMMMMM")
+       this.cdr.markForCheck()
       },
       error: (err) => { console.log(err) }
     })
