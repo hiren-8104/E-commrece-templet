@@ -11,26 +11,34 @@ import { StorageService } from '../shared/services/storage.service';
 })
 export class FavoriteComponent implements OnInit {
 
-  data: any = []
+  data: any[] = []
   constructor(private commonService: CommonService, private cdr: ChangeDetectorRef, private storage: StorageService) { }
 
   ngOnInit(): void {
     this.getFavoriteProducts()
 
-    // favourite products form local storage
-    let favouriteProducts: any = this.storage.getStorageItem('favorite');
-    if (favouriteProducts) {
-      this.data = JSON.parse(favouriteProducts)
-      this.cdr.detectChanges();
-    }
+
   }
 
   // get favorite products form Behaviour
   getFavoriteProducts(): any {
-    this.commonService.favouritesProductsService.subscribe({
+    this.commonService.getfavoriteProduct().subscribe({
       next: (res) => {
-        this.data = res
-      }
+        
+        this.data= res.data.products.map((ele:any)=>{
+          return ele.product
+        })
+        // res.data.products.forEach((ele:any, i:number)=>{
+          //   ele.product['favId']= ele._id
+          //   this.data.push(ele.product)
+          
+          // })
+          console.log("RRRRRRRR", res)
+        console.log(this.data)
+        this.cdr.markForCheck()
+
+      },
+      error: (err) => { console.log() }
     })
   }
 

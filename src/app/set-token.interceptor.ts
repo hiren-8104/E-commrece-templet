@@ -5,8 +5,9 @@ import {
   HttpEvent,
   HttpInterceptor
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { StorageService } from './shared/services/storage.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class SetTokenInterceptor implements HttpInterceptor {
@@ -18,7 +19,6 @@ export class SetTokenInterceptor implements HttpInterceptor {
     if (token) {
       request = request.clone({ setHeaders: { "token": token } })
     }
-    return next.handle(request);
-    
+    return next.handle(request)
   }
 }

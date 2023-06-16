@@ -2,6 +2,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, In
 import { CommonService } from '../../services/common.service';
 import { Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
+import { AuthService } from '../../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
+import { ConditionalExpr } from '@angular/compiler';
 
 @Component({
   selector: 'app-product',
@@ -29,7 +32,9 @@ export class ProductComponent implements OnInit {
   constructor(public commonService: CommonService,
     private route: Router,
     private cdr: ChangeDetectorRef,
-    private storage: StorageService
+    private storage: StorageService,
+    private auth: AuthService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -47,7 +52,10 @@ export class ProductComponent implements OnInit {
       this.productData = this.allProductData
     }
     else if (this.favData) {
+      console.log("#######", this.favData)
       this.productData = this.favData
+
+      this.cdr.markForCheck()
     }
     else if (this.recentsProductData) {
       this.productData = this.recentsProductData
@@ -89,49 +97,34 @@ export class ProductComponent implements OnInit {
   }
 
   // for a favourite product
-  makeFavourite(item: any) {
-    let localStore: any = this.storage.getStorageItem("favorite")
+  makeFavourite(item: any, i: number) {
+    console.log(item, "item")
+    if (this.favData) {
+      this.commonService.removefavoriteProduct(item._id).subscribe({
+        next: (res) => {
+          console.log("success00000", item._id);
 
-    if (localStore) {
-      this.favouriteProducts = JSON.parse(localStore)
+          this.commonService.totalfavoriteProductService.next(this.favData.length)
+          this.productData.splice(i, 1)
+          this.cdr.markForCheck()
+        },
+        error: (err) => { console.log(err) }
+      })
     }
     else {
-      this.favouriteProducts.push(item)
-      localStorage.setItem('favorite', JSON.stringify(this.favouriteProducts))
-      this.commonService.favouritesProductsService.next(this.favouriteProducts)
-      return
-    }
-    let isFavouriteProduct;
-    isFavouriteProduct = this.favouriteProducts.some((ele) => {
-      return ele.id == item.id;
-    })
+      this.commonService.addfavoritesProduct(item._id).subscribe({
+        next: (res: any) => {
+          console.log("add api in count of fav")
+          this.toastr.warning("", "Please Login")
 
-    if (isFavouriteProduct != true) {
-      this.addfavouriteProduct(item)
+        },
+
+      })
     }
-    else {
-      this.removefavouriteProduct(item)
-    }
+
   }
 
-  // add favourite products
-  addfavouriteProduct(item: any) {
 
-    this.favouriteProducts.push(item)
-    this.commonService.favouritesProductsService.next(this.favouriteProducts)
-    localStorage.setItem('favorite', JSON.stringify(this.favouriteProducts))
-  }
-
-  // remove favourite products
-  removefavouriteProduct(item: any) {
-    this.favouriteProducts.map((res: any, index: any) => {
-      if (res.id == item.id) {
-        this.favouriteProducts.splice(index, 1);
-      }
-    })
-    this.commonService.favouritesProductsService.next(this.favouriteProducts)
-    localStorage.setItem('favorite', JSON.stringify(this.favouriteProducts))
-  }
 
   pageChange(val: any) {
     console.log(val)
@@ -142,17 +135,25 @@ export class ProductComponent implements OnInit {
   }
 
   addToCart(id: string) {
-    let item = {
-      _product: id,
-      quantity: <Number>1
-    }
-    console.log(item)
 
-    this.commonService.addIntoCart(item).subscribe({
-      next: (res) => {
-        console.log(res, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-      },
-      error:(err)=>{console.log(err)}
-    })
+    if (this.auth.deCodeToken()) {
+      let item = {
+
+        productId: id,
+        quantity: <Number>1
+      }
+
+
+      this.commonService.addIntoCart(item).subscribe({
+        next: (res) => {
+          console.log("add", res)
+          this.toastr.success(res.message)
+        },
+        error: (err) => { console.log(err) }
+      })
+    }
+    else {
+      this.toastr.warning("", "Please Login")
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -13,6 +13,7 @@ import { StorageService } from 'src/app/shared/services/storage.service';
   styleUrls: ['./topbar.component.scss']
 })
 export class TopbarComponent implements OnInit {
+  userDetails !: any
   searchForm: FormGroup = new FormGroup({
     searchValue: new FormControl(null)
   })
@@ -50,7 +51,9 @@ export class TopbarComponent implements OnInit {
     private route: Router,
     public storage: StorageService,
     private auth: AuthService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private cdr: ChangeDetectorRef
+
   ) { }
 
   ngOnInit(): void {
@@ -61,8 +64,14 @@ export class TopbarComponent implements OnInit {
     if (storeCurrncy) {
       this.selectedCurrncy = storeCurrncy
       this.common.currncypipe.next(storeCurrncy)
-      console.log("_+_+_+_+_+_+_+__+_+_+_+_")
+
     }
+    this.common.tokenService.subscribe({
+      next: (res: any) => {
+        this.getusername()
+        this.cdr.markForCheck()
+      }
+    })
   }
 
   // selected the currency
@@ -72,13 +81,13 @@ export class TopbarComponent implements OnInit {
       this.selectedCurrncy = item
       this.storage.setStorageItem("defultCurrncy", item)
       this.common.currncypipe.next(this.selectedCurrncy)
-      console.log("======================")
+
     }
   }
 
   // for the search all product
   search() {
-  
+
     if (this.searchForm.value.searchValue && this.searchForm.valid) {
       this.common.searchfilters.next(this.searchForm.value.searchValue)
       this.route.navigate(['/Shop'])
@@ -96,8 +105,10 @@ export class TopbarComponent implements OnInit {
   logout() {
     this.auth.logout().subscribe({
       next: (res) => {
-        this.toast.success(res.message,"",{timeOut: 3000,progressBar: true,enableHtml: true});
+        this.toast.success(res.message);
         localStorage.removeItem("token")
+        this.common.tokenService.next(null)
+        this.route.navigate(['/'])
       },
       error: (err) => { console.log(err) }
     })
@@ -115,5 +126,13 @@ export class TopbarComponent implements OnInit {
     }
 
     return cookies[name];
+  }
+
+  getusername() {
+    this.userDetails = this.auth.deCodeToken()
+  }
+
+  goTo(path: string) {
+    this.common.commonFunctions(path)
   }
 }

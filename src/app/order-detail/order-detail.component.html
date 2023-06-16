@@ -1,0 +1,126 @@
+<div class="container p-2">
+
+
+
+    <div class="d-flex justify-content-between">
+
+        <div class="col">
+            <h5 class=" col section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Billing
+                    Address</span></h5>
+            <div class="col  m-1 flex-start">
+                <address>
+                    <div class="m-2">
+                        <i class="fas fa-map-marker-alt m-1"></i><b>{{orderDetails?.billingAddress?.title}}</b><br>
+                    </div>
+                    <hr>
+                    <i class="fas fa-user m-2"></i> <b>{{orderDetails?.billingAddress?.name}}</b><br>
+                    <i class="fas fa-phone-alt m-2"></i> {{orderDetails?.billingAddress?.mobileNo}}<br>
+                    <i class="fas fa-map-marked-alt m-2"></i> {{orderDetails?.billingAddress?.addressLineOne}}
+                    {{orderDetails?.billingAddress?.addressLineTwo}}<br>
+
+                    {{orderDetails?.billingAddress?.landmark}}, {{orderDetails?.billingAddress?.city}},
+                    {{orderDetails?.billingAddress?.state}},
+                    {{orderDetails?.billingAddress?.country}}, {{orderDetails?.billingAddress?.pincode}}
+                </address>
+
+            </div>
+        </div>
+        <div class="col">
+            <h5 class=" col section-title position-relative text-uppercase mb-3"><span
+                    class="bg-secondary pr-3">delivery Address</span></h5>
+            <div class="col  m-1 flex-start">
+                <address>
+                    <div class="m-2">
+                        <i class="fas fa-truck m-1"></i><b>{{orderDetails?.deliveryAddress?.title}}</b><br>
+                    </div>
+                    <hr>
+                    <i class="fas fa-user m-2"></i> <b>{{orderDetails?.deliveryAddress?.name}}</b><br>
+                    <i class="fas fa-phone-alt m-2"></i> {{orderDetails?.deliveryAddress?.mobileNo}}<br>
+                    <i class="fas fa-map-marked-alt m-2"></i> {{orderDetails?.deliveryAddress?.addressLineOne}}
+                    {{orderDetails?.deliveryAddress?.addressLineTwo}}<br>
+
+                    {{orderDetails?.deliveryAddress?.landmark}}, {{orderDetails?.deliveryAddress?.city}},
+                    {{orderDetails?.deliveryAddress?.state}},
+                    {{orderDetails?.deliveryAddress?.country}}, {{orderDetails?.deliveryAddress?.pincode}}
+                </address>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col table-responsive mb-5 mt-3">
+        <table class="table table-light table-borderless table-hover text-center mb-0 w-100">
+            <thead class="thead-dark">
+                <tr>
+                    <th>No. </th>
+                    <th>Products Image </th>
+                    <th>Products Name </th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+
+                </tr>
+            </thead>
+
+            <tbody class="align-middle">
+                <tr *ngFor="let item of orderDetails?.products ; let index = index">
+                    <td class="align-middle">
+                        {{index +1}}
+
+                    </td>
+                    <td class="align-middle">
+                        <img src="{{item?.productDetails?.image |imgconcate}}" alt=""
+                            style="width: 70px; height: 70px; align-self: flex-start">
+
+                    </td>
+                    <td class="d-flex ">
+
+                        <span class="p-4 align-middle">{{item?.productDetails?.title}}</span>
+                    </td>
+
+                    <td class="align-middle">{{item?.productDetails?.price |currency:(common.currncypipe| async)}}</td>
+                    <td class="align-middle">
+                        {{item.quantity}}
+
+                    </td>
+                    <td class="align-middle">{{(item.quantity*item?.productDetails?.price) |currency
+                        :(common.currncypipe|
+                        async)}}</td>
+
+                </tr>
+
+            </tbody>
+
+
+
+        </table>
+        <div class="float-right p-0 mt-3 col-4">
+
+            <div class="bg-light p-30 mb-5">
+                <div class="border-bottom pb-2">
+                    <div class="d-flex justify-content-between mb-3">
+                        <h6>Total Amount</h6>
+                        <h6>{{orderDetails.totalAmount |currency :(common.currncypipe| async)}}</h6>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="font-weight-medium">Shipping</h6>
+                        <h6 class="font-weight-medium">{{orderDetails.shippingAmount |currency
+                            :(common.currncypipe| async)}}</h6>
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <div class="d-flex justify-content-between mt-2">
+                        <h5>Total</h5>
+                        <h5>{{orderDetails.shippingAmount + orderDetails.totalAmount |currency
+                            :(common.currncypipe| async)}}</h5>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+    </div>

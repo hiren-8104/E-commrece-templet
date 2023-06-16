@@ -34,9 +34,7 @@ export class LogInComponent implements OnInit {
     this.getOffer()
   }
 
-  ngAfterViewInit() {
 
-  }
 
 
   // login aapi calling the auth service
@@ -45,10 +43,17 @@ export class LogInComponent implements OnInit {
     if (this.logInForm.valid) {
       this.auth.logIn(this.logInForm.value).subscribe({
         next: (res) => {
-          this.toastr.success(res.message)
-          this.storage.setStorageItem("token", res.token)
+          if (res.status=='200'){
+            this.toastr.success(res.message)
+            this.storage.setStorageItem("token", res.token)
+            this.commonService.tokenService.next(res.token)
+            this.router.navigate(['/'])
+          }
+          else{
+            this.toastr.error(res.message)
 
-          this.router.navigate(['/'])
+          }
+
         },
         error: (err) => { console.log(err) }
       })

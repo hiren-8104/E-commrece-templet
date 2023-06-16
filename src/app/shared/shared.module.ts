@@ -21,11 +21,10 @@ import { BrowserModule } from '@angular/platform-browser';
     SearchFilterPipe,
     RatingComponent,
     ImgconcatePipe,
-    
+
 
   ],
   imports: [
-    // BrowserModule,
     CommonModule,
     RouterModule,
     NgxPaginationModule
@@ -34,11 +33,12 @@ import { BrowserModule } from '@angular/platform-browser';
   exports: [
     OffersComponent,
     ProductComponent,
-    ImgconcatePipe
+    ImgconcatePipe,
+    RatingComponent
 
   ],
   providers: [
-    
+
   ]
 })
 export class SharedModule { }

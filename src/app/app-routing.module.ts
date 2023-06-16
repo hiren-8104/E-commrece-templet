@@ -9,6 +9,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { CheckoutComponent } from './checkout/checkout.component';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { LogInComponent } from './auth/log-in/log-in.component';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
 
 const routes: Routes = [
   {
@@ -19,7 +21,7 @@ const routes: Routes = [
     path: 'auth',
     // pathMatch:'full',
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
-   
+
   },
   {
     path: 'contact',
@@ -50,10 +52,19 @@ const routes: Routes = [
     component: FavoriteComponent
   },
   {
+    path: "orders",
+    component: MyOrdersComponent
+  },
+  {
+    path: "order-details",
+    component: OrderDetailComponent
+  },
+  {
     path: "notfound",
     component: PageNotFoundComponent
   },
-  
+
+
 
 ];
 

@@ -51,7 +51,8 @@ export class ShopCartComponent implements OnInit {
     }
   }
 
-  constructor(private activatedRoute: ActivatedRoute,
+  constructor(
+    private activatedRoute: ActivatedRoute,
     public commonService: CommonService,
     private route: Router,
     private cdr: ChangeDetectorRef
@@ -66,7 +67,7 @@ export class ShopCartComponent implements OnInit {
     // get category form params
     this.activatedRoute.params.subscribe((params: any) => {
       if (params['category']) {
-        this.filterDataForBody.filter={}
+        this.filterDataForBody.filter = {}
         // console.log(params['category'], "+++++++++++++++++++++", this.filterDataForBody)
         this.filterDataForBody['filter']['category'] = params['category'];
         this.getAllProduct()
@@ -188,7 +189,7 @@ export class ShopCartComponent implements OnInit {
     this.commonService.searchfilters.subscribe({
       next: (res) => {
         if (res.length > 0) {
-          console.log(res, "******************************")
+
           if (!("filter" in this.filterDataForBody)) {
             this.filterDataForBody['filter'] = {}
             if (!("search" in this.filterDataForBody.filter)) {

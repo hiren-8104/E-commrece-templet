@@ -25,7 +25,10 @@ import { BreacrumbComponent } from './breacrumb/breacrumb.component';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { SetTokenInterceptor } from './set-token.interceptor';
 import { ToastrModule } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MyOrdersComponent } from './my-orders/my-orders.component'
+import { ErrorHandlingInterceptor } from './error-handling.interceptor';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
 
 
 @NgModule({
@@ -41,7 +44,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
     CheckoutComponent,
     PageNotFoundComponent,
     BreacrumbComponent,
-    FavoriteComponent    
+    FavoriteComponent,
+    MyOrdersComponent,
+    OrderDetailComponent
 
   ],
   imports: [
@@ -57,10 +62,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
     NgxUsefulSwiperModule,
     NgxPaginationModule,
     ToastrModule.forRoot()
-   
-  
+
+
   ],
-  providers: [ {provide: HTTP_INTERCEPTORS, useClass: SetTokenInterceptor, multi:true}],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SetTokenInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlingInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

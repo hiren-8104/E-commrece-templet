@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from '../shared/services/common.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-contact',
@@ -12,9 +13,10 @@ export class ContactComponent implements OnInit {
     name: ["", [Validators.required]],
     email: ["", [Validators.required, Validators.email]],
     subject: ["", [Validators.required]],
-    massage: ["", [Validators.required]]
+    message: ["", [Validators.required]]
   });
-  constructor(private fb: FormBuilder, private common: CommonService) { }
+  constructor(private fb: FormBuilder, private common: CommonService, private toaster: ToastrService
+    ) { }
 
   ngOnInit(): void {
     // breadcrumbs
@@ -26,8 +28,13 @@ export class ContactComponent implements OnInit {
 
   // contact form data
   contactFormSubmit() {
+    console.log(this.contactForm.value)
     if (this.contactForm.valid) {
-      alert("your form has been submitted")
+     this.common.contactUs(this.contactForm.value).subscribe({
+      next:(res:any)=>{
+        this.toaster.success(res.message)
+      }
+     })
     }
     else {
       alert("Error! Please try again")

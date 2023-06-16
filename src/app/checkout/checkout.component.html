@@ -5,42 +5,71 @@
 
 <!-- Checkout Start -->
 <div class="container-fluid">
-    <div class="row px-xl-5">
+    <div class="container ">
+        <div class="row">
+
+            <div class="col-3 bg-light m-1 flex-start" *ngFor="let item of userAddresses; let i = index">
+                <div class=" d-flex justify-content-around pt-3">
+
+                    <input (change)="addressChange(i ,item.addressId,'change')" class="custom-margin" type="radio"
+                        name="address">
+                    <label for="" class="d-block"><b>{{item.title}}</b></label>
+                    <span class="text-warning" (click)="addressChange(i,item.addressId,'edit')"> <i
+                            class="fas fa-edit"></i></span>
+                    <span class="text-danger" (click)="removeAddress(i)"><i class="fas fa-thin fa-trash"></i>
+                    </span>
+
+                </div>
+                <hr>
+                <address>
+                    <b>{{item.name}}</b><br>
+                    {{item.mobileNo}}<br>
+                    {{item.landmark}}, {{item.city}}, {{item.state}}, {{item.country}}, {{item.pincode}}
+                </address>
+
+
+            </div>
+        </div>
+
+    </div>
+    <div class="row px-xl-5 mt-3">
         <div class="col-lg-8">
-            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Billing
-                    Address </span></h5>
+            <h5 class="section-title position-relative text-uppercase mb-3">
+                <span class="bg-secondary pr-3">
+                    {{(!isUpdateAddress)? "Billing Address" : "Upadate Address"}}
+                </span>
+                <span class="float-right bg-warning" (click)="clearForm()">
+                   
+                  <small>New Address</small>  
+                </span>
+            </h5>
             <div class="bg-light p-30 mb-5">
                 <form [formGroup]="billingAdress">
                     <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label>First Name</label>
-                            <input class="form-control" type="text" placeholder="John" formControlName="firstName">
+                        <div class="col-md-12 form-group w-100">
+                            <label>Address Name</label>
+                            <input class="form-control" type="text" value=""
+                                placeholder="Home Address , Office Address, etc..." formControlName="title">
+
                             <span class="help-block text-danger"
-                                *ngIf="billingAdress.controls['firstName'].hasError('required') && billingAdress.controls['firstName'].touched ">
-                                Please enter your name
+                                *ngIf="billingAdress.controls['title'].hasError('required') && billingAdress.controls['title'].touched ">
+                                please a add address Title
                             </span>
 
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Last Name</label>
-                            <input class="form-control" type="text" placeholder="Doe" formControlName="lastName">
+                            <label>Full Name</label>
+                            <input class="form-control" type="text" placeholder="John" formControlName="name">
                             <span class="help-block text-danger"
-                                *ngIf="billingAdress.controls['lastName'].hasError('required') && billingAdress.controls['lastName'].touched ">
-                                Please enter your lastName
+                                *ngIf="billingAdress.controls['name'].hasError('required') && billingAdress.controls['name'].touched ">
+                                Please enter your name
                             </span>
+
                         </div>
-                        <div class="col-md-6 form-group">
-                            <label>E-mail</label>
-                            <input class="form-control" type="text" placeholder="example@email.com"
-                                formControlName="email">
-                            <span class="help-block text-danger"
-                                *ngIf="billingAdress.controls['email'].hasError('required') && billingAdress.controls['email'].touched ">
-                                Please enter your email
-                            </span>
-                        </div>
+
                         <div class="col-md-6 form-group">
                             <label>Mobile No</label>
-                            <input class="form-control" type="text" placeholder="+123 456 789"
+                            <input class="form-control" type="number" placeholder="+123 456 789"
                                 formControlName="mobileNo">
                             <span class="help-block text-danger"
                                 *ngIf="billingAdress.controls['mobileNo'].hasError('required') && billingAdress.controls['mobileNo'].touched ">
@@ -49,31 +78,24 @@
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Address Line 1</label>
-                            <input class="form-control" type="text" placeholder="123 Street" formControlName="address">
+                            <input class="form-control" type="text" placeholder="123 Street"
+                                formControlName="addressLineOne">
                             <span class="help-block text-danger"
-                                *ngIf="billingAdress.controls['address'].hasError('required') && billingAdress.controls['address'].touched ">
+                                *ngIf="billingAdress.controls['addressLineOne'].hasError('required') && billingAdress.controls['addressLineOne'].touched ">
                                 Please enter your address
                             </span>
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Address Line 2</label>
                             <input class="form-control" type="text" placeholder="123 Street"
-                                formControlName="secondAddress">
+                                formControlName="addressLineTwo">
                         </div>
                         <div class="col-md-6 form-group">
                             <label>Country</label>
-                            <input class="form-control" type="text" placeholder="123 Street" formControlName="country">
+                            <input class="form-control" type="text" placeholder="USA" formControlName="country">
                             <span class="help-block text-danger"
                                 *ngIf="billingAdress.controls['country'].hasError('required') && billingAdress.controls['country'].touched ">
                                 Please enter your country
-                            </span>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>City</label>
-                            <input class="form-control" type="text" placeholder="New York" formControlName="city">
-                            <span class="help-block text-danger"
-                                *ngIf="billingAdress.controls['city'].hasError('required') && billingAdress.controls['city'].touched ">
-                                Please enter your city
                             </span>
                         </div>
                         <div class="col-md-6 form-group">
@@ -85,128 +107,146 @@
                             </span>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>ZIP Code</label>
-                            <input class="form-control" type="text" placeholder="123" formControlName="zipCode">
+                            <label>City</label>
+                            <input class="form-control" type="text" placeholder="New York" formControlName="city">
                             <span class="help-block text-danger"
-                                *ngIf="billingAdress.controls['zipCode'].hasError('required') && billingAdress.controls['zipCode'].touched ">
+                                *ngIf="billingAdress.controls['city'].hasError('required') && billingAdress.controls['city'].touched ">
+                                Please enter your city
+                            </span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Landmark</label>
+                            <input class="form-control" type="text" placeholder="Time Square"
+                                formControlName="landmark">
+                            <span class="help-block text-danger"
+                                *ngIf="billingAdress.controls['landmark'].hasError('required') && billingAdress.controls['landmark'].touched ">
+                                Please enter your landmark
+                            </span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>ZIP Code</label>
+                            <input class="form-control" type="number" placeholder="123" formControlName="pincode">
+                            <span class="help-block text-danger"
+                                *ngIf="billingAdress.controls['pincode'].hasError('required') && billingAdress.controls['pincode'].touched ">
                                 Please enter your zipCode
                             </span>
                         </div>
-                        <div class="col-md-12 form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="newaccount">
-                                <label class="custom-control-label" for="newaccount">Create an account</label>
+                        <ng-container *ngIf="!isUpdateAddress">
+
+                            <div class="col-md-12 form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="newaccount">
+                                    <label class="custom-control-label" for="newaccount">Create an account</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" [checked]="isChecked"
-                                    (change)="addMoreDetails()" id="shipto">
-                                <label class="custom-control-label" for="shipto">Ship to different address</label>
+                            <div class="col-md-12">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" [checked]="isOtherAddress"
+                                        (change)="addMoreDetails()" id="shipto">
+                                    <label class="custom-control-label" for="shipto">Ship to different address</label>
+                                </div>
                             </div>
-                        </div>
+                        </ng-container>
                     </div>
+                    <ng-container *ngIf="isUpdateAddress">
+                        <button (click)="updateAddress()" class="btn btn-warning"> Submit Now</button>
+                    </ng-container>
                 </form>
             </div>
-
-        
-
-            <div *ngIf="isChecked" class="mb-5" id="shipping-address ">
+            <div *ngIf="isOtherAddress" class="mb-5" id="shipping-address ">
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Shipping
                         Address</span></h5>
                 <div class="bg-light p-30">
-                    <form [formGroup]="billingAdress">
-                        <div class="row" formArrayName="moreDetails"
-                            *ngFor="let item of this.billingAdress.get('moreDetails')?.value; let i = index;">
+                    <form [formGroup]="shippingAddres">
+                        <div class="row">
+                            <div class="col-md-12 form-group w-100">
+                                <label>Address Name</label>
+                                <input class="form-control" type="text" value=""
+                                    placeholder="Home Address , Office Address, etc..." formControlName="title">
 
-                            <ng-container [formGroupName]="i">
-                                <div class="col-md-6 form-group">
-                                    <label>First Name </label>
-                                    <input class="form-control" type="text" placeholder="John"
-                                        formControlName="firstName" required>
-                                        <span class="help-block text-danger"
-                                        *ngIf="billingAdress.controls['firstName'].hasError('required') && billingAdress.controls['firstName'].touched ">
-                                        Please enter your name
-                                    </span>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label>Last Name</label>
-                                    <input class="form-control" type="text" placeholder="Doe"
-                                        formControlName="lastName">
-                                    <span class="help-block text-danger"
-                                        *ngIf="billingAdress.controls['lastName'].hasError('required') && billingAdress.controls['lastName'].touched ">
-                                        Please enter your lastName
-                                    </span>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label>E-mail</label>
-                                    <input class="form-control" type="text" placeholder="example@email.com"
-                                        formControlName="email">
-                                    <span class="help-block text-danger"
-                                        *ngIf="billingAdress.controls['email'].hasError('required') && billingAdress.controls['email'].touched ">
-                                        Please enter your email
-                                    </span>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label>Mobile No</label>
-                                    <input class="form-control" type="text" placeholder="+123 456 789"
-                                        formControlName="mobileNo">
-                                    <span class="help-block text-danger"
-                                        *ngIf="billingAdress.controls['mobileNo'].hasError('required') && billingAdress.controls['mobileNo'].touched ">
-                                        Please enter your mobileNo
-                                    </span>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label>Address Line 1</label>
-                                    <input class="form-control" type="text" placeholder="123 Street"
-                                        formControlName="address">
-                                    <span class="help-block text-danger"
-                                        *ngIf="billingAdress.controls['address'].hasError('required') && billingAdress.controls['address'].touched ">
-                                        Please enter your address
-                                    </span>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label>Address Line 2</label>
-                                    <input class="form-control" type="text" placeholder="123 Street"
-                                        formControlName="secondAddress">
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label>Country</label>
-                                    <input class="form-control" type="text" placeholder="123 Street"
-                                        formControlName="country">
-                                    <span class="help-block text-danger"
-                                        *ngIf="billingAdress.controls['country'].hasError('required') && billingAdress.controls['country'].touched ">
-                                        Please enter your country
-                                    </span>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label>City</label>
-                                    <input class="form-control" type="text" placeholder="New York"
-                                        formControlName="city">
-                                    <span class="help-block text-danger"
-                                        *ngIf="billingAdress.controls['city'].hasError('required') && billingAdress.controls['city'].touched ">
-                                        Please enter your city
-                                    </span>
+                                <span class="help-block text-danger"
+                                    *ngIf="billingAdress.controls['title'].hasError('required') && billingAdress.controls['title'].touched ">
+                                    please a add address Title
+                                </span>
 
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label>State</label>
-                                    <input class="form-control" type="text" placeholder="New York"
-                                        formControlName="state">
-                                    <span class="help-block text-danger"
-                                        *ngIf="billingAdress.controls['state'].hasError('required') && billingAdress.controls['state'].touched ">
-                                        Please enter your state
-                                    </span>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label>ZIP Code</label>
-                                    <input class="form-control" type="text" placeholder="123" formControlName="zipCode">
-                                    <span class="help-block text-danger"
-                                        *ngIf="billingAdress.controls['zipCode'].hasError('required') && billingAdress.controls['zipCode'].touched ">
-                                        Please enter your zipCode
-                                    </span>
-                                </div>
-                            </ng-container>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>First Name </label>
+                                <input class="form-control" type="text" placeholder="John" formControlName="name"
+                                    required>
+                                <span class="help-block text-danger"
+                                    *ngIf="billingAdress.controls['name'].hasError('required') && billingAdress.controls['name'].touched ">
+                                    Please enter your name
+                                </span>
+                            </div>
+
+
+                            <div class="col-md-6 form-group">
+                                <label>Mobile No</label>
+                                <input class="form-control" type="text" placeholder="+123 456 789"
+                                    formControlName="mobileNo">
+                                <span class="help-block text-danger"
+                                    *ngIf="billingAdress.controls['mobileNo'].hasError('required') && billingAdress.controls['mobileNo'].touched ">
+                                    Please enter your mobileNo
+                                </span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Address Line 1</label>
+                                <input class="form-control" type="text" placeholder="123 Street"
+                                    formControlName="addressLineOne">
+                                <span class="help-block text-danger"
+                                    *ngIf="billingAdress.controls['addressLineOne'].hasError('required') && billingAdress.controls['addressLineOne'].touched ">
+                                    Please enter your address
+                                </span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Address Line 2</label>
+                                <input class="form-control" type="text" placeholder="123 Street"
+                                    formControlName="addressLineTwo">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Country</label>
+                                <input class="form-control" type="text" placeholder="123 Street"
+                                    formControlName="country">
+                                <span class="help-block text-danger"
+                                    *ngIf="billingAdress.controls['country'].hasError('required') && billingAdress.controls['country'].touched ">
+                                    Please enter your country
+                                </span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>State</label>
+                                <input class="form-control" type="text" placeholder="New York" formControlName="state">
+                                <span class="help-block text-danger"
+                                    *ngIf="billingAdress.controls['state'].hasError('required') && billingAdress.controls['state'].touched ">
+                                    Please enter your state
+                                </span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>City</label>
+                                <input class="form-control" type="text" placeholder="New York" formControlName="city">
+                                <span class="help-block text-danger"
+                                    *ngIf="billingAdress.controls['city'].hasError('required') && billingAdress.controls['city'].touched ">
+                                    Please enter your city
+                                </span>
+
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>landmark</label>
+                                <input class="form-control" type="text" placeholder="New York"
+                                    formControlName="landmark">
+                                <span class="help-block text-danger"
+                                    *ngIf="billingAdress.controls['landmark'].hasError('required') && billingAdress.controls['landmark'].touched ">
+                                    Please enter your landmark
+                                </span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>PIN Code</label>
+                                <input class="form-control" type="text" placeholder="123" formControlName="pincode">
+                                <span class="help-block text-danger"
+                                    *ngIf="billingAdress.controls['pincode'].hasError('required') && billingAdress.controls['pincode'].touched ">
+                                    Please enter your zipCode
+                                </span>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -261,7 +301,7 @@
                             <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
                         </div>
                     </div>
-                    <button class="btn btn-block btn-primary font-weight-bold py-3" (click)="placeOrder()">Place
+                    <button class="btn btn-block btn-primary font-weight-bold py-3" (click)="ganrateOrder()">Place
                         Order</button>
                 </div>
             </div>

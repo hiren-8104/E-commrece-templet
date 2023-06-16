@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 
@@ -19,7 +20,7 @@ export class RegistrationComponent implements OnInit {
     timezone: ["UTC+05:30", Validators.required],
     language: ["English", Validators.required],
   })
-  constructor(private fb: FormBuilder, private authService: AuthService, public commonService: CommonService) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, public commonService: CommonService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getOffer()
@@ -30,6 +31,7 @@ export class RegistrationComponent implements OnInit {
       this.authService.registratoin(this.regetrationsForm.value).subscribe({
         next: (res: any) => {
           console.log(res, "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+          this.toastr.success(res.message)
         }
       })
     }

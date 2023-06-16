@@ -1,17 +1,17 @@
-<div class="row px-xl-5 " [ngClass]="{'custom-row' : productDetailsData}">
-        <ng-container
+<div class="row px-xl-5 box-size " [ngClass]="{'custom-row' : productDetailsData}">
+    <ng-container
         *ngFor="let item of productData  | paginate : (commonService.paginationsService|async) ;index as index">
         <div class="col-lg-3 col-md-4 col-sm-6 pb-1 " [ngClass]="{'col-lg-4 col-md-6':allProductData}">
             <div class="product-item bg-light mb-4 ">
                 <div class="product-img position-relative overflow-hidden">
-                    <ng-container class="ps-3 d-flex justify-content-center">
+                    <!-- <ng-container class="ps-3 d-flex justify-content-center"> -->
 
-                        <img class=" imgWidth img-fluid  " src="{{item.image |imgconcate}}" alt="">
-                    </ng-container>
+                    <img class=" imgWidth img-fluid align-items-center " src="{{item.image |imgconcate}}" alt="">
+                    <!-- </ng-container> -->
                     <div class="product-action">
                         <a (click)="addToCart(item._id)" class="btn btn-outline-dark btn-square"><i
                                 class="fa fa-shopping-cart"></i></a>
-                        <a (click)="makeFavourite(item)" class="btn btn-outline-dark btn-square">
+                        <a (click)="makeFavourite(item, index)" class="btn btn-outline-dark btn-square">
                             <i class="far fa-heart " [ngClass]="{'fa text-danger':favData}"></i>
                         </a>
                         <a class="btn btn-outline-dark btn-square"><i class="fa fa-sync-alt"></i></a>
@@ -26,20 +26,28 @@
                         <h5>{{item.price | currency:(commonService.currncypipe| async)}}</h5>
                         <h6 class="text-muted ml-2"><del>{{item.price}}</del></h6>
                     </div>
-                    <app-rating [rating]="item"></app-rating>
+                    <ng-container class="d-flex">
+                        <app-rating [rating]="item.rating.rate"></app-rating>
+                        <small>({{item.rating.count}})</small>
+                    </ng-container>
                 </div>
             </div>
         </div>
     </ng-container>
 </div>
-<pagination-controls *ngIf=" allProductData && productData && productData.length" (pageChange)="p = $event ;pageChange($event)"></pagination-controls>
+<pagination-controls *ngIf=" allProductData && productData && productData.length"
+    (pageChange)="p = $event ;pageChange($event)"></pagination-controls>
 
 
 
 
-<div class="text-center py-4" *ngIf="productData && !productData.length">
+<!-- <div class="text-center py-4" *ngIf="productData && !productData.length">
     <img src="https://cdn-icons-png.flaticon.com/128/9019/9019239.png" alt="" height="200px" width="200px">
     <h1 class=" text-decoration-none titlewrap d-flex justify-content-center">Those type Product is Not
         available
     </h1>
-</div>
+</div> -->
+
+
+
+

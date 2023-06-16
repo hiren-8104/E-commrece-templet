@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 
@@ -25,6 +26,10 @@ export class HeaderComponent implements OnInit {
         route: "/Shop"
       },
       {
+        navName: "My Orders",
+        route: "/orders"
+      },
+      {
         navName: "Contact",
         route: "/contact"
       },
@@ -36,25 +41,32 @@ export class HeaderComponent implements OnInit {
     public commonsercice: CommonService,
     public route: Router,
     private storage: StorageService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private auth: AuthService
   ) { }
   cateToggle: boolean = false
 
 
   ngOnInit(): void {
-    this.getFavoriteItemslength()
-    let favItem: any = this.storage.getStorageItem("favorite")
-    if (favItem) {
-      this.favItemCount = JSON.parse(favItem).length
+    this.getFavoriteProductCount()
+    this.getCartProductCount()
 
-
-    }
+    this.commonsercice.totalCartProductService.subscribe({
+      next: (res: any) => {
+        this.cartItemCount = (res) ? res :0
+      }
+    })
+    this.commonsercice.totalfavoriteProductService.subscribe({
+      next: (res: any) => {
+        this.favItemCount = (res) ? res :0
+      }
+    })
     // subscribe a list of manu
-    this.cartItemCount = this.storage.getStorageItem("cartItem")
+
     let list = { isCategoryList: true }
     this.commonsercice.getProduct(list).subscribe({
       next: (res: any) => {
-        console.log(res)
+
         res.data.categories.forEach((ele: any) => {
           this.headerSection.category.push(ele.title)
         })
@@ -75,10 +87,23 @@ export class HeaderComponent implements OnInit {
   }
 
   // subscribe to get favorite items  length
-  getFavoriteItemslength() {
-    this.commonsercice.favouritesProductsService.subscribe({
-      next: (res) => {
-        this.favItemCount = res.length
+  getFavoriteProductCount() {
+    this.commonsercice.getfavoriteProduct().subscribe({
+      next: (res: any) => {
+
+
+        this.favItemCount = res.data?.products.length
+      }
+    })
+  }
+
+  // subscribe to get favorite items  length
+  getCartProductCount() {
+    this.commonsercice.getCartItem().subscribe({
+      next: (res: any) => {
+     
+
+        this.cartItemCount = res.data?.products.length
       }
     })
   }
@@ -90,12 +115,6 @@ export class HeaderComponent implements OnInit {
     this.dropDwonIsActive = false
   }
   goTo(path: any) {
-    let token = this.storage.getStorageItem("token")
-    if (token) {
-      this.route.navigate([`${path}`])
-    }
-    else {
-this.toastrService.warning( `Login and see your  ${path}`,"Please Login")
-    }
+    this.commonsercice.commonFunctions(path)
   }
 }

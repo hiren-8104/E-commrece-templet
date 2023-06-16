@@ -1,15 +1,18 @@
+<!-- <div title="{{rating}}" class="d-flex align-items-center justify-content-center mb-1 text-primary">
+  <small (click)="rating = 1"
+    [class]="(rating == 0 ) ? 'far fa-star mr-1' : (rating > 0 && rating < 1) ? 'fa fa-star-half-alt mr-1' : 'fa fa-star mr-1'"></small>
+  <small (click)="rating = 2"
+    [class]="(rating > 1 && rating < 2) ? 'fa fa-star-half-alt mr-1' : (rating >= 2) ? 'fa fa-star mr-1' : 'far fa-star mr-1'"></small>
+  <small (click)="rating = 3"
+    [class]="(rating > 2 && rating < 3) ? 'fa fa-star-half-alt mr-1' : (rating >= 3) ? 'fa fa-star mr-1' : 'far fa-star mr-1'"></small>
+  <small (click)="rating = 4"
+    [class]="(rating > 3 && rating < 4) ? 'fa fa-star-half-alt mr-1' : (rating >= 4) ? 'fa fa-star mr-1' : 'far fa-star mr-1'"></small>
+  <small (click)="rating = 5"
+    [class]="(rating > 4 && rating < 5) ? 'fa fa-star-half-alt mr-1' : (rating >= 5) ? 'fa fa-star mr-1' : 'far fa-star mr-1'"></small>
 
-<div title="{{rating.rating.rate}}"  class="d-flex align-items-center justify-content-center mb-1 text-primary" *ngIf="rating.rating">
-    <small
-      [class]="(rating.rating.rate == 0) ? 'far fa-star mr-1' : (rating.rating.rate > 0 && rating.rating.rate < 1) ? 'fa fa-star-half-alt mr-1' : 'fa fa-star mr-1'"></small>
-    <small
-      [class]="(rating.rating.rate > 1 && rating.rating.rate < 2) ? 'fa fa-star-half-alt mr-1' : (rating.rating.rate >= 2) ? 'fa fa-star mr-1' : 'far fa-star mr-1'"></small>
-    <small
-      [class]="(rating.rating.rate > 2 && rating.rating.rate < 3) ? 'fa fa-star-half-alt mr-1' : (rating.rating.rate >= 3) ? 'fa fa-star mr-1' : 'far fa-star mr-1'"></small>
-    <small
-      [class]="(rating.rating.rate > 3 && rating.rating.rate < 4) ? 'fa fa-star-half-alt mr-1' : (rating.rating.rate >= 4) ? 'fa fa-star mr-1' : 'far fa-star mr-1'"></small>
-    <small
-      [class]="(rating.rating.rate > 4 && rating.rating.rate < 5) ? 'fa fa-star-half-alt mr-1' : (rating.rating.rate >= 5) ? 'fa fa-star mr-1' : 'far fa-star mr-1'"></small>
-    <small>({{rating.rating.count}})</small>
-</div>
+</div> -->
 
+<ng-container *ngFor="let item of [1,2,3,4,5]">
+  <small class="text-warning"  title="{{rating}}"  (click)="giveRating(item)" 
+    [class]="(rating > item - 1 && rating < item) ? 'fa fa-star-half-alt mr-1' : (rating >= item) ? 'fa fa-star mr-1' : 'far fa-star mr-1'"></small>
+</ng-container>

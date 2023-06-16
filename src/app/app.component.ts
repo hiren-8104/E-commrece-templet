@@ -27,9 +27,7 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit(): void {
-   if(!(this.validUser())){
-      this.toasterService.warning("", "Please Login Again")
-   }
+   
   }
   
   backToTop() {
@@ -45,8 +43,4 @@ export class AppComponent implements OnInit {
     }
   }
 
-  validUser(){
-    console.log("*************" ,this.auth.isValidToken())
-    return this.auth.isValidToken()
-  }
 }

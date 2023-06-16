@@ -7,12 +7,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { HomeModule } from '../home/home.module';
 import { RegistrationComponent } from './registration/registration.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 
 
 @NgModule({
   declarations: [
     LogInComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    ForgetPasswordComponent
   ],
   imports: [
     CommonModule,

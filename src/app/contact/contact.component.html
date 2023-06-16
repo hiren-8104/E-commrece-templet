@@ -16,7 +16,7 @@
                     <div class="control-group">
                         <input type="text" class="form-control" id="name" formControlName="name"
                             placeholder="Your Name" />
-                        <p >
+                        <p>
                             <span class="help-block text-danger"
                                 *ngIf="contactForm.controls['name'].hasError('required') && contactForm.controls['name'].touched ">
                                 Please enter your name
@@ -26,32 +26,32 @@
                     <div class="control-group">
                         <input type="email" class="form-control" id="email" formControlName="email"
                             placeholder="Your Email" />
-                            <p >
-                                <span class="help-block text-danger"
-                                    *ngIf="contactForm.controls['email'].hasError('required') && contactForm.controls['email'].touched ">
-                                    Please enter your email
-                                </span>
-                            </p>
+                        <p>
+                            <span class="help-block text-danger"
+                                *ngIf="contactForm.controls['email'].hasError('required') && contactForm.controls['email'].touched ">
+                                Please enter your email
+                            </span>
+                        </p>
                     </div>
                     <div class="control-group">
                         <input type="text" class="form-control" id="subject" formControlName="subject"
                             placeholder="Subject" />
-                            <p >
-                                <span class="help-block text-danger"
-                                    *ngIf="contactForm.controls['subject'].hasError('required') && contactForm.controls['subject'].touched ">
-                                    Please enter your subject
-                                </span>
-                            </p>
+                        <p>
+                            <span class="help-block text-danger"
+                                *ngIf="contactForm.controls['subject'].hasError('required') && contactForm.controls['subject'].touched ">
+                                Please enter your subject
+                            </span>
+                        </p>
                     </div>
                     <div class="control-group">
                         <textarea class="form-control" rows="8" id="message" placeholder="Message"
-                            formControlName="massage"></textarea>
-                            <p >
-                                <span class="help-block text-danger"
-                                    *ngIf="contactForm.controls['massage'].hasError('required') && contactForm.controls['massage'].touched ">
-                                    Please enter your massage
-                                </span>
-                            </p>
+                            formControlName="message"></textarea>
+                        <p>
+                            <span class="help-block text-danger"
+                                *ngIf="contactForm.controls['message'].hasError('required') && contactForm.controls['message'].touched ">
+                                Please enter your message
+                            </span>
+                        </p>
                     </div>
                     <div>
                         <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Send

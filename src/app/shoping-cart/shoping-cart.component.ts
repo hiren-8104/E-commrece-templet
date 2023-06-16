@@ -27,7 +27,7 @@ export class ShopingCartComponent implements OnInit {
 
   ngOnInit(): void {
 
-   
+
     // breadcrumbs
     this.common.breadcrumbs.next(
       [
@@ -36,57 +36,92 @@ export class ShopingCartComponent implements OnInit {
         { label: "Shoping Cart", route: "cart" }
       ])
 
-    // cart item for a user id '5'
+    this.getcart()
+  }
+
+  getcart() {
     this.common.getCartItem().subscribe({
       next: (resp) => {
         this.cartProduct.cartItem = resp.data.products
-       console.log(this.cartProduct.cartItem , "MMMMMMMMMMMMMMMMMMMMMMMMMMMM")
-       this.cdr.markForCheck()
+        this.finalSum()
+        this.cdr.markForCheck()
       },
       error: (err) => { console.log(err) }
     })
   }
 
 
-  // increment quantity
-  increaseQuntity(i: any) {
-    this.cartProduct.cartItem[i].quantity = 1 + parseInt(this.cartProduct.cartItem[i].quantity)
-    this.finalSum()
+  // increment drecrement quantity
+  quantityPlusMinus(opration: string, index: number, id: string) {
+
+    this.cartProduct.cartItem[index].quantity = (opration === '+') ? (this.cartProduct.cartItem[index].quantity + 1) : (this.cartProduct.cartItem[index].quantity - 1);
+    if (this.cartProduct.cartItem[index].quantity >= 1) {
+      let body = {
+       
+        productId: id,
+        quantity: this.cartProduct.cartItem[index].quantity
+      }
+      console.log("+++", this.cartProduct.cartItem[index].quantity, "++++++++++++", body)
+      this.common.addIntoCart(body).subscribe({
+        next: (res) => {
+          this.finalSum()
+          this.cdr.markForCheck()
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      })
+    }
+    else {
+      this.cartProduct.cartItem[index].quantity = 1
+
+    }
+
+
   }
 
-  // decrease quntity
-  decreaseQuntity(i: any) {
-    if (this.cartProduct.cartItem[i].quantity > 1) {
-      this.cartProduct.cartItem[i].quantity = parseInt(this.cartProduct.cartItem[i].quantity) - 1
-      this.finalSum()
-    }
-  }
+
 
   // remove product
-  removeItem(i: any) {
-    this.cartProduct.cartItem.splice(i, 1)
-    localStorage.setItem("cartItem", this.cartProduct.cartItem.length)
-    this.finalSum()
+  removeItem(index: number, id: any) {
+    this.common.removeCartItem(id.cartId).subscribe({
+      next: (res) => {
+        this.cartProduct.cartItem.splice(index, 1)
+        this.common.totalCartProductService.next(this.cartProduct.cartItem.length)
+        this.finalSum()
+        this.cdr.markForCheck()
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+
+
   }
 
 
   // final sum of all product
   finalSum() {
+    let count = 1
+
     if (this.cartProduct.cartItem.length == 0) {
       this.cartProduct.cartCheck.shipping = 0
     }
-    this.cartProduct.cartCheck.subTotal = 0
+    let sum = 0
+
     this.cartProduct.cartItem.forEach((ele: any) => {
-      let sum = 0
-      sum += ele.quantity * ele.price
-      this.cartProduct.cartCheck.subTotal += sum
-    });
+      sum += ele.quantity * ele.product.price
+    })
+    this.cartProduct.cartCheck.subTotal = sum
   }
 
   // goto checkout page
   goToCheckOut() {
-    this.common.checkoutData.next(this.cartProduct)
-    this.router.navigate(['/checkout'])
-  }
+    if(this.cartProduct.cartItem.length != 0){
+
+      this.common.checkoutData.next(this.cartProduct)
+      this.router.navigate(['/checkout'])
+    }
+  } 
 
 }
