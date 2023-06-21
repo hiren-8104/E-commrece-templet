@@ -2,8 +2,15 @@
     <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
         <span class="bg-secondary pr-3">Favourite Products</span>
     </h2>
+
+    <app-product *ngIf="data.length" [favData]='data'></app-product>
     
-<app-product  [favData]= 'data' ></app-product>
-    
+        <div class="container-fluid mx-xl-5 mb-4"  *ngIf="data.length == 0">
+
+            <h3> No One Favourite Product </h3>
+            <h5><a routerLink="/Shop" class="text-center">Back To Shop  </a></h5>
+
+        </div>
+   
 
 </div>

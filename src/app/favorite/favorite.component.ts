@@ -28,12 +28,6 @@ export class FavoriteComponent implements OnInit {
         this.data= res.data.products.map((ele:any)=>{
           return ele.product
         })
-        // res.data.products.forEach((ele:any, i:number)=>{
-          //   ele.product['favId']= ele._id
-          //   this.data.push(ele.product)
-          
-          // })
-          console.log("RRRRRRRR", res)
         console.log(this.data)
         this.cdr.markForCheck()
 

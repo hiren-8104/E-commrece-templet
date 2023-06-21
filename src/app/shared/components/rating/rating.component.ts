@@ -19,7 +19,7 @@ export class RatingComponent implements OnInit {
 
   }
   giveRating(startRate: any) {
-   if(!this.rating || this.isReviewFlag) {
+   if(!this.rating && this.isReviewFlag) {
      this.rating =startRate
     }
     this.rate.emit(startRate);

@@ -14,6 +14,11 @@ export class MyOrdersComponent implements OnInit {
   constructor(public common: CommonService, private cdr: ChangeDetectorRef, private router: Router) { }
 
   ngOnInit(): void {
+    this.common.breadcrumbs.next(
+      [
+        { label: "Home", route: "/" },
+        { label: "My Order", route: "order-details" }
+      ])
     this.getOrderesList()
   }
 
@@ -22,7 +27,7 @@ export class MyOrdersComponent implements OnInit {
   getOrderesList() {
     this.common.getAllOrders().subscribe({
       next: (res) => {
-        console.log(res.data.orders, "asdhgjjjjjjjjjjjjjjjjjjjjjjj");
+     
 
         this.manageOrderData = res.data.orders
         this.cdr.markForCheck()

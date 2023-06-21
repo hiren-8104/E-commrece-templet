@@ -13,6 +13,13 @@ export class OrderDetailComponent implements OnInit {
   constructor(private activeRoute: ActivatedRoute, public common: CommonService ) { }
 
   ngOnInit(): void {
+    this.common.breadcrumbs.next(
+      [
+        { label: "Home", route: "/" },
+        { label: "My Order", route: "orders" },
+        { label: "Order Detail", route: "orders" }
+
+      ])
     this.activeRoute.queryParams.subscribe(params => {
       console.log(params['id']);
       this.common.getAllOrders(params['id']).subscribe({

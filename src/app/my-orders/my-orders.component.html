@@ -1,3 +1,6 @@
+<!-- Breadcrumb Start -->
+<app-breacrumb></app-breacrumb>
+<!-- Breadcrumb End -->
 <section class="">
 
 
@@ -25,7 +28,7 @@
                         </tr>
                     </thead>
 
-                    <tbody class="align-middle">
+                    <tbody class="align-middle" >
                         <tr *ngFor="let i of manageOrderData ;index as index">
 
                             <td class="align-middle">
@@ -39,22 +42,30 @@
                             <td class="align-middle">
                                 -
                             </td>
-                            <td class="align-middle">
-                                pennding
+                            <td class="align-middle " [ngClass]="{'text-success ': i.status == 'Success'}">
+                                {{i.status }}
                             </td>
                             <td class="align-middle">
-                                <span (click)="viewOrder(i._id)">
+                                <button  class=" btn btn-outline-warning" (click)="viewOrder(i._id)">
 
-                                    <i class="fas fa-eye"></i>
-                                </span>
+                                  View Order
+                                </button>
                             </td>
                         </tr>
 
                     </tbody>
-
-
-
+                    
+                    
+                    
                 </table>
+                <ng-container *ngIf="!manageOrderData">
+                    <div  class="float-center">
+            
+                        <h3>  No One Order Product  </h3>
+                        <h5><a routerLink="/Shop" class="text-center">Shop Now</a></h5>
+                    
+                </div>
+                </ng-container>
 
             </div>
 

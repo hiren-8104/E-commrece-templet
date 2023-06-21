@@ -20,6 +20,7 @@ export class CheckoutComponent implements OnInit {
   userAddresses: any[] = [];
   checkOutData!: any
   formArray!: FormArray;
+  isAddressBookSelected: any = ''
   isUpdateAddress: boolean = false
   orderDetails: any = {
     shipToDifferentAddress: this.isOtherAddress,
@@ -61,7 +62,7 @@ export class CheckoutComponent implements OnInit {
     pincode: ['361320', Validators.required],
   });
 
-  constructor(private common: CommonService, private fb: FormBuilder, private toastr: ToastrService, private router: Router) { }
+  constructor(public common: CommonService, private fb: FormBuilder, private toastr: ToastrService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -72,16 +73,16 @@ export class CheckoutComponent implements OnInit {
       { label: "Shop", route: "/Shop" },
       { label: "CheckOut", route: "checkout" }
     ])
-    this.formArray = this.billingAdress.get('moreDetails') as FormArray;
+    
     this.getAddresses()
     // cart product data
     this.common.checkoutData.subscribe({
       next: (res) => {
-        if(!res){
-            this.router.navigate(['/cart'])
+        if (!res) {
+          this.router.navigate(['/cart'])
+          return
         }
-        this.orderDetails.totalAmount = res?.cartCheck.subTotal
-        this.orderDetails.shippingAmount = res?.cartCheck.shipping
+       
         this.checkOutData = res
 
 
@@ -104,6 +105,8 @@ export class CheckoutComponent implements OnInit {
   getAddresses() {
     this.common.getUserAddress().subscribe({
       next: (res: any) => {
+        console.log(res.data);
+
         this.userAddresses = res.data.addressBook
 
       }
@@ -145,8 +148,8 @@ export class CheckoutComponent implements OnInit {
         error: (err) => { console.log(err) }
       })
     }
-    else{
-      this.toastr.error("some field are missing" )
+    else {
+      this.toastr.error("some field are missing")
     }
 
 
@@ -203,11 +206,23 @@ export class CheckoutComponent implements OnInit {
 
 
   // }
-  clearForm() {
-    this.userAddressId = null
-    this.billingAdress.enable()
-    this.billingAdress.reset()
-    this.isOtherAddress = false
+  clearForm(callBy?: any) {
+    if (callBy && callBy === 'shippingAddres') {
+      this.userAddressId = null
+      this.shippingAddres.enable()
+      this.shippingAddres.reset()
+
+
+    }
+    else {
+
+      this.userAddressId = null
+      this.billingAdress.enable()
+      this.billingAdress.reset()
+      this.isOtherAddress = false
+      this.isAddressBookSelected = false;
+    }
+
   }
 
 
@@ -216,9 +231,24 @@ export class CheckoutComponent implements OnInit {
       next: (res: any) => {
         if (res.status == 200) {
           this.toastr.success(res.message)
+          this.router.navigate(['/'])
           return
         }
       }
     })
+  }
+  shippingAddresChange(i: any, addressId?: any, perpose?: any) {
+    if (perpose === "edit") {
+      this.isUpdateAddress = true
+      this.shippingAddres.enable()
+    }
+    else {
+      this.isUpdateAddress = false
+      this.shippingAddres.disable()
+    }
+    // this.userAddressId = addressId;
+    this.orderDetails.deliveryId = addressId
+    this.shippingAddres.patchValue(this.userAddresses[i])
+
   }
 }

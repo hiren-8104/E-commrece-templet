@@ -50,7 +50,7 @@ export class ProductDetailsComponent implements OnInit {
 
   })
 
-  constructor(private activatedRoute: ActivatedRoute, private commonService: CommonService, private fb: FormBuilder, private toastr: ToastrService) { }
+  constructor(private activatedRoute: ActivatedRoute, public commonService: CommonService, private fb: FormBuilder, private toastr: ToastrService) { }
 
 
   ngOnInit(): void {
@@ -69,9 +69,9 @@ export class ProductDetailsComponent implements OnInit {
       this.productId = params.ProductId
       this.commonService.getSelectedProduct(this.productId).subscribe({
         next: (res) => {
-          console.log(res.data.products[0]);
-          this.reviewForm.controls['productId'].setValue(res.data.products[0]._id)
-          this.selectedProduct = res.data.products[0]
+          console.log(res.data.product);
+          this.reviewForm.controls['productId'].setValue(res.data.product._id)
+          this.selectedProduct = res.data.product
 
         },
         error: (err) => { console.log(err) }
@@ -81,14 +81,18 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   // review Form 
-  formSubmit() {
+  ReViewformSubmit() {
     if (this.reviewForm.valid) {
-      console.log(this.reviewForm.value);
+      // console.log(this.reviewForm.value);
       
       this.commonService.addProductReview(this.reviewForm.value).subscribe({
 
         next: (res) => {
-          this.toastr.info(res.message)
+          if(res.status==200) {
+            this.reviewForm.reset()
+            this.toastr.success(res.message)
+            this.ngOnInit()
+          }
         }
       })
     }
@@ -121,7 +125,8 @@ export class ProductDetailsComponent implements OnInit {
     }
     this.commonService.addIntoCart(body).subscribe({
       next: (res) => {
-        this.toastr.info(res.message)
+        this.commonService.totalCartProductService.next(res.productsInCart)
+        this.toastr.success(res.message)
       },
       error: (err) => { console.log(err) }
     })

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
@@ -9,9 +10,13 @@ import { CommonService } from 'src/app/shared/services/common.service';
 export class HomeComponent implements OnInit {
   featureProductList!: any[]
   offerData!:any
-  constructor(private common: CommonService) { }
+  constructor(private common: CommonService,
+    private router: Router) { }
 
   ngOnInit(): void {
+    // this.common.breadcrumbs.next([])
+
+    
     this.getFeatureProduct()
     if(!this.offerData){
 

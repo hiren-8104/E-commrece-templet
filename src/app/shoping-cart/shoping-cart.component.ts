@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShopingCartComponent implements OnInit {
+  abc: any;
   cartProduct: any = {
     cartItem: [],
     cartCheck: {
@@ -17,6 +18,12 @@ export class ShopingCartComponent implements OnInit {
 
     }
   }
+  body: any = {
+
+    productId: '',
+    quantity: 0
+  }
+
 
 
   constructor(
@@ -52,31 +59,31 @@ export class ShopingCartComponent implements OnInit {
 
 
   // increment drecrement quantity
-  quantityPlusMinus(opration: string, index: number, id: string) {
+  // quantityPlusMinus(opration: string, index: number, id: string) {
 
-    this.cartProduct.cartItem[index].quantity = (opration === '+') ? (this.cartProduct.cartItem[index].quantity + 1) : (this.cartProduct.cartItem[index].quantity - 1);
-    if (this.cartProduct.cartItem[index].quantity >= 1) {
-      let body = {
-       
-        productId: id,
-        quantity: this.cartProduct.cartItem[index].quantity
-      }
-      console.log("+++", this.cartProduct.cartItem[index].quantity, "++++++++++++", body)
-      this.common.addIntoCart(body).subscribe({
-        next: (res) => {
-          this.finalSum()
-          this.cdr.markForCheck()
-        },
-        error: (err) => {
-          console.log(err)
-        }
-      })
+  //   this.cartProduct.cartItem[index].quantity = (opration === '+') ? (this.cartProduct.cartItem[index].quantity + 1) : (this.cartProduct.cartItem[index].quantity - 1);
+  //   if (this.cartProduct.cartItem[index].quantity >= 1) {
+  //     this.body = {
+
+  //       productId: id,
+  //       quantity: this.cartProduct.cartItem[index].quantity
+  //     }
+  //     this.addToCart()
+
+  //   }
+  //   else {
+  //     this.cartProduct.cartItem[index].quantity = 1
+
+  //   }
+  // }
+  quantityChange(opration: string, item: any){
+    (opration=='+')?(item.quantity++):(item.quantity--)
+    this.body = {
+      productId: item.product.productId,
+      quantity: item.quantity
     }
-    else {
-      this.cartProduct.cartItem[index].quantity = 1
-
-    }
-
+    this.addToCart();
+    this.cdr.markForCheck();
 
   }
 
@@ -99,6 +106,18 @@ export class ShopingCartComponent implements OnInit {
 
   }
 
+  addToCart() {
+    this.common.addIntoCart(this.body).subscribe({
+      next: (res) => {
+        this.finalSum()
+        this.cdr.markForCheck()
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
+  }
+
 
   // final sum of all product
   finalSum() {
@@ -117,11 +136,25 @@ export class ShopingCartComponent implements OnInit {
 
   // goto checkout page
   goToCheckOut() {
-    if(this.cartProduct.cartItem.length != 0){
-
+    if (this.cartProduct.cartItem.length != 0) {
+      console.log(this.cartProduct);
+      
       this.common.checkoutData.next(this.cartProduct)
       this.router.navigate(['/checkout'])
     }
-  } 
+  }
+
+  directQuntityChange(event: any,item: any) {
+    
+console.log(event);
+
+
+    this.body = {
+      productId: item.product.productId,
+      quantity: <Number>event
+    }
+    this.addToCart()
+
+  }
 
 }

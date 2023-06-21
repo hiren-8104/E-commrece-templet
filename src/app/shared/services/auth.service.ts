@@ -50,16 +50,16 @@ export class AuthService {
       const atTime = new Date()
       const toeknExTime = moment(expiryTime).subtract(15, 'minutes')
       let diff = moment(toeknExTime).diff(atTime, 'minutes')
-      console.log(diff);
+      // console.log(diff);
 
       if ("email" in decodeToken && diff > 0) {
-        console.log("generated NEW token");
+       
         return decodeToken
       }
       else if ("email" in decodeToken && diff <= 0) {
         this.RenewToken().subscribe({
           next: (res: any) => {
-            console.log("generated NEW token");
+            // console.log("generated NEW token");
 
             this.storage.setStorageItem("token", res.token)
 

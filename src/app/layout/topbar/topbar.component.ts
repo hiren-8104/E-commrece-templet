@@ -105,10 +105,10 @@ export class TopbarComponent implements OnInit {
   logout() {
     this.auth.logout().subscribe({
       next: (res) => {
-        this.toast.success(res.message);
         localStorage.removeItem("token")
         this.common.tokenService.next(null)
         this.route.navigate(['/'])
+        this.toast.success(res.message);
       },
       error: (err) => { console.log(err) }
     })

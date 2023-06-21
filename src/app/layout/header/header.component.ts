@@ -12,7 +12,7 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 })
 export class HeaderComponent implements OnInit {
   cartItemCount: any = 0
-  favItemCount: any = 0
+  favItemCount: any 
   dropDwonIsActive: boolean = false;
   headerSection: any = {
     category: [],
@@ -51,16 +51,17 @@ export class HeaderComponent implements OnInit {
     this.getFavoriteProductCount()
     this.getCartProductCount()
 
+
     this.commonsercice.totalCartProductService.subscribe({
       next: (res: any) => {
-        this.cartItemCount = (res) ? res :0
+        this.cartItemCount = (res) ? res : 0
       }
-    })
+    });
     this.commonsercice.totalfavoriteProductService.subscribe({
       next: (res: any) => {
-        this.favItemCount = (res) ? res :0
+        this.favItemCount = (res) ? res : 0
       }
-    })
+    });
     // subscribe a list of manu
 
     let list = { isCategoryList: true }
@@ -90,7 +91,8 @@ export class HeaderComponent implements OnInit {
   getFavoriteProductCount() {
     this.commonsercice.getfavoriteProduct().subscribe({
       next: (res: any) => {
-
+        this.commonsercice.totalCartProductService.next(res.data?.products.length)
+        console.log(res.data?.products.length, "favorite rohit       rrrrrrrrrrrr");
 
         this.favItemCount = res.data?.products.length
       }
@@ -101,8 +103,8 @@ export class HeaderComponent implements OnInit {
   getCartProductCount() {
     this.commonsercice.getCartItem().subscribe({
       next: (res: any) => {
-     
 
+        // console.log(res, "+++++++++++++++");
         this.cartItemCount = res.data?.products.length
       }
     })
@@ -116,5 +118,10 @@ export class HeaderComponent implements OnInit {
   }
   goTo(path: any) {
     this.commonsercice.commonFunctions(path)
+  }
+
+
+  getCurrentUSer() {
+
   }
 }

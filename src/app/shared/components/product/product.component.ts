@@ -52,7 +52,7 @@ export class ProductComponent implements OnInit {
       this.productData = this.allProductData
     }
     else if (this.favData) {
-      console.log("#######", this.favData)
+     
       this.productData = this.favData
 
       this.cdr.markForCheck()
@@ -102,10 +102,8 @@ export class ProductComponent implements OnInit {
     if (this.favData) {
       this.commonService.removefavoriteProduct(item._id).subscribe({
         next: (res) => {
-          console.log("success00000", item._id);
-
-          this.commonService.totalfavoriteProductService.next(this.favData.length)
           this.productData.splice(i, 1)
+          this.commonService.totalfavoriteProductService.next(this.productData.length)
           this.cdr.markForCheck()
         },
         error: (err) => { console.log(err) }
@@ -114,8 +112,10 @@ export class ProductComponent implements OnInit {
     else {
       this.commonService.addfavoritesProduct(item._id).subscribe({
         next: (res: any) => {
-          console.log("add api in count of fav")
-          this.toastr.warning("", "Please Login")
+          // this.commonService.totalfavoriteProductService.next('')
+          console.log(res ,"add api in count of fav")
+          this.commonService.totalfavoriteProductService.next(res?.favoriteProducts)
+          this.toastr.success(res.message)
 
         },
 
@@ -135,12 +135,15 @@ export class ProductComponent implements OnInit {
   }
 
   addToCart(id: string) {
+    let cartProductLength: number
 
+   
     if (this.auth.deCodeToken()) {
       let item = {
 
         productId: id,
-        quantity: <Number>1
+        quantity: <Number>1,
+        isAddedFromShop: true,
       }
 
 
@@ -148,6 +151,7 @@ export class ProductComponent implements OnInit {
         next: (res) => {
           console.log("add", res)
           this.toastr.success(res.message)
+          this.commonService.totalCartProductService.next(res.productsInCart)
         },
         error: (err) => { console.log(err) }
       })

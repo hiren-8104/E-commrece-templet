@@ -14,8 +14,7 @@
                         <a (click)="makeFavourite(item, index)" class="btn btn-outline-dark btn-square">
                             <i class="far fa-heart " [ngClass]="{'fa text-danger':favData}"></i>
                         </a>
-                        <a class="btn btn-outline-dark btn-square"><i class="fa fa-sync-alt"></i></a>
-                        <a class="btn btn-outline-dark btn-square"><i class="fa fa-search"></i></a>
+                       
                     </div>
                 </div>
                 <div class="text-center py-4">
@@ -24,9 +23,9 @@
 
                     <div class="d-flex align-items-center justify-content-center mt-2">
                         <h5>{{item.price | currency:(commonService.currncypipe| async)}}</h5>
-                        <h6 class="text-muted ml-2"><del>{{item.price}}</del></h6>
+                       
                     </div>
-                    <ng-container class="d-flex">
+                    <ng-container *ngIf="item.rating.count!=0" class="d-flex">
                         <app-rating [rating]="item.rating.rate"></app-rating>
                         <small>({{item.rating.count}})</small>
                     </ng-container>
