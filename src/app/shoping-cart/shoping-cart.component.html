@@ -33,12 +33,12 @@
                         <td class="align-middle">
                             <div class="input-group quantity mx-auto" style="width: 100px;">
                                 <div class="input-group-btn">
-                                    <button type="button" (click)="quantityChange( '-', item)"
+                                    <button [disabled]=" item.quantity <= 1 " type="button" (click)="quantityChange( '-', item)"
                                         class="btn btn-sm btn-primary btn-minus">
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </div>
-                                <input type="text"
+                                <input type="number"
                                     class="form-control form-control-sm bg-secondary border-0 text-center"
                                     (ngModelChange)="directQuntityChange($event,item)" [(ngModel)]="item.quantity">
 

@@ -5,42 +5,44 @@
 
 <!-- Checkout Start -->
 <div class="container-fluid">
-    <div class="container ">
-        <div class="row">
+    <div class="row px-xl-5 mt-3 mb-3">
+        <div class="col-lg-8">
+            <div>
+                <div class="row">
 
-            <div class="col bg-light m-1 flex-start" *ngFor="let item of userAddresses; let i = index">
-                <div class=" d-flex justify-content-around pt-3">
+                    <div class="col-3 bg-light m-1 flex-start" *ngFor="let item of userAddresses; let i = index">
+                        <div class=" d-flex justify-content-around pt-3">
 
-                    <input (change)="addressChange(i ,item.addressId,'change')" class="custom-margin" type="radio"
-                        name="address">
-                    <label for="" class="d-block"><b>{{item.title}}</b></label>
-                    <span class="text-warning" (click)="addressChange(i,item.addressId,'edit')"> <i
-                            class="fas fa-edit"></i></span>
-                    <span class="text-danger" (click)="removeAddress(i)"><i class="fas fa-thin fa-trash"></i>
-                    </span>
+                            <input (change)="addressChange(i ,item.addressId,'change')" class="custom-margin"
+                                type="radio" name="address">
+                            <label for="" class="d-block"><b>{{item.title}}</b></label>
+                            <span class="text-warning" (click)="addressChange(i,item.addressId,'edit')"> <i
+                                    class="fas fa-edit"></i></span>
+                            <span class="text-danger" (click)="removeAddress(i)"><i class="fas fa-thin fa-trash"></i>
+                            </span>
+
+                        </div>
+                        <hr>
+                        <address>
+                            <b>{{item.name}}</b><br>
+                            {{item.mobileNo}}<br>
+                            {{item.landmark}}, {{item.city}}, {{item.state}}, {{item.country}}, {{item.pincode}}
+                        </address>
+
+
+                    </div>
 
                 </div>
-                <hr>
-                <address>
-                    <b>{{item.name}}</b><br>
-                    {{item.mobileNo}}<br>
-                    {{item.landmark}}, {{item.city}}, {{item.state}}, {{item.country}}, {{item.pincode}}
-                </address>
-
-
             </div>
-        </div>
 
-    </div>
-    <div  class="row px-xl-5 mt-3">
-        <div class="col-lg-8">
+
             <h5 class="section-title position-relative text-uppercase mb-3">
                 <span class="bg-secondary pr-3">
                     {{(!isUpdateAddress)? "Billing Address" : "Upadate Address"}}
                 </span>
                 <span class="float-right bg-warning" (click)="clearForm()">
-                   
-                  <small>New Address</small>  
+
+                    <small>New Address</small>
                 </span>
             </h5>
             <div class="bg-light p-30 mb-5">
@@ -259,24 +261,26 @@
                 <div class="border-bottom">
                     <h6 class="mb-3">Products</h6>
                     <div class="d-flex justify-content-between" *ngFor="let item of checkOutData?.cartItem">
-                      
+
                         <p>{{item.product.title}}</p>
-                        <p>{{item.product.price* item.quantity  |currency:(common.currncypipe| async)}}</p>
+                        <p>{{item.product.price* item.quantity |currency:(common.currncypipe| async)}}</p>
                     </div>
 
                     <div class="d-flex justify-content-between mb-3">
                         <h6>subtotal</h6>
-                        <h6>{{checkOutData?.cartCheck?.subTotal  |currency:(common.currncypipe| async)}}</h6>
+                        <h6>{{checkOutData?.cartCheck?.subTotal |currency:(common.currncypipe| async)}}</h6>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium">Shipping</h6>
-                        <h6 class="font-weight-medium">{{checkOutData?.cartCheck?.shipping  |currency:(common.currncypipe| async)}}</h6>
+                        <h6 class="font-weight-medium">{{checkOutData?.cartCheck?.shipping
+                            |currency:(common.currncypipe| async)}}</h6>
                     </div>
                 </div>
                 <div class="pt-2">
                     <div class="d-flex justify-content-between mt-2">
                         <h5>Total</h5>
-                        <h5>{{checkOutData?.cartCheck?.subTotal + checkOutData?.cartCheck?.shipping  |currency:(common.currncypipe| async)}}</h5>
+                        <h5>{{checkOutData?.cartCheck?.subTotal + checkOutData?.cartCheck?.shipping
+                            |currency:(common.currncypipe| async)}}</h5>
                     </div>
                 </div>
             </div>
@@ -288,7 +292,7 @@
                         <input type="radio" class="custom-control-input" name="payment" checked id="paypal">
                         <label class="custom-control-label" for="paypal">Cash On Delivery</label>
                     </div>
-                   
+
                     <button class="btn btn-block btn-primary font-weight-bold py-3" (click)="ganrateOrder()">Place
                         Order</button>
                 </div>

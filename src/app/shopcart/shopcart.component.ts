@@ -109,6 +109,7 @@ export class ShopCartComponent implements OnInit {
   // change per page products
   pagePerProducts(value: any) {
     this.paginationObject.itemsPerPage = value;
+    this.paginationObject.currentPage= 1
     this.paginationToggle = false
     this.getAllProduct()
   }
@@ -136,7 +137,9 @@ export class ShopCartComponent implements OnInit {
 
   changePage(val: any) {
     this.paginationObject.currentPage = val;
-    // this.filterDataForBody.pagination.page = val
+    // if(this.paginationObject.totalItems/val <  0){
+    //   this.paginationObject.currentPage = 1
+    // }
 
     this.getAllProduct()
   }

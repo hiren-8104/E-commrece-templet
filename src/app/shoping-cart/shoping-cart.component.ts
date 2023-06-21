@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonService } from '../shared/services/common.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-shoping-cart',
@@ -29,7 +30,8 @@ export class ShopingCartComponent implements OnInit {
   constructor(
     public common: CommonService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private toaster: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -76,8 +78,8 @@ export class ShopingCartComponent implements OnInit {
 
   //   }
   // }
-  quantityChange(opration: string, item: any){
-    (opration=='+')?(item.quantity++):(item.quantity--)
+  quantityChange(opration: string, item: any) {
+    (opration == '+') ? (item.quantity++) : (item.quantity--)
     this.body = {
       productId: item.product.productId,
       quantity: item.quantity
@@ -138,23 +140,24 @@ export class ShopingCartComponent implements OnInit {
   goToCheckOut() {
     if (this.cartProduct.cartItem.length != 0) {
       console.log(this.cartProduct);
-      
+
       this.common.checkoutData.next(this.cartProduct)
       this.router.navigate(['/checkout'])
     }
   }
 
-  directQuntityChange(event: any,item: any) {
+  directQuntityChange(event: any, item: any ) {
     
-console.log(event);
+    console.log(event);
 
-
-    this.body = {
-      productId: item.product.productId,
-      quantity: <Number>event
+    if (event) {
+      this.body = {
+        productId: item.product.productId,
+        quantity: <Number>event
+      }
+      this.addToCart()
     }
-    this.addToCart()
-
+    
   }
 
 }

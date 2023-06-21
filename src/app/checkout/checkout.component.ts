@@ -26,8 +26,8 @@ export class CheckoutComponent implements OnInit {
     shipToDifferentAddress: this.isOtherAddress,
     billingId: "",
     deliveryId: "",
-    totalAmount: 11110,
-    shippingAmount: 111110,
+    totalAmount: 0,
+    shippingAmount: 0,
     paymentMethod: "Cash on delivery"
   }
 
@@ -62,7 +62,9 @@ export class CheckoutComponent implements OnInit {
     pincode: ['361320', Validators.required],
   });
 
-  constructor(public common: CommonService, private fb: FormBuilder, private toastr: ToastrService, private router: Router) { }
+  constructor(public common: CommonService, private fb: FormBuilder, private toastr: ToastrService, private router: Router) {
+
+  }
 
   ngOnInit(): void {
 
@@ -73,7 +75,7 @@ export class CheckoutComponent implements OnInit {
       { label: "Shop", route: "/Shop" },
       { label: "CheckOut", route: "checkout" }
     ])
-    
+
     this.getAddresses()
     // cart product data
     this.common.checkoutData.subscribe({
@@ -82,7 +84,7 @@ export class CheckoutComponent implements OnInit {
           this.router.navigate(['/cart'])
           return
         }
-       
+
         this.checkOutData = res
 
 
@@ -117,15 +119,28 @@ export class CheckoutComponent implements OnInit {
   // ganrate Order 
   ganrateOrder() {
     if (this.userAddressId) {
+      if (this.isOtherAddress && this.shippingAddres.valid) {
+        this.common.addUserAddress(this.shippingAddres.value).subscribe({
+          next: (resp) => {
+            this.orderDetails.deliveryId = resp.addedAddressId
+            this.placeOrder()
+            return
+          },
+          error: (err) => { console.log(err) }
+        })
+      }
+
+      delete this.orderDetails.deliveryId
       this.placeOrder()
     }
 
-    else if (this.billingAdress.valid && this.isOtherAddress) {
+    else if (this.userAddressId && this.billingAdress.valid && this.isOtherAddress) {
       this.common.addUserAddress(this.billingAdress.value).subscribe({
         next: (res) => {
           this.orderDetails.billingId = res.addedAddressId
           this.common.addUserAddress(this.shippingAddres.value).subscribe({
             next: (resp) => {
+
               this.orderDetails.deliveryId = resp.addedAddressId
               this.placeOrder()
             },
@@ -139,9 +154,10 @@ export class CheckoutComponent implements OnInit {
       this.orderDetails.deliveryId
 
     }
-    else if (this.billingAdress.valid) {
+    else if (this.billingAdress.valid && !this.isOtherAddress) {
       this.common.addUserAddress(this.billingAdress.value).subscribe({
         next: (res) => {
+
           this.orderDetails.billingId = res.addedAddressId
           this.placeOrder()
         },
@@ -149,11 +165,18 @@ export class CheckoutComponent implements OnInit {
       })
     }
     else {
+
+
       this.toastr.error("some field are missing")
     }
 
 
+
+
   }
+
+
+
   addressChange(i: any, addressId?: any, perpose?: any) {
     if (perpose === "edit") {
       this.isUpdateAddress = true
@@ -232,7 +255,6 @@ export class CheckoutComponent implements OnInit {
         if (res.status == 200) {
           this.toastr.success(res.message)
           this.router.navigate(['/'])
-          return
         }
       }
     })
